@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&amp;display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="<?= base_url() ?>assets/assets_customer/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/assets_customer/css/font-awesome.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/assets_customer/css/animate.css">
 
     <link rel="stylesheet" href="<?= base_url() ?>assets/assets_customer/css/owl.carousel.min.css">
@@ -40,13 +41,23 @@
             </button>
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="<?= site_url('beranda'); ?>" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="<?= site_url('mobil'); ?>" class="nav-link">Mobil</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">Blog</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">Transaction</a></li>
-                    <li class="nav-item"><a href="<?= site_url('auth/login'); ?>" class="nav-link ml-5">Login</a></li>
+                    <li class="nav-item <?= $this->uri->segment(1) == '' || $this->uri->segment(1) == 'beranda' ? 'active' : ''; ?>"><a href="<?= site_url('beranda'); ?>" class="nav-link">Beranda</a></li>
+                    <li class="nav-item <?= $this->uri->segment(1) == 'mobil' ? 'active' : ''; ?>"><a href="<?= site_url('mobil'); ?>" class="nav-link">Mobil</a></li>
+                    <!-- <li class="nav-item"><a href="#" class="nav-link">Blog</a></li> -->
+                    <li class="nav-item <?= $this->uri->segment(1) == 'contact' ? 'active' : ''; ?>"><a href="#" class="nav-link">Contact</a></li>
+                    <?php if ($this->session->userdata('nama')) { ?>
+                        <li class="nav-item <?= $this->uri->segment(1) == 'transaksi' ? 'active' : ''; ?>"><a href="#" class="nav-link">Transaction</a></li>
+                    <?php } ?>
+                    <div class="ml-5"></div>
+                    <?php if ($this->session->userdata('nama')) { ?>
+                        <li class="nav-item">
+                            <a href="<?= site_url('auth/logout'); ?>" class="nav-link"><?= $this->session->userdata('nama'); ?> | Logout</a>
+                        </li>
+                    <?php } else { ?>
+                        <li class="nav-item">
+                            <a href="<?= site_url('auth/login'); ?>" class="nav-link">Login</a>
+                        </li>
+                    <?php } ?>
                 </ul>
             </div>
         </div>
@@ -64,7 +75,7 @@
                 <div class="col-md">
                     <div class="ftco-footer-widget mb-4">
                         <h2 class="ftco-heading-2"><a href="#" class="logo">H<span>RC</span></a></h2>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                        <p>Solusi cepat &amp; mudah untuk rental mobil di Banyuwangi, Kenyamanan dan kepuasan anda adalah prioritas kami</p>
                         <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
                             <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
                             <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -76,11 +87,8 @@
                     <div class="ftco-footer-widget mb-4 ml-md-5">
                         <h2 class="ftco-heading-2">Information</h2>
                         <ul class="list-unstyled">
-                            <li><a href="#" class="py-2 d-block">About</a></li>
-                            <li><a href="#" class="py-2 d-block">Services</a></li>
-                            <li><a href="#" class="py-2 d-block">Term and Conditions</a></li>
-                            <li><a href="#" class="py-2 d-block">Best Price Guarantee</a></li>
-                            <li><a href="#" class="py-2 d-block">Privacy &amp; Cookies Policy</a></li>
+                            <li><a href="#" class="py-2 d-block">Tentang</a></li>
+                            <li><a href="#" class="py-2 d-block">Layanan</a></li>
                         </ul>
                     </div>
                 </div>
@@ -88,11 +96,9 @@
                     <div class="ftco-footer-widget mb-4">
                         <h2 class="ftco-heading-2">Customer Support</h2>
                         <ul class="list-unstyled">
-                            <li><a href="#" class="py-2 d-block">FAQ</a></li>
-                            <li><a href="#" class="py-2 d-block">Payment Option</a></li>
+                            <li><a href="#" class="py-2 d-block">Opsi Pembayaran</a></li>
                             <li><a href="#" class="py-2 d-block">Booking Tips</a></li>
-                            <li><a href="#" class="py-2 d-block">How it works</a></li>
-                            <li><a href="#" class="py-2 d-block">Contact Us</a></li>
+                            <li><a href="#" class="py-2 d-block">Hubungi Kami</a></li>
                         </ul>
                     </div>
                 </div>
@@ -101,9 +107,9 @@
                         <h2 class="ftco-heading-2">Have a Questions?</h2>
                         <div class="block-23 mb-3">
                             <ul>
-                                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-                                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-                                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                                <li><a href="#"><span class="icon icon-map-marker"></span><span class="text">Pringsejuta, Genteng, Banyuwangi.</span></a></li>
+                                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+62 82244922833</span></a></li>
+                                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">halim@gmail.com</span></a></li>
                             </ul>
                         </div>
                     </div>
@@ -113,25 +119,24 @@
                 <div class="col-md-12 text-center">
 
                     <p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;<script>
+                        Copyright &copy;
+                        <script>
                             document.write(new Date().getFullYear());
-                        </script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="" target="_blank">Do'a</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </script>
+                        <i class="icon-heart color-danger" aria-hidden="true"></i> By <a href="" target="_blank">Do'a Ibu</a>
                     </p>
                 </div>
             </div>
         </div>
     </footer>
 
-
-
     <!-- loader -->
-    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+    <div id="ftco-loader" class="show fullscreen">
+        <svg class="circular" width="48px" height="48px">
             <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
             <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
-        </svg></div>
-
+        </svg>
+    </div>
 
     <script src="<?= base_url() ?>assets/assets_customer/js/jquery.min.js"></script>
     <script src="<?= base_url() ?>assets/assets_customer/js/jquery-migrate-3.0.1.min.js"></script>

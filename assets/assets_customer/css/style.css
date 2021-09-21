@@ -8380,22 +8380,22 @@ h1, h2, h3, h4, h5,
       .hero-wrap .overlay {
         height: 1150px; } }
   .hero-wrap.hero-wrap-2 {
-    height: 600px !important;
+    height: 250px !important;
     position: relative; }
     .hero-wrap.hero-wrap-2 .overlay {
       width: 100%;
       opacity: .3;
-      height: 600px; }
+      height: 250px; }
     .hero-wrap.hero-wrap-2 .slider-text {
-      height: 600px !important; }
+      height: 250px !important; }
 
 .slider-text {
   height: 850px; }
   @media (max-width: 991.98px) {
     .slider-text {
-      height: 1150px; } }
+      height: 600px; } }
   .slider-text h1 {
-    font-size: 44px;
+    font-size: 34px;
     color: #fff;
     line-height: 1.1;
     font-weight: 700; }
