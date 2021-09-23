@@ -17,7 +17,13 @@ class Customer extends CI_Controller
 
     public function detailMobil($id)
     {
+        $data['mobil'] = $this->rental_model->get_data('mobil')->result();
         $data['detail'] = $this->rental_model->ambil_id_mobil($id);
-        $this->template->load('templateCustomer', 'customer/beranda');
+        $this->template->load('templateCustomer', 'customer/detailmobil', $data);
+    }
+
+    public function contact()
+    {
+        $this->template->load('templateCustomer', 'customer/contact');
     }
 }

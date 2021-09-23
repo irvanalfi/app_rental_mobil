@@ -125,12 +125,25 @@
                                 <div class="img rounded d-flex align-items-end" style="background-image: url(<?= base_url() ?>assets/upload/<?= $mb->gambar ?>);">
                                 </div>
                                 <div class="text">
-                                    <h2 class="mb-0"><a href="#"><?= $mb->merek; ?></a></h2>
+                                    <h2 class="mb-0">
+                                        <?php if ($mb->status == '1') { ?>
+                                            <a href="<?= base_url('mobil/detailmobil/' . $mb->id_mobil) ?>"><?= $mb->merek; ?> (Tersedia)</a>
+                                        <?php } else { ?>
+                                            <a href="#" style="text-decoration: line-through;"><?= $mb->merek; ?> (Dirental)</a>
+                                        <?php } ?>
+                                    </h2>
                                     <div class="d-flex mb-3">
                                         <span class="cat">Tahun <?= $mb->tahun; ?></span>
                                         <p class="price ml-auto">Rp. <?= number_format($mb->harga, 0, ',', '.'); ?>,-<span>/day</span></p>
                                     </div>
-                                    <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a href="#" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                                    <p class="d-flex mb-0 d-block">
+                                        <?php if ($mb->status == '1') { ?>
+                                            <a href="#" class="btn btn-primary py-2 mr-1">Book now</a>
+                                        <?php } else { ?>
+                                            <a href="#" class="btn btn-primary py-2 mr-1 disabled" style="text-decoration: line-through;">Book now</a>
+                                        <?php } ?>
+                                        <a href="<?= base_url('mobil/detailmobil/' . $mb->id_mobil) ?>" class="btn btn-warning py-2 ml-1">Details</a>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -211,8 +224,8 @@
                 <div class="heading-section heading-section-white pl-md-5">
                     <span class="subheading">Tentang Kami</span>
                     <h2 class="mb-4">Selamat Datang di Halim Rental Car</h2>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima quia cupiditate non, nobis totam corporis, velit a fuga soluta reiciendis rem culpa, quaerat quidem perferendis voluptate. Expedita distinctio explicabo nulla!</p>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quisquam velit sunt excepturi in exercitationem dolore minima! Magni quis consequuntur non sunt rerum esse harum. Adipisci porro illum ut ipsum?Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas explicabo veritatis, consequatur cum odio non cumque quam beatae quisquam ipsa nihil dolore nemo itaque consectetur eum quaerat suscipit labore velit.</p>
+                    <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima quia cupiditate non, nobis totam corporis, velit a fuga soluta reiciendis rem culpa, quaerat quidem perferendis voluptate. Expedita distinctio explicabo nulla!</p>
+                    <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quisquam velit sunt excepturi in exercitationem dolore minima! Magni quis consequuntur non sunt rerum esse harum. Adipisci porro illum ut ipsum?Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas explicabo veritatis, consequatur cum odio non cumque quam beatae quisquam ipsa nihil dolore nemo itaque consectetur eum quaerat suscipit labore velit.</p>
                 </div>
             </div>
         </div>

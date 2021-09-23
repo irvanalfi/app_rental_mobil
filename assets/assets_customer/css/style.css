@@ -8356,7 +8356,7 @@ h1, h2, h3, h4, h5,
 
 .hero-wrap {
   width: 100%;
-  height: 850px;
+  height: 600px;
   position: inherit;
   background-size: cover;
   background-repeat: no-repeat;
@@ -8376,18 +8376,28 @@ h1, h2, h3, h4, h5,
     height: 850px; }
   @media (max-width: 991.98px) {
     .hero-wrap {
-      height: 1150px; }
+      height: 800px; }
       .hero-wrap .overlay {
-        height: 1150px; } }
+        height: 800px; } }
   .hero-wrap.hero-wrap-2 {
     height: 250px !important;
     position: relative; }
+    @media (max-width: 991.98px) {
+      .hero-wrap.hero-wrap-2 {
+        height: 100px !important;
+        position: relative; } }
     .hero-wrap.hero-wrap-2 .overlay {
       width: 100%;
       opacity: .3;
       height: 250px; }
+      @media (max-width: 991.98px) {
+        .hero-wrap.hero-wrap-2 .overlay {
+          height: 100px; } }
     .hero-wrap.hero-wrap-2 .slider-text {
       height: 250px !important; }
+      @media (max-width: 991.98px) {
+        .hero-wrap.hero-wrap-2 .slider-text {
+          height: 100px !important; } }
 
 .slider-text {
   height: 850px; }
@@ -8756,8 +8766,11 @@ h1, h2, h3, h4, h5,
 
 .car-details .img {
   width: 100%;
-  height: 600px;
-  margin-bottom: 40px; }
+  height: 400px; }
+  @media (max-width: 767.98px) {
+    .car-details .img {
+      width: 100%;
+      height: 250px; } }
 
 .car-details span.subheading {
   font-size: 12px;
@@ -9017,14 +9030,14 @@ h1, h2, h3, h4, h5,
     font-weight: 600; }
 
 .services .icon {
-  width: 90px;
-  height: 90px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 1px solid rgba(0, 0, 0, 0.05);
   margin: 0 auto;
   margin-bottom: 20px; }
   .services .icon span {
-    font-size: 40px;
+    font-size: 30px;
     color: #1089ff; }
 
 .services h3 {
@@ -9279,11 +9292,11 @@ textarea.form-control {
   padding-top: 120px;
   padding-bottom: 120px; }
 
-#map {
+.gmap {
   height: 500px;
   width: 100%; }
   @media (max-width: 991.98px) {
-    #map {
+    .gmap {
       height: 300px; } }
 
 @-webkit-keyframes pulse {

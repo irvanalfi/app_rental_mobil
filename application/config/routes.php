@@ -54,8 +54,12 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['beranda'] = 'Customer/beranda';
+$route['contact'] = 'Customer/contact';
 $route['mobil'] = 'Customer/mobil';
-$route['mobildetail/(:num)'] = 'Customer/detailmobil/$1';
+$route['mobil/detailmobil/(:num)'] = 'Customer/detailmobil/$1';
+
+
+
 // $route['customer/add'] = 'pelanggan/add';
 // $route['customer/process'] = 'pelanggan/process';
 // $route['customer/edit/(:num)'] = 'pelanggan/edit/$1';
