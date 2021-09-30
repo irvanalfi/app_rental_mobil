@@ -36,7 +36,7 @@
                                             <div class="text">
                                                 <h3 class="heading mb-0 pl-3">
                                                     KM
-                                                    <span>-+40k</span>
+                                                    <span>-+<?= $dt->km; ?>k</span>
                                                 </h3>
                                             </div>
                                         </div>
@@ -51,7 +51,7 @@
                                             <div class="text">
                                                 <h3 class="heading mb-0 pl-3">
                                                     Transmisi
-                                                    <span>Manual</span>
+                                                    <span><?= $dt->transmisi; ?></span>
                                                 </h3>
                                             </div>
                                         </div>
@@ -66,7 +66,7 @@
                                             <div class="text">
                                                 <h3 class="heading mb-0 pl-3">
                                                     Kursi
-                                                    <span>7 Dewasa</span>
+                                                    <span><?= $dt->jmlh_kursi; ?></span>
                                                 </h3>
                                             </div>
                                         </div>
@@ -81,7 +81,7 @@
                                             <div class="text">
                                                 <h3 class="heading mb-0 pl-3">
                                                     Bagasi
-                                                    <span>4 ransel</span>
+                                                    <span><?= $dt->bagasi; ?></span>
                                                 </h3>
                                             </div>
                                         </div>
@@ -96,7 +96,7 @@
                                             <div class="text">
                                                 <h3 class="heading mb-0 pl-3">
                                                     BBM
-                                                    <span>Solar</span>
+                                                    <span><?= $dt->bbm; ?></span>
                                                 </h3>
                                             </div>
                                         </div>
@@ -135,37 +135,33 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <ul class="features">
-                                            <li class="check"><span class="ion-ios-checkmark"></span>Airconditions</li>
-                                            <li class="check"><span class="ion-ios-checkmark"></span>Child Seat</li>
-                                            <li class="check"><span class="ion-ios-checkmark"></span>GPS</li>
-                                            <li class="check"><span class="ion-ios-checkmark"></span>Luggage</li>
-                                            <li class="check"><span class="ion-ios-checkmark"></span>Music</li>
+                                            <li class="<?= $dt->ac == '1' ? 'check' : 'remove'; ?>"><span class="ion-ios-<?= $dt->ac == '1' ? 'checkmark' : 'close'; ?>"></span>Airconditions</li>
+                                            <li class="<?= $dt->seat_belt == '1' ? 'check' : 'remove'; ?>"><span class="ion-ios-<?= $dt->seat_belt == '1' ? 'checkmark' : 'close'; ?>"></span>Seat Belt</li>
+                                            <li class="<?= $dt->air == '1' ? 'check' : 'remove'; ?>"><span class="ion-ios-<?= $dt->air == '1' ? 'checkmark' : 'close'; ?>"></span>Air</li>
+                                            <li class="<?= $dt->p3k == '1' ? 'check' : 'remove'; ?>"><span class="ion-ios-<?= $dt->p3k == '1' ? 'checkmark' : 'close'; ?>"></span>P3K</li>
                                         </ul>
                                     </div>
                                     <div class="col-md-4">
                                         <ul class="features">
-                                            <li class="check"><span class="ion-ios-checkmark"></span>Seat Belt</li>
-                                            <li class="remove"><span class="ion-ios-close"></span>Sleeping Bed</li>
-                                            <li class="check"><span class="ion-ios-checkmark"></span>Water</li>
-                                            <li class="check"><span class="ion-ios-checkmark"></span>Bluetooth</li>
-                                            <li class="remove"><span class="ion-ios-close"></span>Onboard computer</li>
+                                            <li class="<?= $dt->audio_input == '1' ? 'check' : 'remove'; ?>"><span class="ion-ios-<?= $dt->audio_input == '1' ? 'checkmark' : 'close'; ?>"></span>Audio input</li>
+                                            <li class="<?= $dt->bluethooth == '1' ? 'check' : 'remove'; ?>"><span class="ion-ios-<?= $dt->bluethooth == '1' ? 'checkmark' : 'close'; ?>"></span>Bluetooth</li>
+                                            <li class="<?= $dt->mp3_player == '1' ? 'check' : 'remove'; ?>"><span class="ion-ios-<?= $dt->mp3_player == '1' ? 'checkmark' : 'close'; ?>"></span>Music</li>
+                                            <li class="<?= $dt->vidio == '1' ? 'check' : 'remove'; ?>"><span class="ion-ios-<?= $dt->vidio == '1' ? 'checkmark' : 'close'; ?>"></span>Vidio</li>
                                         </ul>
                                     </div>
                                     <div class="col-md-4">
                                         <ul class="features">
-                                            <li class="check"><span class="ion-ios-checkmark"></span>Audio input</li>
-                                            <li class="check"><span class="ion-ios-checkmark"></span>Long Term Trips</li>
-                                            <li class="check"><span class="ion-ios-checkmark"></span>Car Kit</li>
-                                            <li class="check"><span class="ion-ios-checkmark"></span>Remote central locking</li>
-                                            <li class="check"><span class="ion-ios-checkmark"></span>Climate control</li>
+                                            <li class="<?= $dt->central_lock == '1' ? 'check' : 'remove'; ?>"><span class="ion-ios-<?= $dt->central_lock == '1' ? 'checkmark' : 'close'; ?>"></span>Remote central locking</li>
+                                            <li class="<?= $dt->ban_serep == '1' ? 'check' : 'remove'; ?>"><span class="ion-ios-<?= $dt->ban_serep == '1' ? 'checkmark' : 'close'; ?>"></span>Roda Cadangan</li>
+                                            <li class="<?= $dt->car_kit == '1' ? 'check' : 'remove'; ?>"><span class="ion-ios-<?= $dt->car_kit == '1' ? 'checkmark' : 'close'; ?>"></span>Peralatan Mobil</li>
+                                            <li class="<?= $dt->sopir == '1' ? 'check' : 'remove'; ?>"><span class="ion-ios-<?= $dt->sopir == '1' ? 'checkmark' : 'close'; ?>"></span><b>Lepas Kunci</b></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="tab-pane fade" id="pills-manufacturer" role="tabpanel" aria-labelledby="pills-manufacturer-tab">
-                                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
-                                <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
+                                <p><?= $dt->detail ?></p>
                             </div>
 
                             <div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">

@@ -1,11 +1,13 @@
 <?php
 
-class Data_mobil extends CI_Controller{
+class Data_mobil extends CI_Controller
+{
 
-  public function __construct(){
+  public function __construct()
+  {
     parent::__construct();
-    
-    if(empty($this->session->userdata('username'))){
+
+    if (empty($this->session->userdata('username'))) {
       $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>Anda belum login!</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -13,8 +15,7 @@ class Data_mobil extends CI_Controller{
         </button>
       </div>');
       redirect('auth/login');
-    }
-    elseif($this->session->userdata('role_id') != '1'){
+    } elseif ($this->session->userdata('role_id') != '1') {
       $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>Anda tidak punya akses ke halaman ini!</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -25,7 +26,8 @@ class Data_mobil extends CI_Controller{
     }
   }
 
-  public function index(){
+  public function index()
+  {
     $data['mobil'] = $this->rental_model->get_data('mobil')->result();
     $data['tipe'] = $this->rental_model->get_data('tipe')->result();
     $this->load->view('templates_admin/header');
@@ -34,7 +36,8 @@ class Data_mobil extends CI_Controller{
     $this->load->view('templates_admin/footer');
   }
 
-  public function tambah_mobil(){
+  public function tambah_mobil()
+  {
     $data['tipe'] = $this->rental_model->get_data('tipe')->result();
     $this->load->view('templates_admin/header');
     $this->load->view('templates_admin/sidebar');
@@ -42,37 +45,54 @@ class Data_mobil extends CI_Controller{
     $this->load->view('templates_admin/footer');
   }
 
-  public function tambah_mobil_aksi(){
+  public function tambah_mobil_aksi()
+  {
     $this->_rules();
 
-    if($this->form_validation->run() == FALSE){
+    if ($this->form_validation->run() == FALSE) {
       $this->tambah_mobil();
-    }
-    else{
+    } else {
       $kode_tipe    = $this->input->post('kode_tipe');
       $merek        = $this->input->post('merek');
       $no_plat      = $this->input->post('no_plat');
       $warna        = $this->input->post('warna');
+      $jmlh_kursi   = $this->input->post('jmlh_kursi');
+      $bagasi       = $this->input->post('bagasi');
+      $transmisi    = $this->input->post('transmisi');
+      $km           = $this->input->post('km');
+      $bbm          = $this->input->post('bbm');
       $tahun        = $this->input->post('tahun');
       $status       = $this->input->post('status');
       $harga        = $this->input->post('harga');
+      $hrg_supir    = $this->input->post('hrg_supir');
       $denda        = $this->input->post('denda');
-      $ac           = $this->input->post('ac');
       $sopir        = $this->input->post('sopir');
+      $ac           = $this->input->post('ac');
+      $seat_belt    = $this->input->post('seat_belt');
+      $air          = $this->input->post('air');
+      $p3k          = $this->input->post('p3k');
+      $audio_input  = $this->input->post('audio_input');
       $mp3_player   = $this->input->post('mp3_player');
+      $bluethooth   = $this->input->post('bluethooth');
+      $vidio        = $this->input->post('vidio');
       $central_lock = $this->input->post('central_lock');
-      $gambar    = $_FILES['gambar']['name'];
+      $ban_serep    = $this->input->post('ban_serep');
+      $car_kit      = $this->input->post('car_kit');
+      $detail       = $this->input->post('detail');
+      $gambar       = $_FILES['gambar']['name'];
 
-      if($gambar=''){}
-      else{
-        $config['upload_path'] = './assets/upload';
-        $config['allowed_types'] = 'jpg|jpeg|png|tiff';
+      if ($gambar = '') {
+      } else {
+        $config['upload_path']    = './assets/upload';
+        $config['allowed_types']  = 'jpg|jpeg|png|tiff|gif';
+        $config['max_size']       = 5120;
+        $config['file_name']      = 'car-' . date('dmy') . '-' . substr(md5(rand()), 0, 10);
 
         $this->load->library('upload', $config);
-        if(!$this->upload->do_upload('gambar')){
-          echo "Gambar mobil gagal diupload";
-        }
-        else{
+
+        if (!$this->upload->do_upload('gambar')) {
+          echo $this->upload->display_error();
+        } else {
           $gambar = $this->upload->data('file_name');
         }
       }
@@ -82,13 +102,28 @@ class Data_mobil extends CI_Controller{
         'no_plat'      => $no_plat,
         'tahun'        => $tahun,
         'warna'        => $warna,
+        'jmlh_kursi'   => $jmlh_kursi,
+        'bagasi'       => $bagasi,
+        'transmisi'    => $transmisi,
+        'km'           => $km,
+        'bbm'          => $bbm,
         'status'       => $status,
         'harga'        => $harga,
+        'hrg_supir'    => $hrg_supir,
         'denda'        => $denda,
-        'ac'           => $ac,
         'sopir'        => $sopir,
+        'ac'           => $ac,
+        'seat_belt'    => $seat_belt,
+        'air'          => $air,
+        'p3k'          => $p3k,
+        'audio_input'  => $audio_input,
         'mp3_player'   => $mp3_player,
+        'bluethooth'   => $bluethooth,
         'central_lock' => $central_lock,
+        'vidio'        => $vidio,
+        'ban_serep'    => $ban_serep,
+        'car_kit'      => $car_kit,
+        'detail'       => $detail,
         'gambar'       => $gambar,
       );
 
@@ -102,7 +137,8 @@ class Data_mobil extends CI_Controller{
     }
   }
 
-  public function update_mobil($id){
+  public function update_mobil($id)
+  {
     $where = array('id_mobil' => $id);
     $data['mobil'] = $this->db->query("SELECT * FROM mobil mb, tipe tp WHERE mb.kode_tipe = tp.kode_tipe AND mb.id_mobil = '$id'")->result();
     $data['tipe'] = $this->rental_model->get_data('tipe')->result();
@@ -112,40 +148,56 @@ class Data_mobil extends CI_Controller{
     $this->load->view('templates_admin/footer');
   }
 
-  public function update_mobil_aksi(){
+  public function update_mobil_aksi()
+  {
     $this->_rules();
 
-    if($this->form_validation->run() == FALSE){
+    if ($this->form_validation->run() == FALSE) {
       $id = $this->input->post('id_mobil');
       $this->update_mobil($id);
-    }
-    else{
+    } else {
       $id           = $this->input->post('id_mobil');
       $kode_tipe    = $this->input->post('kode_tipe');
       $merek        = $this->input->post('merek');
       $no_plat      = $this->input->post('no_plat');
       $warna        = $this->input->post('warna');
+      $jmlh_kursi   = $this->input->post('jmlh_kursi');
+      $bagasi       = $this->input->post('bagasi');
+      $transmisi    = $this->input->post('transmisi');
+      $km           = $this->input->post('km');
+      $bbm          = $this->input->post('bbm');
       $tahun        = $this->input->post('tahun');
       $status       = $this->input->post('status');
       $harga        = $this->input->post('harga');
+      $hrg_supir    = $this->input->post('hrg_supir');
       $denda        = $this->input->post('denda');
-      $ac           = $this->input->post('ac');
       $sopir        = $this->input->post('sopir');
+      $ac           = $this->input->post('ac');
+      $seat_belt    = $this->input->post('seat_belt');
+      $air          = $this->input->post('air');
+      $p3k          = $this->input->post('p3k');
+      $audio_input  = $this->input->post('audio_input');
       $mp3_player   = $this->input->post('mp3_player');
+      $bluethooth   = $this->input->post('bluethooth');
+      $vidio        = $this->input->post('vidio');
       $central_lock = $this->input->post('central_lock');
-      $gambar    = $_FILES['gambar']['name'];
+      $ban_serep    = $this->input->post('ban_serep');
+      $car_kit      = $this->input->post('car_kit');
+      $detail       = $this->input->post('detail');
+      $gambar       = $_FILES['gambar']['name'];
 
-      if($gambar){
-        $config['upload_path'] = './assets/upload';
-        $config['allowed_types'] = 'jpg|jpeg|png|tiff';
+      if ($gambar) {
+        $config['upload_path']    = './assets/upload/';
+        $config['allowed_types']  = 'jpg|jpeg|png|tiff|gif';
+        $config['max_size']       = 5120;
+        $config['file_name']      = 'car-' . date('dmy') . '-' . substr(md5(rand()), 0, 10);
 
         $this->load->library('upload', $config);
-        
-        if($this->upload->do_upload('gambar')){
+
+        if ($this->upload->do_upload('gambar')) {
           $gambar = $this->upload->data('file_name');
           $this->db->set('gambar', $gambar);
-        }
-        else{
+        } else {
           echo $this->upload->display_error();
         }
       }
@@ -155,13 +207,29 @@ class Data_mobil extends CI_Controller{
         'no_plat'      => $no_plat,
         'tahun'        => $tahun,
         'warna'        => $warna,
+        'jmlh_kursi'   => $jmlh_kursi,
+        'bagasi'       => $bagasi,
+        'transmisi'    => $transmisi,
+        'km'           => $km,
+        'bbm'          => $bbm,
         'status'       => $status,
         'harga'        => $harga,
+        'hrg_supir'    => $hrg_supir,
         'denda'        => $denda,
-        'ac'           => $ac,
         'sopir'        => $sopir,
+        'ac'           => $ac,
+        'seat_belt'    => $seat_belt,
+        'air'          => $air,
+        'p3k'          => $p3k,
+        'audio_input'  => $audio_input,
         'mp3_player'   => $mp3_player,
+        'bluethooth'   => $bluethooth,
         'central_lock' => $central_lock,
+        'vidio'        => $vidio,
+        'ban_serep'    => $ban_serep,
+        'car_kit'      => $car_kit,
+        'detail'       => $detail,
+        'gambar'       => $gambar,
       );
       $where = array('id_mobil' => $id);
 
@@ -175,7 +243,8 @@ class Data_mobil extends CI_Controller{
     }
   }
 
-  public function detail_mobil($id){
+  public function detail_mobil($id)
+  {
     $data['detail'] = $this->rental_model->ambil_id_mobil($id);
     $this->load->view('templates_admin/header');
     $this->load->view('templates_admin/sidebar');
@@ -183,7 +252,8 @@ class Data_mobil extends CI_Controller{
     $this->load->view('templates_admin/footer');
   }
 
-  public function delete_mobil($id){
+  public function delete_mobil($id)
+  {
     $where = array('id_mobil' => $id);
 
     $this->rental_model->delete_data($where, 'mobil');
@@ -193,10 +263,10 @@ class Data_mobil extends CI_Controller{
       <span aria-hidden="true">&times;</span>
     </button></div>');
     redirect('admin/data_mobil');
-
   }
 
-  public function _rules(){
+  public function _rules()
+  {
     $this->form_validation->set_rules('kode_tipe', 'Kode Tipe', 'required');
     $this->form_validation->set_rules('merek', 'Merek', 'required');
     $this->form_validation->set_rules('no_plat', 'Nomor Plat', 'required');
@@ -210,6 +280,4 @@ class Data_mobil extends CI_Controller{
     $this->form_validation->set_rules('mp3_player', 'MP3 Player', 'required');
     $this->form_validation->set_rules('central_lock', 'Central Lock', 'required');
   }
-
-
 }
