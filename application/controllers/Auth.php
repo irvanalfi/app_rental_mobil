@@ -6,6 +6,7 @@ class Auth extends CI_Controller
 
   public function login()
   {
+    check_already_login();
     $this->_rules();
 
     if ($this->form_validation->run() == FALSE) {
