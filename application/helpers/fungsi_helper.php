@@ -2,7 +2,7 @@
 function check_already_login()
 {
     $CI = &get_instance();
-    $user_session = $CI->session->userdata('id_customer');
+    $user_session = $CI->session->userdata('id_user');
     if ($user_session) {
         redirect('beranda');
     }
@@ -11,7 +11,7 @@ function check_already_login()
 function check_not_login()
 {
     $CI = &get_instance();
-    $user_session = $CI->session->userdata('id_customer');
+    $user_session = $CI->session->userdata('id_user');
     if (!$user_session) {
         redirect('auth/login');
     }

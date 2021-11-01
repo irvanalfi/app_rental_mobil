@@ -24,7 +24,6 @@
     </div>
 </div>
 
-<!-- Video Popup Start -->
 <div class="video-popup">
     <div class="video-popup-inner">
         <i class="fas fa-times video-popup-close"></i>
@@ -33,80 +32,6 @@
         </div>
     </div>
 </div>
-<!-- Video Popup End -->
-
-<!-- <section class="ftco-section ftco-no-pt bg-light">
-    <div class="container">
-        <div class="row no-gutters">
-            <div class="col-md-12	featured-top">
-                <div class="row no-gutters">
-                    <div class="col-md-4 d-flex align-items-center">
-                        <form action="#" class="request-form ftco-animate bg-primary">
-                            <h2>Buat Perjalanan Anda</h2>
-                            <div class="form-group">
-                                <label for="" class="label">Lokasi Penjemputan</label>
-                                <input type="text" class="form-control" placeholder="City, Airport, Station, etc">
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="label">Lokasi Tujuan</label>
-                                <input type="text" class="form-control" placeholder="City, Airport, Station, etc">
-                            </div>
-                            <div class="d-flex">
-                                <div class="form-group mr-2">
-                                    <label for="" class="label">Tanggal Penjemputan</label>
-                                    <input type="text" class="form-control" id="book_pick_date" placeholder="Date">
-                                </div>
-                                <div class="form-group ml-2">
-                                    <label for="" class="label">Tanggal Selesai</label>
-                                    <input type="text" class="form-control" id="book_off_date" placeholder="Date">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="label">Jam Penjemputan</label>
-                                <input type="text" class="form-control" id="time_pick" placeholder="Time">
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Rental Sekarang" class="btn btn-secondary py-3 px-4">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-md-8 d-flex align-items-center">
-                        <div class="services-wrap rounded-right w-100">
-                            <h3 class="heading-section mb-4">Jalan Terbaik Untuk Rental Mobil Terbaik</h3>
-                            <div class="row d-flex mb-4">
-                                <div class="col-md-4 d-flex align-self-stretch ftco-animate">
-                                    <div class="services w-100 text-center">
-                                        <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-route"></span></div>
-                                        <div class="text w-100">
-                                            <h3 class="heading mb-2">Pilih Lokasi Penjemputan Anda</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 d-flex align-self-stretch ftco-animate">
-                                    <div class="services w-100 text-center">
-                                        <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-handshake"></span></div>
-                                        <div class="text w-100">
-                                            <h3 class="heading mb-2">Lakukan Pembayaran Hingga disetujui</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 d-flex align-self-stretch ftco-animate">
-                                    <div class="services w-100 text-center">
-                                        <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-rent"></span></div>
-                                        <div class="text w-100">
-                                            <h3 class="heading mb-2">Nikmati Mobil Rental Anda</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p><a href="#" class="btn btn-primary py-3 px-4">Reserve Your Perfect Car</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-</section> -->
-
 
 <section class="ftco-section ftco-no-pt bg-light">
     <div class="container">
@@ -122,27 +47,27 @@
                     <?php foreach ($mobil as $mb) : ?>
                         <div class="item">
                             <div class="car-wrap rounded ftco-animate">
-                                <div class="img rounded d-flex align-items-end" style="background-image: url(<?= base_url() ?>assets/upload/<?= $mb->gambar ?>);">
+                                <div class="img rounded d-flex align-items-end" style="background-image: url(<?= base_url() ?>assets/upload/<?= $mb['gambar'] ?>);">
                                 </div>
                                 <div class="text">
                                     <h2 class="mb-0">
-                                        <?php if ($mb->status == '1') { ?>
-                                            <a href="<?= base_url('mobil/detailmobil/' . $mb->id_mobil) ?>"><?= $mb->merek; ?> (Tersedia)</a>
+                                        <?php if ($mb['status'] == '1') { ?>
+                                            <a href="<?= base_url('mobil/detailmobil/' . $mb['id_mobil']) ?>"><?= $mb['merek']; ?> (Tersedia)</a>
                                         <?php } else { ?>
-                                            <a href="#" style="text-decoration: line-through;"><?= $mb->merek; ?> (Dirental)</a>
+                                            <a href="#" style="text-decoration: line-through;"><?= $mb['merek']; ?> (Dirental)</a>
                                         <?php } ?>
                                     </h2>
                                     <div class="d-flex mb-3">
-                                        <span class="cat">Tahun <?= $mb->tahun; ?></span>
-                                        <p class="price ml-auto">Rp. <?= number_format($mb->harga, 0, ',', '.'); ?>,-<span>/day</span></p>
+                                        <span class="cat">Tahun <?= $mb['tahun']; ?></span>
+                                        <p class="price ml-auto">Rp. <?= number_format($mb['harga'], 0, ',', '.'); ?>,-<span>/day</span></p>
                                     </div>
                                     <p class="d-flex mb-0 d-block">
-                                        <?php if ($mb->status == '1') { ?>
+                                        <?php if ($mb['status'] == '1') { ?>
                                             <a href="#" class="btn btn-primary py-2 mr-1">Book now</a>
                                         <?php } else { ?>
                                             <a href="#" class="btn btn-primary py-2 mr-1 disabled" style="text-decoration: line-through;">Book now</a>
                                         <?php } ?>
-                                        <a href="<?= base_url('mobil/detailmobil/' . $mb->id_mobil) ?>" class="btn btn-warning py-2 ml-1">Details</a>
+                                        <a href="<?= base_url('mobil/detailmobil/' . $mb['id_mobil']) ?>" class="btn btn-warning py-2 ml-1">Details</a>
                                     </p>
                                 </div>
                             </div>
@@ -231,18 +156,6 @@
         </div>
     </div>
 </section>
-<!-- 
-<section class="ftco-section ftco-intro" style="background-image: url(<?= base_url() ?>assets/assets_customer/images/bg_3.jpg);">
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="row justify-content-end">
-            <div class="col-md-6 heading-section heading-section-white ftco-animate">
-                <h2 class="mb-3">Do You Want To Earn With Us? So Don't Be Late.</h2>
-                <a href="#" class="btn btn-primary btn-lg">Become A Driver</a>
-            </div>
-        </div>
-    </div>
-</section> -->
 
 
 <section class="ftco-section testimony-section bg-light">
@@ -316,64 +229,6 @@
         </div>
     </div>
 </section>
-<!-- 
-<section class="ftco-section">
-    <div class="container">
-        <div class="row justify-content-center mb-5">
-            <div class="col-md-7 heading-section text-center ftco-animate">
-                <span class="subheading">Blog</span>
-                <h2>Recent Blog</h2>
-            </div>
-        </div>
-        <div class="row d-flex">
-            <div class="col-md-4 d-flex ftco-animate">
-                <div class="blog-entry justify-content-end">
-                    <a href="blog-single.html" class="block-20" style="background-image: url('<?= base_url() ?>assets/assets_customer/images/image_1.jpg');">
-                    </a>
-                    <div class="text pt-4">
-                        <div class="meta mb-3">
-                            <div><a href="#">Oct. 29, 2019</a></div>
-                            <div><a href="#">Admin</a></div>
-                            <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                        </div>
-                        <h3 class="heading mt-2"><a href="#">Why Lead Generation is Key for Business Growth</a></h3>
-                        <p><a href="#" class="btn btn-primary">Read more</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 d-flex ftco-animate">
-                <div class="blog-entry justify-content-end">
-                    <a href="blog-single.html" class="block-20" style="background-image: url('<?= base_url() ?>assets/assets_customer/images/image_2.jpg');">
-                    </a>
-                    <div class="text pt-4">
-                        <div class="meta mb-3">
-                            <div><a href="#">Oct. 29, 2019</a></div>
-                            <div><a href="#">Admin</a></div>
-                            <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                        </div>
-                        <h3 class="heading mt-2"><a href="#">Why Lead Generation is Key for Business Growth</a></h3>
-                        <p><a href="#" class="btn btn-primary">Read more</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 d-flex ftco-animate">
-                <div class="blog-entry">
-                    <a href="blog-single.html" class="block-20" style="background-image: url('<?= base_url() ?>assets/assets_customer/images/image_3.jpg');">
-                    </a>
-                    <div class="text pt-4">
-                        <div class="meta mb-3">
-                            <div><a href="#">Oct. 29, 2019</a></div>
-                            <div><a href="#">Admin</a></div>
-                            <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                        </div>
-                        <h3 class="heading mt-2"><a href="#">Why Lead Generation is Key for Business Growth</a></h3>
-                        <p><a href="#" class="btn btn-primary">Read more</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section> -->
 
 <section class="ftco-counter ftco-section img bg-light" id="section-counter">
     <div class="overlay"></div>

@@ -4,6 +4,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Auth extends CI_Controller
 {
 
+  public function __construct()
+  {
+    parent::__construct();
+    //Do your magic here
+    $this->load->model('User_model');
+  }
+
+
   public function login()
   {
     check_already_login();
@@ -16,10 +24,7 @@ class Auth extends CI_Controller
     } else {
       $username = $this->input->post('username');
       $password = md5($this->input->post('password'));
-
-      $cek = $this->rental_model->cek_login($username, $password);
-      // var_dump($cek);
-      // die;
+      $cek = $this->User_model->cek_login($username, $password);
 
       if ($cek == FALSE) {
         $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -29,12 +34,12 @@ class Auth extends CI_Controller
         </button></div>');
         redirect('auth/login');
       } else {
-        $this->session->set_userdata('id_customer', $cek->id_customer);
+        $this->session->set_userdata('id_user', $cek->id_user);
         $this->session->set_userdata('username', $cek->username);
-        $this->session->set_userdata('role_id', $cek->role_id);
+        $this->session->set_userdata('role', $cek->role);
         $this->session->set_userdata('nama', $cek->nama);
 
-        switch ($cek->role_id) {
+        switch ($cek->role) {
           case 1:
             redirect('admin/dashboard');
             break;
@@ -75,9 +80,9 @@ class Auth extends CI_Controller
       $this->load->view('templates_admin/footer');
     } else {
       $data = array('password' => md5($pass_baru));
-      $id = array('id_customer' => $this->session->userdata('id_customer'));
+      $id = array('id_user' => $this->session->userdata('id_user'));
 
-      $this->rental_model->update_password($id, $data, 'customer');
+      $this->rental_model->update_password($id, $data, 'user');
       $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
       Password berhasil diupdate, silahkan login.
       <button type="button" class="close" data-dismiss="alert" aria-label="close">

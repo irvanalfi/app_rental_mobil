@@ -16,27 +16,27 @@
             <?php foreach ($mobil as $mb) : ?>
                 <div class="col-md-4">
                     <div class="car-wrap rounded ftco-animate">
-                        <div class="img rounded d-flex align-items-end" style="background-image: url(<?= base_url() ?>assets/upload/<?= $mb->gambar ?>);">
+                        <div class="img rounded d-flex align-items-end" style="background-image: url(<?= base_url() ?>assets/upload/<?= $mb['gambar'] ?>);">
                         </div>
                         <div class="text">
                             <h2 class="mb-0">
-                                <?php if ($mb->status == '1') { ?>
-                                    <a href="<?= base_url('mobil/detailmobil/' . $mb->id_mobil) ?>"><?= $mb->merek; ?> (Tersedia)</a>
+                                <?php if ($mb['status'] == '1') { ?>
+                                    <a href="<?= base_url('mobil/detailmobil/' . $mb['id_mobil']) ?>"><?= $mb['merek']; ?> (Tersedia)</a>
                                 <?php } else { ?>
-                                    <a href="#" style="text-decoration: line-through;"><?= $mb->merek; ?> (Dirental)</a>
+                                    <a href="#" style="text-decoration: line-through;"><?= $mb['merek']; ?> (Dirental)</a>
                                 <?php } ?>
                             </h2>
                             <div class="d-flex mb-3">
-                                <span class="cat">Tahun <?= $mb->tahun; ?></span>
-                                <p class="price ml-auto">Rp. <?= number_format($mb->harga, 0, ',', '.'); ?>,-<span>/day</span></p>
+                                <span class="cat">Tahun <?= $mb['tahun']; ?></span>
+                                <p class="price ml-auto">Rp. <?= number_format($mb['harga'], 0, ',', '.'); ?>,-<span>/day</span></p>
                             </div>
                             <p class="d-flex mb-0 d-block">
-                                <?php if ($mb->status == '1') { ?>
-                                    <a href="#" class="btn btn-primary py-2 mr-1">Book now</a>
+                                <?php if ($mb['status'] == '1') { ?>
+                                    <a href="<?= base_url('mobil/addrental/' . $mb['id_mobil']) ?>" class="btn btn-primary py-2 mr-1">Book now</a>
                                 <?php } else { ?>
                                     <a href="#" class="btn btn-primary py-2 mr-1 disabled" style="text-decoration: line-through;">Book now</a>
                                 <?php } ?>
-                                <a href="<?= base_url('mobil/detailmobil/' . $mb->id_mobil) ?>" class="btn btn-warning py-2 ml-1">Details</a>
+                                <a href="<?= base_url('mobil/detailmobil/' . $mb['id_mobil']) ?>" class="btn btn-warning py-2 ml-1">Details</a>
                             </p>
                         </div>
                     </div>
