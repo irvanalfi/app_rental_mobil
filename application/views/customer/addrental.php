@@ -28,20 +28,6 @@
                                 <div class="col-12">
                                     <form action="<?= base_url('customer/rental/tambah_rental_aksi') ?>" class="request-form ftco-animate bg-primary" method="post">
                                         <?php foreach ($customer as $cs) : ?>
-                                            <div class="d-flex">
-                                                <div class="form-group mr-2">
-                                                    <label for="" class="label">Nama</label>
-                                                    <input type="text" class="form-control" placeholder="<?= $cs->nama; ?>">
-                                                </div>
-                                                <div class="form-group mx-2">
-                                                    <label for="" class="label">No KTP / SIM / PASPORT</label>
-                                                    <input type="text" class="form-control" placeholder="<?= $cs->no_ktp; ?>">
-                                                </div>
-                                                <div class="form-group ml-2">
-                                                    <label for="" class="label">No Telpon</label>
-                                                    <input type="number" class="form-control" placeholder="<?= $cs->no_telepon; ?>">
-                                                </div>
-                                            </div>
                                             <div class="form-group">
                                                 <label for="" class="label">Lokasi Penjemputan</label>
                                                 <input type="text" class="form-control" placeholder="<?= $cs->alamat; ?>">
