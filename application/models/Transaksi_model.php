@@ -34,6 +34,7 @@
                 "id_mobil"              => $this->input->post('id_mobil', true),
                 "tgl_rental"            => $this->input->post('tgl_rental', true),
                 "tgl_kembali"           => $this->input->post('tgl_kembali', true),
+                "alamat_penjemputan"    => $this->input->post('alamat_penjemjemputan', true),
                 
                 // function hitung total harga
                 "total_harga"           => $this->input->post('harga', true),
@@ -79,7 +80,7 @@
                 "total_denda"           => $this->input->post('status_pembayaran', true),
                 "total_akhir"           => $this->input->post('status_pembayaran', true),
                 "tgl_pengembalian"      => $this->input->post('tgl_pengembalian', true),
-                
+
                 "updated"               => date('Y-m-d H:i:s'),
                 "updated_by"            => $this->session->userdata('nama'),
             ];
