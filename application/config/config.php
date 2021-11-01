@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/app_rental_mobil/';
+$config['base_url'] = 'http://localhost:8080/app_rental_mobil/';
 
 /*
 |--------------------------------------------------------------------------
@@ -521,3 +521,7 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+
+// set timezone
+date_default_timezone_set("Asia/Jakarta");

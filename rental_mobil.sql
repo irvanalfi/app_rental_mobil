@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 01, 2021 at 07:47 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 7.4.24
+-- Generation Time: Nov 01, 2021 at 02:15 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -35,8 +36,8 @@ CREATE TABLE `contact` (
   `status` enum('1','0') NOT NULL COMMENT '1=sudah dilihan, 0=belum di lihat',
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -63,8 +64,8 @@ CREATE TABLE `fitur` (
   `car_kit` int(1) NOT NULL,
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -104,8 +105,8 @@ CREATE TABLE `mobil` (
   `detail` text DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -113,12 +114,12 @@ CREATE TABLE `mobil` (
 --
 
 INSERT INTO `mobil` (`id_mobil`, `id_tipe`, `merek`, `no_plat`, `warna`, `transmisi`, `jmlh_kursi`, `bagasi`, `bbm`, `tahun`, `km`, `status`, `harga`, `denda`, `gambar`, `detail`, `created`, `updated`, `created_by`, `updated_by`) VALUES
-(6, 0, 'Toyota Camry', 'B 1446 DAG', 'Hitam', 'Manual', '7 Dewasa', '3 Ransel', 'Pertalite', 2015, 21000, 1, 400000, 30000, 'toyota-camry.jpg', '', '2021-09-30 19:20:55', NULL, 0, 0),
-(9, 0, 'Honda City', 'B 1456 DAG', 'Hitam', 'Manual', '7 Dewasa', '3 Ransel', 'Pertamax', 2015, 11860, 0, 450000, 30000, 'honda-city.jpg', '', '2021-09-30 19:20:55', NULL, 0, 0),
-(10, 0, 'CRV', 'B 1234 csh', 'Silver', 'Matic', '7 Dewasa', '4 Ransel', 'Pertalite', 2019, 34000, 0, 400000, 100000, 'gallery_used-car-mobil123-honda-cr-v-2_4.jpg', '', '2021-09-30 19:20:55', NULL, 0, 0),
-(13, 0, 'Toyota Avanza', 'B 2245 DAM', 'Hitam', 'Manual', '7 Dewasa', '4 Ransel', 'Pertamax', 2015, 25640, 1, 350000, 25000, 'avanza-hitam.jpg', '', '2021-09-30 19:20:55', NULL, 0, 0),
-(14, 0, 'Toyota Avanza', 'B 1123 DUD', 'Putih', 'Matic', '7 Dewasa', '4 Ransel', 'Pertalite', 2016, 40020, 1, 350000, 25000, 'avanza-putih.jpg', '', '2021-09-30 19:20:55', NULL, 0, 0),
-(15, 0, 'Toyota Hiace', 'P 1234 UI', 'Silver', 'Manual', '10 Dewasa', '8 Koper', 'Solar', 2015, 19762, 1, 700000, 100000, 'car-300921-b3bd9ca18c.jpg', 'kdfjkls akdjfa skdjf ladkljf klsajfkla klsdfjkla lsdkjflas lkjfskld', '2021-09-30 21:44:05', NULL, 0, 0);
+(6, 1, 'Toyota Camry', 'B 1446 DAG', 'Hitam', 'Manual', '7 Dewasa', '3 Ransel', 'Pertalite', 2015, 21000, 1, 400000, 30000, 'toyota-camry.jpg', '', '2021-09-30 19:20:55', NULL, 0, 0),
+(9, 1, 'Honda City', 'B 1456 DAG', 'Hitam', 'Manual', '7 Dewasa', '3 Ransel', 'Pertamax', 2015, 11860, 0, 450000, 30000, 'honda-city.jpg', '', '2021-09-30 19:20:55', NULL, 0, 0),
+(10, 1, 'CRV', 'B 1234 csh', 'Silver', 'Matic', '7 Dewasa', '4 Ransel', 'Pertalite', 2019, 34000, 0, 400000, 100000, 'gallery_used-car-mobil123-honda-cr-v-2_4.jpg', '', '2021-09-30 19:20:55', NULL, 0, 0),
+(13, 1, 'Toyota Avanza', 'B 2245 DAM', 'Hitam', 'Manual', '7 Dewasa', '4 Ransel', 'Pertamax', 2015, 25640, 1, 350000, 25000, 'avanza-hitam.jpg', '', '2021-09-30 19:20:55', NULL, 0, 0),
+(14, 1, 'Toyota Avanza', 'B 1123 DUD', 'Putih', 'Matic', '7 Dewasa', '4 Ransel', 'Pertalite', 2016, 40020, 1, 350000, 25000, 'avanza-putih.jpg', '', '2021-09-30 19:20:55', NULL, 0, 0),
+(15, 1, 'Toyota Hiace', 'P 1234 UI', 'Silver', 'Manual', '10 Dewasa', '8 Koper', 'Solar', 2015, 19762, 1, 700000, 100000, 'car-300921-b3bd9ca18c.jpg', 'kdfjkls akdjfa skdjf ladkljf klsajfkla klsdfjkla lsdkjflas lkjfskld', '2021-09-30 21:44:05', NULL, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -129,13 +130,14 @@ INSERT INTO `mobil` (`id_mobil`, `id_tipe`, `merek`, `no_plat`, `warna`, `transm
 CREATE TABLE `review` (
   `id_review` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `id_transaksi` int(11) NOT NULL,
   `review` text NOT NULL,
   `star` int(2) NOT NULL,
   `status` enum('1','0') NOT NULL COMMENT '1 = tampil, 0 = tidak tampil',
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -150,8 +152,8 @@ CREATE TABLE `tipe` (
   `nama_tipe` varchar(120) NOT NULL,
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -170,36 +172,37 @@ INSERT INTO `tipe` (`id_tipe`, `kode_tipe`, `nama_tipe`, `created`, `updated`, `
 --
 
 CREATE TABLE `transaksi` (
-  `id_rental` int(11) NOT NULL,
+  `id_transaksi` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `id_mobil` int(11) NOT NULL,
   `tgl_rental` date NOT NULL,
   `tgl_kembali` date NOT NULL,
-  `harga` varchar(120) NOT NULL,
-  `denda` int(11) NOT NULL,
-  `total_denda` varchar(120) NOT NULL,
+  `total_harga` int(11) NOT NULL,
+  `total_denda` int(11) NOT NULL,
+  `total_akhir` int(11) NOT NULL,
   `tgl_pengembalian` date NOT NULL,
   `status_pengembalian` varchar(50) NOT NULL,
   `status_rental` varchar(50) NOT NULL,
   `bukti_pembayaran` varchar(120) NOT NULL,
   `status_pembayaran` int(11) NOT NULL,
+  `confirm_by` int(11) NOT NULL COMMENT 'orang yang mengkonfirmasi pembayaran',
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `transaksi`
 --
 
-INSERT INTO `transaksi` (`id_rental`, `id_user`, `id_mobil`, `tgl_rental`, `tgl_kembali`, `harga`, `denda`, `total_denda`, `tgl_pengembalian`, `status_pengembalian`, `status_rental`, `bukti_pembayaran`, `status_pembayaran`, `created`, `updated`, `created_by`, `updated_by`) VALUES
-(3, 6, 9, '2021-01-15', '2021-01-16', '450000', 30000, '120000', '2021-01-20', 'Belum Kembali', 'Belum Selesai', '', 0, NULL, NULL, 0, 0),
-(4, 6, 6, '2021-01-15', '2021-01-18', '400000', 30000, '60000', '2021-01-20', 'Kembali', 'Selesai', 'tugas.png', 1, NULL, NULL, 0, 0),
-(5, 8, 10, '2021-01-18', '2021-01-19', '400000', 100000, '100000', '2021-01-20', 'Belum Kembali', 'Belum Selesai', '', 0, NULL, NULL, 0, 0),
-(6, 6, 11, '2021-01-28', '2021-01-30', '300000', 25000, '25000', '2021-01-31', 'Kembali', 'Selesai', 'tugas2.png', 1, NULL, NULL, 0, 0),
-(7, 9, 13, '2021-01-30', '2021-02-01', '350000', 25000, '25000', '2021-02-02', 'Kembali', 'Selesai', 'tugas2.png', 1, NULL, NULL, 0, 0),
-(8, 4, 14, '2021-09-17', '2021-09-19', '350000', 25000, '75000', '2021-09-22', 'Kembali', 'Selesai', '', 0, NULL, NULL, 0, 0);
+INSERT INTO `transaksi` (`id_transaksi`, `id_user`, `id_mobil`, `tgl_rental`, `tgl_kembali`, `total_harga`, `total_denda`, `total_akhir`, `tgl_pengembalian`, `status_pengembalian`, `status_rental`, `bukti_pembayaran`, `status_pembayaran`, `confirm_by`, `created`, `updated`, `created_by`, `updated_by`) VALUES
+(3, 6, 9, '2021-01-15', '2021-01-16', 450000, 30000, 120000, '2021-01-20', 'Belum Kembali', 'Belum Selesai', '', 0, 0, NULL, NULL, 0, 0),
+(4, 6, 6, '2021-01-15', '2021-01-18', 400000, 30000, 60000, '2021-01-20', 'Kembali', 'Selesai', 'tugas.png', 1, 0, NULL, NULL, 0, 0),
+(5, 8, 10, '2021-01-18', '2021-01-19', 400000, 100000, 100000, '2021-01-20', 'Belum Kembali', 'Belum Selesai', '', 0, 0, NULL, NULL, 0, 0),
+(6, 6, 10, '2021-01-28', '2021-01-30', 300000, 25000, 25000, '2021-01-31', 'Kembali', 'Selesai', 'tugas2.png', 1, 0, NULL, NULL, 0, 0),
+(7, 9, 13, '2021-01-30', '2021-02-01', 350000, 25000, 25000, '2021-02-02', 'Kembali', 'Selesai', 'tugas2.png', 1, 0, NULL, NULL, 0, 0),
+(8, 4, 14, '2021-09-17', '2021-09-19', 350000, 25000, 75000, '2021-09-22', 'Kembali', 'Selesai', '', 0, 0, NULL, NULL, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -219,8 +222,8 @@ CREATE TABLE `user` (
   `role` int(11) NOT NULL COMMENT '1 = Admin, 2 = Customer',
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -243,25 +246,30 @@ INSERT INTO `user` (`id_user`, `nama`, `username`, `alamat`, `gender`, `no_telep
 -- Indexes for table `contact`
 --
 ALTER TABLE `contact`
-  ADD PRIMARY KEY (`id_contact`);
+  ADD PRIMARY KEY (`id_contact`),
+  ADD KEY `id_user` (`id_user`);
 
 --
 -- Indexes for table `fitur`
 --
 ALTER TABLE `fitur`
-  ADD PRIMARY KEY (`id_fitur`);
+  ADD PRIMARY KEY (`id_fitur`),
+  ADD KEY `id_mobil` (`id_mobil`);
 
 --
 -- Indexes for table `mobil`
 --
 ALTER TABLE `mobil`
-  ADD PRIMARY KEY (`id_mobil`);
+  ADD PRIMARY KEY (`id_mobil`),
+  ADD KEY `id_tipe` (`id_tipe`);
 
 --
 -- Indexes for table `review`
 --
 ALTER TABLE `review`
-  ADD PRIMARY KEY (`id_review`);
+  ADD PRIMARY KEY (`id_review`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_transaksi` (`id_transaksi`);
 
 --
 -- Indexes for table `tipe`
@@ -273,7 +281,9 @@ ALTER TABLE `tipe`
 -- Indexes for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  ADD PRIMARY KEY (`id_rental`);
+  ADD PRIMARY KEY (`id_transaksi`),
+  ADD KEY `id_user` (`id_user`,`id_mobil`),
+  ADD KEY `id_mobil` (`id_mobil`);
 
 --
 -- Indexes for table `user`
@@ -319,13 +329,49 @@ ALTER TABLE `tipe`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_rental` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `contact`
+--
+ALTER TABLE `contact`
+  ADD CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `fitur`
+--
+ALTER TABLE `fitur`
+  ADD CONSTRAINT `fitur_ibfk_1` FOREIGN KEY (`id_mobil`) REFERENCES `mobil` (`id_mobil`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `mobil`
+--
+ALTER TABLE `mobil`
+  ADD CONSTRAINT `mobil_ibfk_1` FOREIGN KEY (`id_tipe`) REFERENCES `tipe` (`id_tipe`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `review`
+--
+ALTER TABLE `review`
+  ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id_transaksi`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `transaksi`
+--
+ALTER TABLE `transaksi`
+  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_mobil`) REFERENCES `mobil` (`id_mobil`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
