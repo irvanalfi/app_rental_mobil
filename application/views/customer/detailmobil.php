@@ -118,10 +118,10 @@
                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 
                             <li class="nav-item">
-                                <a class="nav-link active" id="pills-description-tab" data-toggle="pill" href="#pills-description" role="tab" aria-controls="pills-description" aria-expanded="true">Features</a>
+                                <a class="nav-link" id="pills-description-tab" data-toggle="pill" href="#pills-description" role="tab" aria-controls="pills-description" aria-expanded="true">Features</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="pills-manufacturer-tab" data-toggle="pill" href="#pills-manufacturer" role="tab" aria-controls="pills-manufacturer" aria-expanded="true">Description</a>
+                                <a class="nav-link active" id="pills-manufacturer-tab" data-toggle="pill" href="#pills-manufacturer" role="tab" aria-controls="pills-manufacturer" aria-expanded="true">Description</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="pills-review-tab" data-toggle="pill" href="#pills-review" role="tab" aria-controls="pills-review" aria-expanded="true">Review</a>
@@ -130,7 +130,7 @@
                     </div>
 
                     <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="pills-description" role="tabpanel" aria-labelledby="pills-description-tab">
+                        <div class="tab-pane fade" id="pills-description" role="tabpanel" aria-labelledby="pills-description-tab">
                             <div class="row">
                                 <div class="col-md-4">
                                     <ul class="features">
@@ -159,8 +159,13 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane fade" id="pills-manufacturer" role="tabpanel" aria-labelledby="pills-manufacturer-tab">
-                            <p><?= $detail['detail'] ?></p>
+                        <div class="tab-pane fade  show active" id="pills-manufacturer" role="tabpanel" aria-labelledby="pills-manufacturer-tab">
+                            <p>Plat Nomer &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp; <?= $detail['no_plat'] ?></p>
+                            <p>Harga Mobil Perhari &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp; <?= indo_currency($detail['harga']) ?></p>
+                            <p>Denda Mobil perhari &nbsp; &nbsp; &nbsp; : &nbsp; <?= indo_currency($detail['denda']) ?> </p>
+                            <p>Harga Supir perhari &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp; <?= indo_currency($detail['hrg_supir']) ?> </p>
+                            <hr>
+                            <p style="text-align: justify !important;"><?= $detail['detail'] ?></p>
                         </div>
 
                         <div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">

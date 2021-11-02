@@ -22,7 +22,7 @@ function check_admin()
     $CI = &get_instance();
     $CI->load->library('fungsi');
     if ($CI->fungsi->user_login()->level != 1) {
-        redirect('dashboard');
+        redirect('beranda');
     }
 }
 

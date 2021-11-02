@@ -8,12 +8,12 @@
             <div class="col-md-12 pills">
                 <div class="row justify-content-center">
                     <div class="col-md-12 heading-section text-center ftco-animate mb-3">
-                        <h3 class="">Buat Perjalananmu Sekarang</h3>
+                        <h3 class="">Ukir Keindahan Perjalananmu Sekarang !</h3>
                     </div>
                 </div>
                 <div class="bd-example bd-example-tabs">
                     <div class="d-flex justify-content-center">
-                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <ul class="nav nav-pills " id="pills-tab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="pills-description-tab" data-toggle="pill" href="#pills-description" role="tab" aria-controls="pills-description" aria-expanded="true">Rental</a>
                             </li>
@@ -56,7 +56,7 @@
                                             </div>
                                             <div class="form-group mx-2">
                                                 <label for="" class="label">Supir / Hari</label>
-                                                <input type="text" class="form-control" placeholder="<?= $detail['denda']; ?>" disabled>
+                                                <input type="text" class="form-control" placeholder="<?= $detail['hrg_supir']; ?>" disabled>
                                             </div>
                                         </div>
                                         <div class="form-group mt-3">
@@ -66,17 +66,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="pills-manufacturer" role="tabpanel" aria-labelledby="pills-manufacturer-tab">
-                            <section class="ftco-section ftco-car-details">
+                        <div class="tab-pane fade" id="pills-manufacturer" role="tabpanel" aria-labelledby="pills-manufacturer-tab" style="padding-top: 0em !important;">
+                            <section class="ftco-section ftco-car-details" style="padding: 0rem !important;">
                                 <div class="container">
                                     <div class="row justify-content-center">
                                         <div class="col-md-7">
-                                            <div class="car-details">
+                                            <div class="car-details py-3 px-5">
                                                 <div class="img rounded" style="background-image: url(<?= base_url() ?>assets/upload/<?= $detail['gambar'] ?>);"></div>
                                             </div>
                                         </div>
                                         <div class="col-md-5">
-                                            <div class="text text-center py-3">
+                                            <div class="text text-center py-5">
                                                 <?php if ($detail['status'] == '1') { ?>
                                                     <h3><?= $detail['merek']; ?> (Tersedia)</h3>
                                                 <?php } else { ?>
@@ -170,19 +170,19 @@
                                                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 
                                                         <li class="nav-item">
-                                                            <a class="nav-link active" id="pills-description-tab" data-toggle="pill" href="#pills-description" role="tab" aria-controls="pills-description" aria-expanded="true">Features</a>
+                                                            <a class="nav-link" id="pills-description-tab" data-toggle="pill" href="#pills-description1" role="tab" aria-controls="pills-description1" aria-expanded="true">Features</a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link" id="pills-manufacturer-tab" data-toggle="pill" href="#pills-manufacturer" role="tab" aria-controls="pills-manufacturer" aria-expanded="true">Description</a>
+                                                            <a class="nav-link active" id="pills-manufacturer-tab" data-toggle="pill" href="#pills-manufacturer1" role="tab" aria-controls="pills-manufacturer1" aria-expanded="true">Description</a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link" id="pills-review-tab" data-toggle="pill" href="#pills-review" role="tab" aria-controls="pills-review" aria-expanded="true">Review</a>
+                                                            <a class="nav-link" id="pills-review-tab" data-toggle="pill" href="#pills-review1" role="tab" aria-controls="pills-review1" aria-expanded="true">Review</a>
                                                         </li>
                                                     </ul>
                                                 </div>
 
                                                 <div class="tab-content" id="pills-tabContent">
-                                                    <div class="tab-pane fade show active" id="pills-description" role="tabpanel" aria-labelledby="pills-description-tab">
+                                                    <div class="tab-pane fade" id="pills-description1" role="tabpanel" aria-labelledby="pills-description-tab">
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <ul class="features">
@@ -211,11 +211,16 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="tab-pane fade" id="pills-manufacturer" role="tabpanel" aria-labelledby="pills-manufacturer-tab">
-                                                        <p><?= $detail['detail'] ?></p>
+                                                    <div class="tab-pane fade  show active" id="pills-manufacturer1" role="tabpanel" aria-labelledby="pills-manufacturer-tab">
+                                                        <p>Plat Nomer &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp; <?= $detail['no_plat'] ?></p>
+                                                        <p>Harga Mobil Perhari &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp; <?= indo_currency($detail['harga']) ?></p>
+                                                        <p>Denda Mobil perhari &nbsp; &nbsp; &nbsp; : &nbsp; <?= indo_currency($detail['denda']) ?> </p>
+                                                        <p>Harga Supir perhari &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp; <?= indo_currency($detail['hrg_supir']) ?> </p>
+                                                        <hr>
+                                                        <p style="text-align: justify !important;"><?= $detail['detail'] ?></p>
                                                     </div>
 
-                                                    <div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
+                                                    <div class="tab-pane fade" id="pills-review1" role="tabpanel" aria-labelledby="pills-review-tab">
                                                         <div class="row">
                                                             <div class="col-md-7">
                                                                 <h3 class="head">23 Reviews</h3>

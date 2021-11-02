@@ -1,11 +1,13 @@
 <?php
 
-class Data_customer extends CI_Controller{
+class Data_customer extends CI_Controller
+{
 
-  public function __construct(){
+  public function __construct()
+  {
     parent::__construct();
-    
-    if(empty($this->session->userdata('username'))){
+
+    if (empty($this->session->userdata('username'))) {
       $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>Anda belum login!</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -13,8 +15,7 @@ class Data_customer extends CI_Controller{
         </button>
       </div>');
       redirect('auth/login');
-    }
-    elseif($this->session->userdata('role_id') != '1'){
+    } elseif ($this->session->userdata('role') != '1') {
       $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>Anda tidak punya akses ke halaman ini!</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -25,7 +26,8 @@ class Data_customer extends CI_Controller{
     }
   }
 
-  public function index(){
+  public function index()
+  {
     $data['customer'] = $this->rental_model->get_data('customer')->result();
     $this->load->view('templates_admin/header');
     $this->load->view('templates_admin/sidebar');
@@ -33,20 +35,21 @@ class Data_customer extends CI_Controller{
     $this->load->view('templates_admin/footer');
   }
 
-  public function tambah_customer(){
+  public function tambah_customer()
+  {
     $this->load->view('templates_admin/header');
     $this->load->view('templates_admin/sidebar');
     $this->load->view('admin/form_tambah_customer');
     $this->load->view('templates_admin/footer');
   }
 
-  public function tambah_customer_aksi(){
+  public function tambah_customer_aksi()
+  {
     $this->_rules();
 
-    if($this->form_validation->run() == FALSE){
+    if ($this->form_validation->run() == FALSE) {
       $this->tambah_customer();
-    }
-    else{
+    } else {
       $nama       = $this->input->post('nama');
       $username   = $this->input->post('username');
       $alamat     = $this->input->post('alamat');
@@ -61,7 +64,7 @@ class Data_customer extends CI_Controller{
         'alamat'     => $alamat,
         'gender'     => $gender,
         'no_telepon' => $no_telepon,
-        'no_ktp'     => $no_ktp,    
+        'no_ktp'     => $no_ktp,
         'password'   => $password,
       );
 
@@ -75,7 +78,8 @@ class Data_customer extends CI_Controller{
     }
   }
 
-  public function update_customer($id){
+  public function update_customer($id)
+  {
     // $where = array('id_customer' => $id);
     $data['customer'] = $this->db->query("SELECT * FROM customer WHERE id_customer = '$id'")->result();
     $this->load->view('templates_admin/header');
@@ -84,14 +88,14 @@ class Data_customer extends CI_Controller{
     $this->load->view('templates_admin/footer');
   }
 
-  public function update_customer_aksi(){
+  public function update_customer_aksi()
+  {
     $this->_rules();
 
-    if($this->form_validation->run() == FALSE){
+    if ($this->form_validation->run() == FALSE) {
       $id = $this->input->post('id_customer');
       $this->update_customer($id);
-    }
-    else{
+    } else {
       $id         = $this->input->post('id_customer');
       $nama       = $this->input->post('nama');
       $username   = $this->input->post('username');
@@ -107,7 +111,7 @@ class Data_customer extends CI_Controller{
         'alamat'     => $alamat,
         'gender'     => $gender,
         'no_telepon' => $no_telepon,
-        'no_ktp'     => $no_ktp,    
+        'no_ktp'     => $no_ktp,
         'password'   => $password,
       );
 
@@ -122,7 +126,8 @@ class Data_customer extends CI_Controller{
     }
   }
 
-  public function delete_customer($id){
+  public function delete_customer($id)
+  {
     $where = array('id_customer' => $id);
     $this->rental_model->delete_data($where, 'customer');
     $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -134,7 +139,8 @@ class Data_customer extends CI_Controller{
   }
 
 
-  public function _rules(){
+  public function _rules()
+  {
     $this->form_validation->set_rules('nama', 'Nama', 'required');
     $this->form_validation->set_rules('username', 'Username', 'required');
     $this->form_validation->set_rules('alamat', 'Alamat', 'required');
@@ -143,7 +149,4 @@ class Data_customer extends CI_Controller{
     $this->form_validation->set_rules('no_ktp', 'No. KTP', 'required|numeric');
     $this->form_validation->set_rules('password', 'Password', 'required');
   }
-
-
-
 }

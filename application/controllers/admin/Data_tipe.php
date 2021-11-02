@@ -1,11 +1,13 @@
 <?php
 
-class Data_tipe extends CI_Controller{
+class Data_tipe extends CI_Controller
+{
 
-  public function __construct(){
+  public function __construct()
+  {
     parent::__construct();
-    
-    if(empty($this->session->userdata('username'))){
+
+    if (empty($this->session->userdata('username'))) {
       $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>Anda belum login!</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -13,8 +15,7 @@ class Data_tipe extends CI_Controller{
         </button>
       </div>');
       redirect('auth/login');
-    }
-    elseif($this->session->userdata('role_id') != '1'){
+    } elseif ($this->session->userdata('role') != '1') {
       $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>Anda tidak punya akses ke halaman ini!</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -25,7 +26,8 @@ class Data_tipe extends CI_Controller{
     }
   }
 
-  public function index(){
+  public function index()
+  {
     $data['tipe'] = $this->rental_model->get_data('tipe')->result();
     $this->load->view('templates_admin/header');
     $this->load->view('templates_admin/sidebar');
@@ -33,20 +35,21 @@ class Data_tipe extends CI_Controller{
     $this->load->view('templates_admin/footer');
   }
 
-  public function tambah_tipe(){
+  public function tambah_tipe()
+  {
     $this->load->view('templates_admin/header');
     $this->load->view('templates_admin/sidebar');
     $this->load->view('admin/form_tambah_tipe');
     $this->load->view('templates_admin/footer');
   }
 
-  public function tambah_tipe_aksi(){
+  public function tambah_tipe_aksi()
+  {
     $this->_rules();
 
-    if($this->form_validation->run() == FALSE){
+    if ($this->form_validation->run() == FALSE) {
       $this->tambah_tipe();
-    }
-    else{
+    } else {
       $kode_tipe = $this->input->post('kode_tipe');
       $nama_tipe = $this->input->post('nama_tipe');
 
@@ -65,7 +68,8 @@ class Data_tipe extends CI_Controller{
     }
   }
 
-  public function update_tipe($id){
+  public function update_tipe($id)
+  {
     $where = array('id_tipe' => $id);
     $data['tipe'] = $this->db->query("SELECT * FROM tipe WHERE id_tipe = '$id'")->result();
     $this->load->view('templates_admin/header');
@@ -74,14 +78,14 @@ class Data_tipe extends CI_Controller{
     $this->load->view('templates_admin/footer');
   }
 
-  public function update_tipe_aksi(){
+  public function update_tipe_aksi()
+  {
     $this->_rules();
 
-    if($this->form_validation->run() == FALSE){
+    if ($this->form_validation->run() == FALSE) {
       $id = $this->input->post('id_tipe');
       $this->update_tipe($id);
-    }
-    else{
+    } else {
       $id        = $this->input->post('id_tipe');
       $kode_tipe = $this->input->post('kode_tipe');
       $nama_tipe = $this->input->post('nama_tipe');
@@ -103,7 +107,8 @@ class Data_tipe extends CI_Controller{
     }
   }
 
-  public function delete_tipe($id){
+  public function delete_tipe($id)
+  {
     $where = array('id_tipe' => $id);
     $this->rental_model->delete_data($where, 'tipe');
     $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -116,10 +121,9 @@ class Data_tipe extends CI_Controller{
 
 
 
-  public function _rules(){
+  public function _rules()
+  {
     $this->form_validation->set_rules('kode_tipe', 'Kode Tipe', 'required');
     $this->form_validation->set_rules('nama_tipe', 'Nama Tipe', 'required');
   }
-
-
 }

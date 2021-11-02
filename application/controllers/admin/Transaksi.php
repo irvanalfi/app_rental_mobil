@@ -1,11 +1,13 @@
 <?php
 
-class Transaksi extends CI_Controller{
+class Transaksi extends CI_Controller
+{
 
-  public function __construct(){
+  public function __construct()
+  {
     parent::__construct();
-    
-    if(empty($this->session->userdata('username'))){
+
+    if (empty($this->session->userdata('username'))) {
       $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>Anda belum login!</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -13,8 +15,7 @@ class Transaksi extends CI_Controller{
         </button>
       </div>');
       redirect('auth/login');
-    }
-    elseif($this->session->userdata('role_id') != '1'){
+    } elseif ($this->session->userdata('role') != '1') {
       $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>Anda tidak punya akses ke halaman ini!</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -25,7 +26,8 @@ class Transaksi extends CI_Controller{
     }
   }
 
-  public function index(){
+  public function index()
+  {
     $data['transaksi'] = $this->db->query("SELECT * FROM transaksi tr, mobil mb, customer cs WHERE tr.id_mobil=mb.id_mobil AND tr.id_customer=cs.id_customer")->result();
     $this->load->view('templates_admin/header');
     $this->load->view('templates_admin/sidebar');
@@ -33,7 +35,8 @@ class Transaksi extends CI_Controller{
     $this->load->view('templates_admin/footer');
   }
 
-  public function pembayaran($id){
+  public function pembayaran($id)
+  {
     // $where = array('id_rental' => $id);
     $data['pembayaran'] = $this->db->query("SELECT * FROM transaksi WHERE id_rental='$id'")->result();
     $this->load->view('templates_admin/header');
@@ -42,7 +45,8 @@ class Transaksi extends CI_Controller{
     $this->load->view('templates_admin/footer');
   }
 
-  public function cek_pembayaran(){
+  public function cek_pembayaran()
+  {
     $id                = $this->input->post('id_rental');
     $status_pembayaran = $this->input->post('status_pembayaran');
 
@@ -55,14 +59,16 @@ class Transaksi extends CI_Controller{
     redirect('admin/transaksi');
   }
 
-  public function download_pembayaran($id){
+  public function download_pembayaran($id)
+  {
     $this->load->helper('download');
     $filePembayaran = $this->rental_model->downloadPembayaran($id);
-    $file = 'assets/upload/'.$filePembayaran['bukti_pembayaran'];
+    $file = 'assets/upload/' . $filePembayaran['bukti_pembayaran'];
     force_download($file, NULL);
   }
 
-  public function transaksi_selesai($id){
+  public function transaksi_selesai($id)
+  {
     // $where = array('id_rental' => $id);
     $data['transaksi'] = $this->db->query("SELECT * FROM transaksi WHERE id_rental='$id'")->result();
     $this->load->view('templates_admin/header');
@@ -71,7 +77,8 @@ class Transaksi extends CI_Controller{
     $this->load->view('templates_admin/footer');
   }
 
-  public function transaksi_selesai_aksi(){
+  public function transaksi_selesai_aksi()
+  {
     $id                  = $this->input->post('id_rental');
     $id_mobil            = $this->input->post('id_mobil');
     $tgl_pengembalian    = $this->input->post('tgl_pengembalian');
@@ -82,7 +89,7 @@ class Transaksi extends CI_Controller{
 
     $x = strtotime($tgl_pengembalian);
     $y = strtotime($tgl_kembali);
-    $selisih = abs($x - $y)/(60*60*24);
+    $selisih = abs($x - $y) / (60 * 60 * 24);
     $total_denda = $selisih * $denda;
 
     $data = array(
@@ -106,11 +113,12 @@ class Transaksi extends CI_Controller{
     redirect('admin/transaksi');
   }
 
-  public function batal_transaksi($id){
+  public function batal_transaksi($id)
+  {
     $where = array('id_rental' => $id);
 
     $data = $this->rental_model->get_where($where, 'transaksi')->row();
-    
+
     $where2 = array('id_mobil' => $data->id_mobil);
     // var_dump($where2);
     // die;
@@ -125,8 +133,4 @@ class Transaksi extends CI_Controller{
     </button></div>');
     redirect('admin/transaksi');
   }
-
-
-
-
 }

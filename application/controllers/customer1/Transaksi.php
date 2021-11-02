@@ -15,7 +15,7 @@ class Transaksi extends CI_Controller
         </button>
       </div>');
       redirect('auth/login');
-    } elseif ($this->session->userdata('role_id') != '2') {
+    } elseif ($this->session->userdata('role') != '2') {
       $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>Anda tidak punya akses ke halaman ini!</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

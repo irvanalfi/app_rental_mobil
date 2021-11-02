@@ -49,7 +49,7 @@ class Customer extends CI_Controller
 
     public function prosesRental()
     {
-        $id_customer    = $this->session->userdata('id_customer');
+        $id_user        = $this->session->userdata('id_user');
         $id_mobil       = $this->input->post('id_mobil');
         $tgl_rental     = $this->input->post('tgl_rental');
         $tgl_kembali    = $this->input->post('tgl_kembali');
@@ -57,7 +57,7 @@ class Customer extends CI_Controller
         $harga          = $this->input->post('harga');
 
         $data = array(
-            'id_customer'          => $id_customer,
+            'id_user'              => $id_user,
             'id_mobil'             => $id_mobil,
             'tgl_rental'           => $tgl_rental,
             'tgl_kembali'          => $tgl_kembali,

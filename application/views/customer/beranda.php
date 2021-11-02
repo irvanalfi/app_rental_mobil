@@ -63,7 +63,7 @@
                                     </div>
                                     <p class="d-flex mb-0 d-block">
                                         <?php if ($mb['status'] == '1') { ?>
-                                            <a href="#" class="btn btn-primary py-2 mr-1">Book now</a>
+                                            <a href="<?= base_url('mobil/addrental/' . $mb['id_mobil']) ?>" class="btn btn-primary py-2 mr-1">Book now</a>
                                         <?php } else { ?>
                                             <a href="#" class="btn btn-primary py-2 mr-1 disabled" style="text-decoration: line-through;">Book now</a>
                                         <?php } ?>
