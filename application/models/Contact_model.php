@@ -20,7 +20,8 @@
             $this->db->select('*');
             $this->db->from('contact');
             $this->db->join('user', 'user.id_user = contact.id_user');
-            $query = $this->db->get_where('contact', ['id_contact' => $id]);
+            $this->db->where('contact.id_contact', $id);
+            $query = $this->db->get();
             return $query->row_array();
         }
 

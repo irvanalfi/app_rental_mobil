@@ -25,6 +25,35 @@
             $query = $this->db->get_where('transaksi', ['id_transaksi' => $id]);
             return $query->row_array();
         }
+        
+        //menampilkan seluruh jumlah transaksi
+        public function get_jumlah_transaksi()
+        {
+            $this->db->select('*');
+            $this->db->from('transaksi');
+            $query = $this->db->count_all_results();
+            return $query;
+        }
+
+        //menampilkan seluruh jumlah transaksi selesai
+        public function get_jumlah_transaksi_belum_selesai()
+        {
+            $this->db->select('*');
+            $this->db->from('transaksi');
+            $this->db->where('Status Pengembalian', "Belum Kembali");
+            $query = $this->db->count_all_results();
+            return $query;
+        }
+
+        //menampilkan seluruh jumlah transaksi selesai
+        public function get_jumlah_transaksi_selesai()
+        {
+            $this->db->select('*');
+            $this->db->from('transaksi');
+            $this->db->where('Status Pengembalian', "Kembali");
+            $query = $this->db->count_all_results();
+            return $query;
+        }
 
         //menambahkan transaksi baru
         public function add_transaksi()

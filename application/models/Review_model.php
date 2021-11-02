@@ -22,7 +22,8 @@
             $this->db->from('review');
             $this->db->join('transaksi', 'review.id_transaksi = transaksi.id_transaksi');
             $this->db->join('user', 'user.id_user = transaksi.id_user');
-            $query = $this->db->get_where('review', ['id_review' => $id]);
+            $this->db->where('review.id_review', $id);
+            $query = $this->db->get();
             return $query->row_array();
         }
 
@@ -33,7 +34,8 @@
             $this->db->from('review');
             $this->db->join('transaksi', 'review.id_transaksi = transaksi.id_transaksi');
             $this->db->join('user', 'user.id_user = transaksi.id_user');
-            $query = $this->db->get_where('review', ['id_transaksi' => $id]);
+            $this->db->where('review.id_transaksi', $id);
+            $query = $this->db->get();
             return $query->row_array();
         }
 

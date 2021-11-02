@@ -15,6 +15,7 @@ class Customer extends CI_Controller
     public function beranda()
     {
         $data['mobil'] = $this->Mobil_model->get_all_mobil();
+        $data['jmlh_cutomer'] = $this->User_model->get_jumlah_customer();
         $this->template->load('templateCustomer', 'customer/beranda', $data);
     }
 

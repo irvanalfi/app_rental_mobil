@@ -19,6 +19,16 @@ class User_model extends CI_Model
         return $this->db->get_where('user', ['id_user' => $id])->row_array();
     }
 
+    // menampilkan jumlah seluruh mobil
+    public function get_jumlah_customer()
+    {
+        $this->db->select('*');
+        $this->db->from('user');
+        $this->db->where('role', 2);
+        $query = $this->db->count_all_results();
+        return $query;
+    }
+
     //menambahkan user baru
     public function add_user()
     {

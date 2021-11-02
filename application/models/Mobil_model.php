@@ -34,6 +34,13 @@ class Mobil_model extends CI_Model
         return $this->db->get('mobil')->result_array();
     }
 
+    // menampilkan jumlah seluruh mobil
+    public function get_jumlah_mobil()
+    {
+        $query = $this->db->count_all_results('mobil');
+        return $query;
+    }
+
     //menambahkan mobil baru
     public function add_mobil()
     {
