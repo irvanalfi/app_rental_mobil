@@ -96,6 +96,8 @@ class Customer extends CI_Controller
         // mencari selisih dari tanggal rental dan tanggal kembali 
         $tanggal_rental       = strtotime($this->input->post('tgl_rental', true));
         $tanggal_kembali      = strtotime($this->input->post('tgl_kembali', true));
+        // $tanggal_rental       = $this->input->post('tgl_rental', true);
+        // $tanggal_kembali      = $this->input->post('tgl_kembali', true);
 
         $selisih              = abs($tanggal_rental - $tanggal_kembali) / (60 * 60 * 24) + 1;
         // melakukan perhitungan untuk total akhir
@@ -103,8 +105,8 @@ class Customer extends CI_Controller
         $total_harga_supir    = $hrg_supir * $selisih;
         $total_akhir          = $total_harga_supir + $total_harga;
         // perubahan format tanggal
-        $tanggal_rental_f     = date_format(date_create_from_format('d/m/Y', $this->input->post('tgl_rental', true)), 'Y/m/d');
-        $tanggal_kembali_f    = date_format(date_create_from_format('d/m/Y', $this->input->post('tgl_kembali', true)), 'Y/m/d');
+        $tanggal_rental_f     = date_format(date_create_from_format('m/d/Y', $this->input->post('tgl_rental', true)), 'Y/m/d');
+        $tanggal_kembali_f    = date_format(date_create_from_format('m/d/Y', $this->input->post('tgl_kembali', true)), 'Y/m/d');
 
         $data = [
             "id_user"               => $this->session->userdata('id_user'),
