@@ -9,8 +9,9 @@ class Customer extends CI_Controller
     {
         parent::__construct();
         // load semua model yang dibutuhkan
-        $this->load->model('Mobil_model');
+        $this->load->model('Tipe_model');
         $this->load->model('User_model');
+        $this->load->model('Mobil_model');
         $this->load->model('Transaksi_model');
     }
     // tampilan halaman beranda 
@@ -145,47 +146,45 @@ class Customer extends CI_Controller
     {
         check_not_login();
         $id_user = $this->session->userdata('id_user');
-        $data['transaksi'] = $this->Transaksi_model->get_transaksi_by_id($id_user);
+        $data['transaksi'] = $this->Transaksi_model->get_transaksi_by_id_user($id_user);
         $this->template->load('templateCustomer', 'customer/transaksi', $data);
     }
     // menampilkan halaman pembayaran 
-    public function pembayaran($id)
+    public function halamanPembayaran($id_mobil)
     {
         check_not_login();
-        $data['transaksi'] = $this->db->query("SELECT * FROM transaksi tr, mobil mb, customer cs WHERE tr.id_mobil=mb.id_mobil AND tr.id_customer=cs.id_customer AND tr.id_rental='$id' ORDER BY id_rental DESC")->result();
-        $this->load->view('templates_customer/header');
-        $this->load->view('customer/pembayaran', $data);
-        $this->load->view('templates_customer/footer');
+        $id_user = $this->session->userdata('id_user');
+        $data['bayar'] = $this->Transaksi_model->get_transaksi_by_id_mobil($id_user, $id_mobil);
+        $this->template->load('templateCustomer', 'customer/pembayaran', $data);
     }
     // melakukan proses pembayaran ( mengupload bukti pembayaran )
     public function prosesPembayaran()
     {
-        $id               = $this->input->post('id_rental');
+        $id               = $this->input->post('id_transaksi');
         $bukti_pembayaran = $_FILES['bukti_pembayaran']['name'];
 
         if ($bukti_pembayaran = '') {
         } else {
-            $config['upload_path'] = './assets/upload';
-            $config['allowed_types'] = 'pdf|jpg|jpeg|png|tiff';
+            $config['upload_path']    = './assets/upload/struk';
+            $config['allowed_types']  = 'jpg|jpeg|png|tiff|gif';
+            $config['max_size']       = 5120;
+            $config['file_name']      = 'Struk-' . date('dmy') . '-' . substr(md5(rand()), 0, 10);
 
             $this->load->library('upload', $config);
             if (!$this->upload->do_upload('bukti_pembayaran')) {
                 echo "Bukti pembayaran mobil gagal diupload";
             } else {
-                $bukti_pembayaran = $this->upload->data('file_name');
+                $struk = $this->upload->data('file_name');
             }
         }
+        $this->Transaksi_model->update_bukti_pembayaran($struk, $id);
 
-        $data = array('bukti_pembayaran' => $bukti_pembayaran);
-        $where = array('id_rental' => $id);
-
-        $this->rental_model->update_data('transaksi', $data, $where);
         $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
             Bukti pembayaran anda berhasil diupload
             <button type="button" class="close" data-dismiss="alert" aria-label="close">
                 <span aria-hidden="true">&times;</span>
             </button></div>');
-        redirect('customer/transaksi');
+        redirect('transaksi');
     }
     // print struk invoice 
     public function cetak_invoice($id)

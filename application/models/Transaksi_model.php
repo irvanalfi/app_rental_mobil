@@ -15,20 +15,47 @@ class Transaksi_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
-
-    //menampilkan beberapa transaksi berdasarkan id
-    public function get_transaksi_by_id($id_user)
+    //menampilkan beberapa transaksi berdasarkan id_user
+    public function get_transaksi_by_id_user($id_user)
     {
         $this->db->select('*');
         $this->db->from('transaksi');
         $this->db->join('mobil', 'mobil.id_mobil = transaksi.id_mobil');
         $this->db->join('user', 'user.id_user = transaksi.id_user');
+        $this->db->join('tipe', 'tipe.id_tipe = mobil.id_tipe');
+        $this->db->join('fitur', 'fitur.id_mobil = mobil.id_mobil');
         $this->db->where('transaksi.id_user', $id_user);
         $this->db->order_by('id_transaksi', 'asc');
         $query = $this->db->get();
         return $query->result_array();
     }
-
+    //menampilkan beberapa transaksi berdasarkan id_transaksi
+    public function get_transaksi_by_id($id_transaksi)
+    {
+        $this->db->select('*');
+        $this->db->from('transaksi');
+        $this->db->join('mobil', 'mobil.id_mobil = transaksi.id_mobil');
+        $this->db->join('user', 'user.id_user = transaksi.id_user');
+        $this->db->join('tipe', 'tipe.id_tipe = mobil.id_tipe');
+        $this->db->where('transaksi.id_transaksi', $id_transaksi);
+        $this->db->order_by('id_transaksi', 'asc');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    //menampilkan beberapa transaksi berdasarkan id_user
+    public function get_transaksi_by_id_mobil($id_user, $id_mobil)
+    {
+        $this->db->select('*');
+        $this->db->from('transaksi');
+        $this->db->join('mobil', 'mobil.id_mobil = transaksi.id_mobil');
+        $this->db->join('user', 'user.id_user = transaksi.id_user');
+        $this->db->join('tipe', 'tipe.id_tipe = mobil.id_tipe');
+        $this->db->join('fitur', 'fitur.id_mobil = mobil.id_mobil');
+        $this->db->where('transaksi.id_user', $id_user);
+        $this->db->where('transaksi.id_mobil', $id_mobil);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
     //menampilkan seluruh jumlah transaksi
     public function get_jumlah_transaksi()
     {
@@ -64,13 +91,13 @@ class Transaksi_model extends CI_Model
         $this->db->insert('transaksi', $data);
     }
 
-    public function update_bukti_pembayaran($nama_foto)
+    public function update_bukti_pembayaran($struk, $id)
     {
         $data = [
-            "bukti_pembayaran"      => $nama_foto,
+            "bukti_pembayaran"      => $struk,
         ];
 
-        $this->db->where('id_transaksi', $this->input->post('id_transaksi'));
+        $this->db->where('id_transaksi', $id);
         $this->db->update('transaksi', $data);
     }
 

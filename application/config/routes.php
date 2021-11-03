@@ -60,6 +60,8 @@ $route['mobil/detailmobil/(:num)'] = 'Customer/detailmobil/$1';
 $route['mobil/addrental/(:num)'] = 'Customer/addRental/$1';
 
 $route['transaksi']             = 'Customer/halamanTransaksi';
+$route['transaksi/pembayaran/(:num)']  = 'Customer/halamanPembayaran/$1';
+$route['transaksi/prosesPembayaran']  = 'Customer/prosesPembayaran';
 
 
 // $route['customer/add'] = 'pelanggan/add';
