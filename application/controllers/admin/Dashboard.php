@@ -31,15 +31,11 @@ class Dashboard extends CI_Controller
 
   public function index()
   {
-    $mobil     = $this->db->query("SELECT * FROM mobil");
-    $customer  = $this->db->query("SELECT * FROM customer WHERE role='2'");
-    $transaksi = $this->db->query("SELECT * FROM transaksi");
-    $laporan   = $this->db->query("SELECT * FROM transaksi WHERE status_rental='Selesai'");
+    $data['mobil']      = $this->Mobil_model->get_jumlah_mobil();
+    $data['customer']   = $this->User_model->get_jumlah_customer();
+    $data['transaksi']  = $this->Transaksi_model->get_jumlah_transaksi();
+    $data['laporan']    = $this->Transaksi_model->get_jumlah_transaksi_selesai();
 
-    $data['mobil']      = $mobil->num_rows();
-    $data['customer']   = $customer->num_rows();
-    $data['transaksi']  = $transaksi->num_rows();
-    $data['laporan']    = $laporan->num_rows();
     $this->load->view('templates_admin/header');
     $this->load->view('templates_admin/sidebar');
     $this->load->view('admin/dashboard', $data);

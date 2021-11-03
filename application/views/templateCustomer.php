@@ -46,7 +46,7 @@
                     <!-- <li class="nav-item"><a href="#" class="nav-link">Blog</a></li> -->
                     <li class="nav-item <?= $this->uri->segment(1) == 'contact' ? 'active' : ''; ?>"><a href="<?= site_url('contact'); ?>" class="nav-link">Contact</a></li>
                     <?php if ($this->session->userdata('nama')) { ?>
-                        <li class="nav-item <?= $this->uri->segment(1) == 'transaksi' ? 'active' : ''; ?>"><a href="#" class="nav-link">Transaction</a></li>
+                        <li class="nav-item <?= $this->uri->segment(1) == 'transaksi' ? 'active' : ''; ?>"><a href="<?= site_url('transaksi'); ?>" class="nav-link">Transaction</a></li>
                     <?php } ?>
                     <div class="ml-5"></div>
                     <?php if ($this->session->userdata('nama')) { ?>

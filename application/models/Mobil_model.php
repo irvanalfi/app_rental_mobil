@@ -94,6 +94,19 @@ class Mobil_model extends CI_Model
         $this->db->update('mobil', $data);
     }
 
+    // update status mobil
+    public function update_status_mobil($id_mobil)
+    {
+        $data = [
+            "status"        => 0,
+            "updated"       => date('Y-m-d H:i:s'),
+            "updated_by"    => $this->session->userdata('nama')
+        ];
+
+        $this->db->where('id_mobil', $id_mobil);
+        $this->db->update('mobil', $data);
+    }
+
     //mengahpus data mobil
     public function dalete_mobil($id)
     {

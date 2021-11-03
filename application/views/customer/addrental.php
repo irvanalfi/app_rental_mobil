@@ -9,6 +9,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-12 heading-section text-center ftco-animate mb-3">
                         <h3 class="">Ukir Keindahan Perjalananmu Sekarang !</h3>
+                        <div id="flash" data-flash="<?= $this->session->flashdata('success'); ?>"></div>
                     </div>
                 </div>
                 <div class="bd-example bd-example-tabs">
@@ -26,41 +27,67 @@
                         <div class="tab-pane fade show active" id="pills-description" role="tabpanel" aria-labelledby="pills-description-tab">
                             <div class="row">
                                 <div class="col-12">
-                                    <form action="<?= base_url('customer/rental/tambah_rental_aksi') ?>" class="request-form ftco-animate bg-primary" method="post">
+                                    <form action="<?= base_url('Customer/addRental/') . $detail['id_mobil'] ?>" class="request-form ftco-animate bg-primary" method="post">
+                                        <input type="hidden" name="id_mobil" value="<?= $detail['id_mobil']; ?>">
                                         <div class="form-group">
                                             <label for="" class="label">Lokasi Penjemputan</label>
-                                            <input type="text" class="form-control" placeholder="<?= $user['alamat']; ?>">
+                                            <input type="text" name="alamat_penjemputan" class="form-control" value="<?= $user['alamat']; ?>">
+                                            <span style="font-size: 12px !important;" class="help-block"><?= form_error('alamat_penjemputan'); ?></span>
                                         </div>
                                         <div class="d-flex">
                                             <div class="form-group mr-2">
                                                 <label for="" class="label">Waktu Penjemputan</label>
-                                                <input type="text" class="form-control" id="time_pick" placeholder="Time">
+                                                <input type="text" name="waktu_penjemputan" class="form-control" id="time_pick" placeholder="Jam" value="<?= set_value('waktu_penjemputan'); ?>">
+                                                <span style="font-size: 12px !important;" class="help-block"><?= form_error('waktu_penjemputan'); ?></span>
                                             </div>
                                             <div class="form-group mx-2">
                                                 <label for="" class="label">Tanggal Rental</label>
-                                                <input type="text" class="form-control" id="book_pick_date" placeholder="Date">
+                                                <input type="text" name="tgl_rental" class="form-control" id="book_pick_date" placeholder="Tanggal" value="<?= set_value('tgl_rental'); ?>">
+                                                <span style="font-size: 12px !important;" class="help-block"><?= form_error('tgl_rental'); ?></span>
                                             </div>
                                             <div class="form-group ml-2">
                                                 <label for="" class="label">Tanggal Pengembalian</label>
-                                                <input type="text" class="form-control" id="book_off_date" placeholder="Date">
+                                                <input type="text" name="tgl_kembali" class="form-control" id="book_off_date" placeholder="Tanggal" value="<?= set_value('tgl_kembali'); ?>">
+                                                <span style="font-size: 12px !important;" class="help-block"><?= form_error('tgl_kembali'); ?></span>
                                             </div>
                                         </div>
                                         <div class="d-flex">
                                             <div class="form-group mr-2">
                                                 <label for="" class="label">Rental / Hari</label>
-                                                <input type="text" class="form-control" placeholder="<?= $detail['merek']; ?>" disabled>
+                                                <input type="text" name="hrg_hari" class="form-control" value="<?= $detail['harga']; ?>" readonly>
                                             </div>
                                             <div class="form-group mx-2">
                                                 <label for="" class="label">Denda / Hari</label>
-                                                <input type="text" class="form-control" placeholder="<?= $detail['denda']; ?>" disabled>
+                                                <input type="text" name="dnd_hari" class="form-control" value="<?= $detail['denda']; ?>" readonly>
                                             </div>
-                                            <div class="form-group mx-2">
-                                                <label for="" class="label">Supir / Hari</label>
-                                                <input type="text" class="form-control" placeholder="<?= $detail['hrg_supir']; ?>" disabled>
-                                            </div>
+                                            <!-- pengkondisian lepas kunci atau tidak -->
+                                            <?php if ($detail['supir'] == 0) : ?>
+                                                <div class="form-group mx-2">
+                                                    <label for="" class="label">Supir / Hari</label>
+                                                    <input type="text" name="hrg_supir" class="form-control" value="<?= $detail['hrg_supir']; ?>" readonly>
+                                                </div>
+                                            <?php else : ?>
+                                                <div class="form-group mx-2">
+                                                    <label for="" class="label">Supir / Hari</label>
+                                                    <select class="form-control" name="hrg_supir">
+                                                        <option value="<?= $detail['hrg_supir'] ?>" class="bg-primary selected"><?= indo_currency($detail['hrg_supir']); ?></option>
+                                                        <option value="0" class="bg-primary">Tanpa supir</option>
+                                                    </select>
+                                                </div>
+                                            <?php endif ?>
                                         </div>
                                         <div class="form-group mt-3">
-                                            <input type="submit" value="Rental Sekarang" class="btn btn-secondary py-3" style="border-radius: 50px !important;">
+                                            <input type="submit" value="Rental Sekarang" class="btn btn-secondary py-3" style="border-radius: 50px !important;" onclick="return confirm('Yakin data anda sudah benar?')">
+                                        </div>
+                                        <div class="mt-5">
+                                            <p class="text-light">Note :</p>
+                                            <ol class="text-light">
+                                                <li>Alamat otomatis tertulis alamat pengguna akun, tetapi bisa dirubah sesuai lokasi penjemputan yang diinginkan oleh penyewa.</li>
+                                                <li>Jika ingin mengambil sendiri mobil di tempat rental, maka alamat bisa diisikan <b>Kantor Rental HRC</b>.</li>
+                                                <li>Untuk Mobil yang <b>tidak</b> memiliki fitur lepas kunci, maka wajib memakai jasa supir.</li>
+                                                <li>Untuk Mobil yang memiliki fitur lepas kunci, maka bisa memilih menggunakan jasa supir atau tidak.</li>
+                                                <li>Apabila telat mengembalikan mobil maka akan didenda sejumlah (harga denda perhari * total hari telat mengembalikan).</li>
+                                            </ol>
                                         </div>
                                     </form>
                                 </div>
@@ -71,7 +98,7 @@
                                 <div class="container">
                                     <div class="row justify-content-center">
                                         <div class="col-md-7">
-                                            <div class="car-details py-3 px-5">
+                                            <div class="car-details py-3">
                                                 <div class="img rounded" style="background-image: url(<?= base_url() ?>assets/upload/<?= $detail['gambar'] ?>);"></div>
                                             </div>
                                         </div>
