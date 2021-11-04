@@ -20,11 +20,7 @@
             </div>
             <div class="col-md-5">
                 <div class="text text-center py-3">
-                    <?php if ($detail['status'] == '1') { ?>
-                        <h3><?= $detail['merek']; ?> (Tersedia)</h3>
-                    <?php } else { ?>
-                        <h3 style="text-decoration: line-through;"><?= $detail['merek']; ?> (Dirental)</h3>
-                    <?php } ?>
+                    <h3><?= $detail['merek']; ?></h3>
                     <span class="subheading">Warna <?= $detail['warna']; ?> Tahun <?= $detail['tahun']; ?></span>
                     <div class="row">
                         <div class="col-md-4 col-sm-6 d-flex align-self-stretch ftco-animate">
@@ -319,22 +315,14 @@
                         </div>
                         <div class="text">
                             <h2 class="mb-0">
-                                <?php if ($mb['status'] == '1') { ?>
-                                    <a href="<?= base_url('mobil/detailmobil/' . $mb['id_mobil']) ?>"><?= $mb['merek']; ?> (Tersedia)</a>
-                                <?php } else { ?>
-                                    <a href="#" style="text-decoration: line-through;"><?= $mb['merek']; ?> (Dirental)</a>
-                                <?php } ?>
+                                <a href="<?= base_url('mobil/detailmobil/' . $mb['id_mobil']) ?>"><?= $mb['merek']; ?></a>
                             </h2>
                             <div class="d-flex mb-3">
                                 <span class="cat">Tahun <?= $mb['tahun']; ?></span>
                                 <p class="price ml-auto">Rp. <?= number_format($mb['harga'], 0, ',', '.'); ?>,-<span>/day</span></p>
                             </div>
                             <p class="d-flex mb-0 d-block">
-                                <?php if ($mb['status'] == '1') { ?>
-                                    <a href="<?= base_url('mobil/addrental/' . $mb['id_mobil']) ?>" class="btn btn-primary py-2 mr-1">Book now</a>
-                                <?php } else { ?>
-                                    <a href="#" class="btn btn-primary py-2 mr-1 disabled" style="text-decoration: line-through;">Book now</a>
-                                <?php } ?>
+                                <a href="<?= base_url('mobil/addrental/' . $mb['id_mobil']) ?>" class="btn btn-primary py-2 mr-1">Book now</a>
                                 <a href="<?= base_url('mobil/detailmobil/' . $mb['id_mobil']) ?>" class="btn btn-warning py-2 ml-1">Details</a>
                             </p>
                         </div>

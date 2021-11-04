@@ -337,10 +337,23 @@ AOS.init({
 
 		fixedContentPos: false,
 	});
-
-	$("#book_pick_date,#book_off_date").datepicker({
-		format: "m/d/yyyy",
-		autoclose: true,
-	});
+	
 	$("#time_pick").timepicker();
 })(jQuery);
+
+// $(function ($data) {
+// 	var disableSpecificDates = ["5-11-2021", "6-11-2021", "7-11-2021", "8-11-2021"];
+// 	$('#book_pick_date,#book_off_date').datepicker({
+// 		startDate: new Date(),
+// 		format: 'mm/dd/yyyy',
+// 		beforeShowDay: function (date) {
+// 			dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+// 			if (disableSpecificDates.indexOf(dmy) != -1) {
+// 				return false;
+// 			} else {
+// 				return true;
+// 			}
+// 		}
+// 	});
+// 	$('#book_pick_date,#book_off_date').datepicker("setDate", new Date());
+// });

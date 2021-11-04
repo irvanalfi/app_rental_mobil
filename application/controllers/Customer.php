@@ -46,6 +46,7 @@ class Customer extends CI_Controller
         $id_user          = $this->session->userdata('id_user');
         $data['detail']   = $this->Mobil_model->get_mobil_by_id($id);
         $data['user']     = $this->User_model->get_user_by_id($id_user);
+        $data['transaksi'] = $this->Transaksi_model->get_transaksi_by_id_mobil_saja($id);
         // form validation 
         $this->form_validation->set_rules(
             'alamat_penjemputan',
@@ -106,8 +107,8 @@ class Customer extends CI_Controller
         $total_harga_supir    = $hrg_supir * $selisih;
         $total_akhir          = $total_harga_supir + $total_harga;
         // perubahan format tanggal
-        $tanggal_rental_f     = date_format(date_create_from_format('m/d/Y', $this->input->post('tgl_rental', true)), 'Y/m/d');
-        $tanggal_kembali_f    = date_format(date_create_from_format('m/d/Y', $this->input->post('tgl_kembali', true)), 'Y/m/d');
+        $tanggal_rental_f     = $this->input->post('tgl_rental', true);
+        $tanggal_kembali_f    = $this->input->post('tgl_kembali', true);
 
         $data = [
             "id_user"               => $this->session->userdata('id_user'),

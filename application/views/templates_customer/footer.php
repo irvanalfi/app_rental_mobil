@@ -24,6 +24,7 @@
     <!-- Bootstrap core JavaScript -->
     <script src="<?= base_url('assets/assets_shop') ?>/vendor/jquery/jquery.min.js"></script>
     <script src="<?= base_url('assets/assets_shop') ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
 
     <!-- Additional Scripts -->
     <script src="<?= base_url('assets/assets_shop') ?>/js/custom.js"></script>

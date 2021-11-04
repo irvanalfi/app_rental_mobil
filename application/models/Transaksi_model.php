@@ -56,6 +56,22 @@ class Transaksi_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
+
+    //menampilkan beberapa transaksi berdasarkan id_mobil
+    public function get_transaksi_by_id_mobil_saja($id_mobil)
+    {
+        $this->db->select('*');
+        $this->db->from('transaksi');
+        $this->db->join('mobil', 'mobil.id_mobil = transaksi.id_mobil');
+        $this->db->join('user', 'user.id_user = transaksi.id_user');
+        $this->db->join('tipe', 'tipe.id_tipe = mobil.id_tipe');
+        $this->db->where('transaksi.id_mobil', $id_mobil);
+        $this->db->where('transaksi.status_pengembalian', "Belum Kembali");
+        $this->db->order_by('tgl_rental', 'asc');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     //menampilkan seluruh jumlah transaksi
     public function get_jumlah_transaksi()
     {
