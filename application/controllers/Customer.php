@@ -132,11 +132,9 @@ class Customer extends CI_Controller
         // input data ke tabel transaksi 
         $this->Transaksi_model->add_transaksi($data);
         if ($this->db->affected_rows() > 0) {
-            // pengubahan status mobil menjadi sudah di rental 
-            $id_mobil       = $this->input->post('id_mobil', true);
-            $this->Mobil_model->update_status_mobil($id_mobil);
             // alert pemberitahuan berhasil melakukan penginputan 
-            $this->session->set_flashdata('success', 'Data has been successfully saved!!');
+            $id_mobil       = $this->input->post('id_mobil', true);
+            $this->session->set_flashdata('success', 'Proses transaksi berhasil!');
             redirect('transaksi');
         }
         echo "<script>window.location='" . site_url('customer/addRental/' . $id_mobil) . "'</script>";
@@ -151,11 +149,11 @@ class Customer extends CI_Controller
         $this->template->load('templateCustomer', 'customer/transaksi', $data);
     }
     // menampilkan halaman pembayaran 
-    public function halamanPembayaran($id_mobil)
+    public function halamanPembayaran($id_transaksi)
     {
         check_not_login();
         $id_user = $this->session->userdata('id_user');
-        $data['bayar'] = $this->Transaksi_model->get_transaksi_by_id_mobil($id_user, $id_mobil);
+        $data['bayar'] = $this->Transaksi_model->get_transaksi_by_id($id_transaksi);
         $this->template->load('templateCustomer', 'customer/pembayaran', $data);
     }
     // melakukan proses pembayaran ( mengupload bukti pembayaran )

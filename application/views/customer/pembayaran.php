@@ -28,7 +28,7 @@
 
                         <div class="card-body">
                             <img class="card-img-top" src="<?= base_url() ?>assets/upload/<?= $byr['gambar'] ?>" alt="Card image cap">
-                            <h5 class="card-title text-center"><b><?= $byr['merek']; ?> Tahun <?= $byr['tahun']; ?></b></h5>
+                            <h5 class="card-title text-center mt-2"><b><?= $byr['merek']; ?> Tahun <?= $byr['tahun']; ?></b></h5>
                             <ul class="list-group list-group-flush">
                                 <div class="row">
                                     <div class="col" style="font-size: 14px;">
@@ -71,9 +71,9 @@
                             <?php if ($byr['bukti_pembayaran'] == '') : ?>
                                 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><span class="icon-upload"></span> Upload Bukti Transfer</a>
                             <?php elseif ($byr['status_pembayaran'] == 0) : ?>
-                                <a href="#" class="btn btn-warning"><span class="icon-clock-o"></span> Menunggu Konfirmasi</a>
+                                <button class="btn btn-warning"><span class="icon-clock-o"></span> Menunggu Konfirmasi</button>
                             <?php elseif ($byr['status_pembayaran'] == 1) : ?>
-                                <a href="#" class="btn btn-success"><span class="icon-check"></span> Pembayaran Berhasil</a>
+                                <button class="btn btn-success"><span class="icon-check"></span> Pembayaran Berhasil</button>
                             <?php endif; ?>
                         </div>
                     </div>

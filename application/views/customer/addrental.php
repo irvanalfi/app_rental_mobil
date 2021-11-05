@@ -535,7 +535,11 @@
     $tgl_hari_ini = date('j-n-Y');
 
     foreach ($transaksi as $t) {
-        $tgl_rental = date('d-n-Y',strtotime($t['tgl_rental']));
+		$tgl_rental = date('d-n-Y',strtotime($t['tgl_rental']));
+		$tgl_check_sebelum_rental = date('j-n-Y',strtotime('-1 days',strtotime($t['tgl_rental'])));
+
+		echo $tgl_check_sebelum_rental . ',';
+
         $tgl_kembali = date('d-n-Y',strtotime('+1 days',strtotime($t['tgl_kembali'])));
         
         while ($tgl_rental <= $tgl_kembali) {
@@ -547,6 +551,8 @@
             }
             $tgl_rental = date('d-n-Y',strtotime('+1 days',strtotime($tgl_rental)));
         }
+
+		array_push($tgl_disabled, '"'. $tgl_check_sebelum_rental.'"');
 
     }
 
