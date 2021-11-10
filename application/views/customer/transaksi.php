@@ -20,8 +20,20 @@
 		<div class="row">
 			<div class="col-md-12 mx-0" id="flash" data-flash="<?= $this->session->flashdata('success'); ?>">
 				<div class="alert alert-success alert-dismissible fade show" role="alert">
-					<strong><?php echo $this->session->flashdata('success')?></strong> Silahkan melakukan pembayaran dan
-					unggah bukti pembayaran
+					<?php echo $this->session->flashdata('success')?>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			</div>
+		</div>
+		<?php endif?>
+		
+		<?php if($this->session->flashdata('failed')!= null) : ?>
+		<div class="row">
+			<div class="col-md-12 mx-0" id="flash" data-flash="<?= $this->session->flashdata('failed'); ?>">
+				<div class="alert alert-danger alert-dismissible fade show" role="alert">
+					<?php echo $this->session->flashdata('failed')?>
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -47,6 +59,8 @@
 							<?php
                             $tanggal_rental       = strtotime($tr['tgl_rental']);
                             $tanggal_kembali      = strtotime($tr['tgl_kembali']);
+							$tanggal_hari_ini	  = strtotime(date('Y/m/d'));
+						
                             $selisih              = abs($tanggal_rental - $tanggal_kembali) / (60 * 60 * 24) + 1;
                             $total_harga_supir    = $tr['total_harga_supir'];
                             ?>
@@ -75,41 +89,71 @@
 									&nbsp; : <?= indo_date($tr['tgl_rental']); ?></span><br>
 								<span class="subheading">Tanggal Kembali &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; :
 									<?= indo_date($tr['tgl_kembali']); ?></span><br>
-								<span class="subheading">Tanggal Pengembalian :
-									<?= $tr['tgl_pengembalian'] == null ? 'Belum Kembali' : $tr['tgl_pengembalian'] ?></span><br>
+								<span class="subheading">Status Pengembalian &nbsp; &nbsp; :
+									<?= $tr['status_pengembalian']?></span><br>
 								<span class="subheading">Alamat Penjemputan &nbsp; &nbsp; :</span><br>
 								<span class="subheading"
 									style="font-size: 14px !important;"><i><b><?= $tr['alamat_penjemputan'] ?></b></i></span><br>
 							</td>
 							<td class="product-name" style="background-color: ghostwhite;">
 								<div style="text-align: center; align-content: center;">
+									
 									<?php if ($tr['status_rental'] == 'Selesai') : ?>
-									<h3>
-										<a href="#" class="btn btn-sm btn-primary">
-											<span class="icon-star"></span> <span>Berikan Review</span>
-										</a>
-									</h3>
+										<?php foreach ($review as $r) : ?>
+											<?php if($r['id_transaksi'] != $tr['id_transaksi']) : ?>
+												<h3>
+													<a href="<?= base_url('transaksi/review/' . $tr['id_transaksi']) ?>" class="btn btn-sm btn-primary">
+														<span class="icon-star"></span> <span>Berikan Review</span>
+													</a>
+												</h3>
+											<?php endif?>
+										<?php endforeach?>
+									
 									<?php endif?>
+
 									<h3>
 										<a href="<?= base_url('transaksi/pembayaran/' . $tr['id_transaksi']) ?>"
 											class="btn btn-sm btn-warning">
 											<span class="icon-money"></span> <span>Cek Pembayaran</span>
 										</a>
 									</h3>
+
+									<?php if($tr['status_rental'] == "Belum Selesai") : ?>
 									<h3>
-										<?php if ($tr['status_pengembalian'] == 'Belum Kembali') : ?>
-										<a href="<?= base_url('customer/deletTransaksi' . $tr['id_transaksi']) ?>"
-											class="btn btn-sm btn-danger"
-											onclick="return confirm('Yakin ingin membatalkan transaksi?')">
-											<span class="icon-trash"></span> <span>Batal Rental</span>
-										</a>
-										<?php else : ?>
-										<button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
-											data-target="#exampleModal">
-											Batal Rental
-										</button>
+										<?php if($tr['status_pembayaran'] == '1') : ?>
+											<?php if($tanggal_hari_ini < $tanggal_rental) : ?>
+											<!-- ketika status pembayaran telah dibayar dan di cancel kurang dari tanggal rental maka uang dikembalikan seluruhnya -->
+											<a href="<?= base_url('customer/transaksi_full_refund/' . $tr['id_transaksi']) ?>"
+												class="btn btn-sm btn-danger"
+												onclick="return confirm('Yakin ingin membatalkan transaksi?')">
+												<span class="icon-trash"></span> <span>Batal Rental</span>
+											</a>
+
+											<?php elseif($tanggal_hari_ini == $tanggal_rental) :?>
+											<!-- ketika status pembayaran telah dibayar dan di cancel sama dengan tanggal rental maka uang total uang yang dikembalikan adalah total harga - (harga mobil / 2) + total harga supir -->
+											<a href="<?= base_url('customer/batal_hari_h/' . $tr['id_transaksi']) ?>"
+												class="btn btn-sm btn-danger"
+												onclick="return confirm('Yakin ingin membatalkan transaksi?')">
+												<span class="icon-trash"></span> <span>Batal Rental</span>
+											</a>
+											
+											<?php else : ?>
+											<!-- ketika status pembayaran telah dibayar dan di cancel lebih dari tanggal rental maka, tombol cancel disable dan status rental selesai. -->
+											<button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
+												data-target="#exampleModal">
+												<span class="icon-trash"> </span> <span>Batal Rental</span>
+											</button>
+											<?php endif?>
+
+										<?php elseif($tr['status_pembayaran'] == '0') :?>
+											<a href="<?= base_url('customer/delete_transaksi/' . $tr['id_transaksi']) ?>"
+												class="btn btn-sm btn-danger"
+												onclick="return confirm('Yakin ingin membatalkan transaksi?')">
+												<span class="icon-trash"></span> <span>Batal Rental</span>
+											</a>	
 										<?php endif; ?>
 									</h3>
+									<?php endif?>
 								</div>
 							</td>
 						</tr><!-- END TR-->
@@ -131,7 +175,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				Maaf, transaksi ini sudah selesai, dan tidak bisa dibatalkan!
+				Maaf, proses rental sudah berjalan, jika ingin melakukan proses cancel silahkan menghubungi Admin!
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-success" data-dismiss="modal">Ok</button>

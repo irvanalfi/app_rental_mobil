@@ -25,7 +25,7 @@ class Transaksi_model extends CI_Model
         $this->db->join('tipe', 'tipe.id_tipe = mobil.id_tipe');
         $this->db->join('fitur', 'fitur.id_mobil = mobil.id_mobil');
         $this->db->where('transaksi.id_user', $id_user);
-        $this->db->order_by('id_transaksi', 'asc');
+        $this->db->order_by('id_transaksi', 'desc');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -41,7 +41,7 @@ class Transaksi_model extends CI_Model
         $this->db->where('transaksi.id_transaksi', $id_transaksi);
         $this->db->order_by('id_transaksi', 'asc');
         $query = $this->db->get();
-        return $query->result_array();
+        return $query->row_array();
     }
     //menampilkan beberapa transaksi berdasarkan id_user
     public function get_transaksi_by_id_mobil($id_user, $id_mobil)
@@ -108,6 +108,12 @@ class Transaksi_model extends CI_Model
         $this->db->insert('transaksi', $data);
     }
 
+    public function update_transaksi($data, $id_transaksi)
+    {
+        $this->db->where('id_transaksi', $id_transaksi);
+        $this->db->update('transaksi', $data);
+    }
+
     public function update_bukti_pembayaran($struk, $id)
     {
         $data = [
@@ -145,10 +151,24 @@ class Transaksi_model extends CI_Model
         $this->db->update('transaksi', $data);
     }
 
+    // update untuk transaksi yang gagal dibayar oleh customer
+    public function update_transaksi_gagal($data, $id_transaksi){
+        $data = [
+            //function itungan total denda todal akhir
+            "status_pengembalian"   => "Kembali",
+            "status_rental"         => "Gagal",
+            "updated"               => date('Y-m-d H:i:s'),
+            "updated_by"            => $this->session->userdata('id_user'),
+        ];
+
+        $this->db->where('id_transaksi', $id_transaksi);
+        $this->db->update('transaksi', $data);
+    }
+
     //mengahpus data transaksi
-    public function dalete_transaksi($id)
+    public function delete_transaksi($id_transaksi)
     {
-        $this->db->where('id_transaksi', $id);
+        $this->db->where('id_transaksi', $id_transaksi);
         $this->db->delete('transaksi');
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2021 at 04:24 PM
+-- Generation Time: Nov 10, 2021 at 04:11 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -33,12 +33,19 @@ CREATE TABLE `contact` (
   `id_user` int(11) NOT NULL,
   `subject` varchar(100) NOT NULL,
   `pesan` text NOT NULL,
-  `status` enum('1','0') NOT NULL COMMENT '1=sudah dilihan, 0=belum di lihat',
+  `status` varchar(1) NOT NULL COMMENT '1=sudah dilihan, 0=belum di lihat',
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
   `created_by` varchar(11) DEFAULT NULL,
   `updated_by` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `contact`
+--
+
+INSERT INTO `contact` (`id_contact`, `id_user`, `subject`, `pesan`, `status`, `created`, `updated`, `created_by`, `updated_by`) VALUES
+(1, 4, 'Tanya soal mobil', 'Permisi ... ', '0', '2021-11-10 22:08:49', NULL, '4', NULL);
 
 -- --------------------------------------------------------
 
@@ -130,15 +137,23 @@ INSERT INTO `mobil` (`id_mobil`, `id_tipe`, `merek`, `no_plat`, `warna`, `transm
 CREATE TABLE `review` (
   `id_review` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `id_mobil` int(11) NOT NULL,
   `id_transaksi` int(11) NOT NULL,
   `review` text NOT NULL,
   `star` int(2) NOT NULL,
-  `status` enum('1','0') NOT NULL COMMENT '1 = tampil, 0 = tidak tampil',
+  `status` varchar(1) NOT NULL COMMENT '1 = tampil, 0 = tidak tampil',
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
   `created_by` varchar(11) DEFAULT NULL,
   `updated_by` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `review`
+--
+
+INSERT INTO `review` (`id_review`, `id_user`, `id_mobil`, `id_transaksi`, `review`, `star`, `status`, `created`, `updated`, `created_by`, `updated_by`) VALUES
+(3, 4, 10, 32, 'asik', 5, '0', '2021-11-10 21:22:50', NULL, '4', NULL);
 
 -- --------------------------------------------------------
 
@@ -185,10 +200,14 @@ CREATE TABLE `transaksi` (
   `total_akhir` int(11) NOT NULL,
   `tgl_pengembalian` date DEFAULT NULL,
   `status_pengembalian` varchar(50) DEFAULT NULL,
-  `status_rental` varchar(50) NOT NULL,
+  `status_rental` varchar(50) NOT NULL COMMENT 'Belum Selesai, Selesai, Gagal, Batal',
   `bukti_pembayaran` varchar(120) DEFAULT NULL,
   `status_pembayaran` int(11) NOT NULL,
   `confirm_by` varchar(50) DEFAULT NULL COMMENT 'orang yang mengkonfirmasi pembayaran',
+  `tgl_cancel` varchar(11) DEFAULT NULL,
+  `status_refund` varchar(120) NOT NULL COMMENT 'Selesai dan Belum Selesai',
+  `bukti_refund` varchar(255) DEFAULT NULL,
+  `total_refund` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
   `created_by` varchar(11) DEFAULT NULL,
@@ -199,13 +218,10 @@ CREATE TABLE `transaksi` (
 -- Dumping data for table `transaksi`
 --
 
-INSERT INTO `transaksi` (`id_transaksi`, `id_user`, `id_mobil`, `tgl_rental`, `waktu_penjemputan`, `tgl_kembali`, `alamat_penjemputan`, `total_harga`, `total_harga_supir`, `total_denda`, `total_akhir`, `tgl_pengembalian`, `status_pengembalian`, `status_rental`, `bukti_pembayaran`, `status_pembayaran`, `confirm_by`, `created`, `updated`, `created_by`, `updated_by`) VALUES
-(3, 6, 9, '2021-01-15', '', '2021-01-16', '', 450000, 0, 30000, 120000, '2021-01-20', 'Belum Kembali', 'Belum Selesai', '', 0, '0', NULL, NULL, '0', '0'),
-(13, 4, 6, '2021-11-02', '12:00am', '2021-09-05', 'Jl. Satu Pekanbaru', 1600000, 1200000, 0, 2800000, NULL, 'Belum Kembali', '', 'Struk-031121-c0c77db32d.png', 1, 'Joko Santos', '2021-11-03 01:53:54', NULL, 'Joko Santos', NULL),
-(14, 4, 14, '2021-11-02', '12:00am', '2021-11-04', 'Jl. Satu Pekanbaru', 1050000, 900000, 0, 1950000, NULL, 'Belum Kembali', '', 'Struk-031121-78a5968529.jpeg', 0, NULL, '2021-11-03 10:45:39', NULL, 'Joko Santos', NULL),
-(15, 8, 6, '2021-11-08', '12:00am', '2021-11-10', 'Jl. Satu Pekanbaru', 1600000, 1200000, 0, 2800000, NULL, 'Belum Kembali', '', 'Struk-031121-c0c77db32d.png', 1, 'Joko Santos', '2021-11-03 01:53:54', NULL, 'Joko Santos', NULL),
-(17, 4, 10, '2021/11/8', '1:00am', '2021/11/11', 'Jl. Satu Pekanbaru', 1600000, 1200000, 0, 2800000, NULL, 'Belum Kembali', '', NULL, 0, NULL, '2021-11-04 22:03:54', NULL, 'Joko Santos', NULL),
-(18, 4, 10, '2021/11/15', '12:30am', '2021/11/16', 'Jl. Satu Pekanbaru', 800000, 600000, 0, 1400000, NULL, 'Belum Kembali', '', NULL, 0, NULL, '2021-11-04 22:19:14', NULL, 'Joko Santos', NULL);
+INSERT INTO `transaksi` (`id_transaksi`, `id_user`, `id_mobil`, `tgl_rental`, `waktu_penjemputan`, `tgl_kembali`, `alamat_penjemputan`, `total_harga`, `total_harga_supir`, `total_denda`, `total_akhir`, `tgl_pengembalian`, `status_pengembalian`, `status_rental`, `bukti_pembayaran`, `status_pembayaran`, `confirm_by`, `tgl_cancel`, `status_refund`, `bukti_refund`, `total_refund`, `created`, `updated`, `created_by`, `updated_by`) VALUES
+(30, 4, 9, '2021/11/11', '1:30am', '2021/11/14', 'Jl. Satu Pekanbaru', 1800000, 1200000, 0, 3000000, NULL, 'Kembali', 'Gagal', NULL, 0, NULL, '', 'Belum Selesai', '', 0, '2021-11-09 19:16:32', '2021-11-12 21:18:46', 'Joko Santos', '4'),
+(31, 4, 10, '2021/11/16', '8:00am', '2021/11/19', 'Jl. Satu Pekanbaru', 1600000, 1200000, 0, 200000, '2021-11-16', 'Kembali', 'Batal', 'Struk-031121-c0c77db32d.png', 1, 'admin', '2021/11/16', 'Selesai', 'Refund-031121-78a5968529.jpeg', 2600000, '2021-11-12 21:19:41', '2021-11-16 17:58:42', 'Joko Santos', '4'),
+(32, 4, 10, '2021/11/12', '3:30am', '2021/11/15', 'Jl. Satu Pekanbaru', 1600000, 1200000, 0, 2800000, '2021-11-16', 'Kembali', 'Selesai', 'Struk-101121-5e663c7d52.jpeg', 1, 'admin', NULL, 'Belum Selesai', NULL, 0, '2021-11-10 18:20:22', '2021-11-10 18:32:35', 'Joko Santos', '4');
 
 -- --------------------------------------------------------
 
@@ -217,11 +233,14 @@ CREATE TABLE `user` (
   `id_user` int(11) NOT NULL,
   `nama` varchar(120) NOT NULL,
   `username` varchar(120) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `alamat` varchar(120) NOT NULL,
   `gender` varchar(20) NOT NULL,
   `no_telepon` varchar(20) NOT NULL,
   `no_ktp` varchar(50) NOT NULL,
   `password` varchar(120) NOT NULL,
+  `avatar` varchar(255) NOT NULL,
+  `foto_ktp` varchar(255) NOT NULL,
   `role` int(11) NOT NULL COMMENT '1 = Admin, 2 = Customer',
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
@@ -233,13 +252,9 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id_user`, `nama`, `username`, `alamat`, `gender`, `no_telepon`, `no_ktp`, `password`, `role`, `created`, `updated`, `created_by`, `updated_by`) VALUES
-(4, 'Joko Santoso', 'joko', 'Jl. Satu Pekanbaru', 'laki-laki', '0653246512', '215654532767', '81dc9bdb52d04dc20036dbd8313ed055', 2, '2021-09-30 19:23:12', NULL, '0', '0'),
-(5, 'Darmawan', 'darmawan', 'Jl. Dua Pekanbaru', 'laki-laki', '07617623', '1423477324723', '81dc9bdb52d04dc20036dbd8313ed055', 2, '2021-09-30 19:23:12', NULL, '0', '0'),
-(6, 'Andi', 'andi', 'Jakarta', 'laki-laki', '0217687634', '12747657463', '827ccb0eea8a706c4c34a16891f84e7b', 2, '2021-09-30 19:23:12', NULL, '0', '0'),
-(7, 'Arif', 'admin', 'Pekanbaru', 'laki-laki', '065423624', '1764578345', '21232f297a57a5a743894a0e4a801fc3', 1, '2021-09-30 19:23:12', NULL, '0', '0'),
-(8, 'Bayu', 'bayu', 'Jl. Nangka Pekanbaru', 'laki-laki', '07612233', '14000756764735', '81dc9bdb52d04dc20036dbd8313ed055', 2, '2021-09-30 19:23:12', NULL, '0', '0'),
-(9, 'Toni', 'toni', 'Bandung', 'laki-laki', '0835653243', '1753453265435', '81dc9bdb52d04dc20036dbd8313ed055', 2, '2021-09-30 19:23:12', NULL, '0', '0');
+INSERT INTO `user` (`id_user`, `nama`, `username`, `email`, `alamat`, `gender`, `no_telepon`, `no_ktp`, `password`, `avatar`, `foto_ktp`, `role`, `created`, `updated`, `created_by`, `updated_by`) VALUES
+(4, 'Joko Santoso', 'joko', 'joko@gmail.com', 'Jl. Satu Pekanbaru', 'laki-laki', '0653246512', '215654532767', '81dc9bdb52d04dc20036dbd8313ed055', '', '', 2, '2021-09-30 19:23:12', NULL, '0', '0'),
+(7, 'Arif', 'admin', 'arif@gmail.com', 'Pekanbaru', 'laki-laki', '065423624', '1764578345', '21232f297a57a5a743894a0e4a801fc3', '', '', 1, '2021-09-30 19:23:12', NULL, '0', '0');
 
 --
 -- Indexes for dumped tables
@@ -272,7 +287,8 @@ ALTER TABLE `mobil`
 ALTER TABLE `review`
   ADD PRIMARY KEY (`id_review`),
   ADD KEY `id_user` (`id_user`),
-  ADD KEY `id_transaksi` (`id_transaksi`);
+  ADD KEY `id_transaksi` (`id_mobil`),
+  ADD KEY `id_transaksi_2` (`id_transaksi`);
 
 --
 -- Indexes for table `tipe`
@@ -302,7 +318,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `id_contact` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_contact` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `fitur`
@@ -320,7 +336,7 @@ ALTER TABLE `mobil`
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `id_review` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_review` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tipe`
@@ -332,7 +348,7 @@ ALTER TABLE `tipe`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -367,7 +383,8 @@ ALTER TABLE `mobil`
 --
 ALTER TABLE `review`
   ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id_transaksi`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`id_mobil`) REFERENCES `mobil` (`id_mobil`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `review_ibfk_3` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id_transaksi`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `transaksi`

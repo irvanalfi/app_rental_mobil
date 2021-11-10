@@ -12,6 +12,33 @@
 
 <section class="ftco-section contact-section">
     <div class="container">
+
+        <?php if($this->session->flashdata('success')!= null) : ?>
+		<div class="row">
+			<div class="col-md-12 mx-0" id="flash" data-flash="<?= $this->session->flashdata('success'); ?>">
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					<?php echo $this->session->flashdata('success')?>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			</div>
+		</div>
+		<?php endif?>
+		
+		<?php if($this->session->flashdata('failed')!= null) : ?>
+		<div class="row">
+			<div class="col-md-12 mx-0" id="flash" data-flash="<?= $this->session->flashdata('failed'); ?>">
+				<div class="alert alert-danger alert-dismissible fade show" role="alert">
+					<?php echo $this->session->flashdata('failed')?>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			</div>
+		</div>
+		<?php endif?>
+
         <div class="row d-flex mb-5 contact-info">
             <div class="col-md-4">
                 <div class="row mb-5">
@@ -42,18 +69,20 @@
                 </div>
             </div>
             <div class="col-md-8 block-9 mb-md-5">
-                <form action="#" class="bg-light p-5 contact-form">
+                <form action="<?= base_url('customer/contact')?>" class="bg-light p-5 contact-form" method="POST">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Nama">
+                        <input type="text" class="form-control" placeholder="Nama" value="<?= $user['nama']?>" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Email">
+                        <input type="text" class="form-control" placeholder="Email" value="<?= $user['email']?>" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Subject">
+                        <input type="text" class="form-control" placeholder="Subject" name="subject">
+                        <span class="text-danger"><?= form_error('subject'); ?></span>
                     </div>
                     <div class="form-group">
-                        <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Pesan"></textarea>
+                        <textarea cols="30" rows="7" class="form-control" placeholder="Pesan" name="pesan"></textarea>
+                        <span class="text-danger"><?= form_error('pesan'); ?></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Kirim Pesan" class="btn btn-primary py-3 px-5">

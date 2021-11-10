@@ -26,17 +26,8 @@
         }
 
         //menambahkan contact baru
-        public function add_contact()
+        public function add_contact($data)
         {
-            $data = [
-                "id_user"       => $this->input->post('kode_contact', true),
-                "subject"       => $this->input->post('nama_contact', true),
-                "pesan"         => $this->input->post('nama_contact', true),
-                "status"        => $this->input->post('nama_contact', true),
-                "created"       => date('Y-m-d H:i:s'),
-                "created_by"    => $this->session->userdata('nama'),
-            ];
-
             $this->db->insert('contact', $data);
         }
 

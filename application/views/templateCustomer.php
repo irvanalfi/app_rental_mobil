@@ -172,27 +172,7 @@
 	<script src="<?= base_url() ?>assets/assets_customer/js/playbtn.js"></script>
 	<script src="<?= base_url() ?>assets/assets_customer/js/main.js"></script>
     
-    <!-- <script type="text/javascript">
-        $(function ($data) {
-            var disableSpecificDates = '<?php echo $tgl_disabled?>';
-            $('#book_pick_date,#book_off_date').datepicker({
-                startDate: new Date(),
-                format: 'mm/dd/yyyy',
-                beforeShowDay: function (date) {
-                    dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
-                    if (disableSpecificDates.indexOf(dmy) != -1) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                }
-            });
-            $('#book_pick_date,#book_off_date').datepicker("setDate", new Date());
-        });
-    </script> -->
     
 </body>
-
-<!-- Mirrored from technext.github.io/carbook/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 17 Sep 2021 01:53:47 GMT -->
 
 </html>

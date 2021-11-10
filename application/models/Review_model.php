@@ -9,8 +9,9 @@
         {    
             $this->db->select('*');
             $this->db->from('review');
-            $this->db->join('transaksi', 'review.id_transaksi = transaksi.id_transaksi');
-            $this->db->join('user', 'user.id_user = transaksi.id_user');
+            $this->db->join('mobil', 'mobil.id_mobil = mobil.id_mobil');
+            $this->db->join('user', 'user.id_user = review.id_user');
+            $this->db->join('transaksi', 'transaksi.id_transaksi = review.id_transaksi');
             $query = $this->db->get();
             return $query->result_array();
         }
@@ -20,38 +21,30 @@
         {
             $this->db->select('*');
             $this->db->from('review');
-            $this->db->join('transaksi', 'review.id_transaksi = transaksi.id_transaksi');
-            $this->db->join('user', 'user.id_user = transaksi.id_user');
+            $this->db->join('mobil', 'mobil.id_mobil = mobil.id_mobil');
+            $this->db->join('user', 'user.id_user = review.id_user');
+            $this->db->join('transaksi', 'transaksi.id_transaksi = review.id_transaksi');
             $this->db->where('review.id_review', $id);
             $query = $this->db->get();
             return $query->row_array();
         }
 
-        //menampilkan review berdasarkan id_transaksi
-        public function get_review_by_id_transaksi($id)
+        //menampilkan review berdasarkan id_mobil
+        public function get_review_by_id_mobil($id)
         {
             $this->db->select('*');
             $this->db->from('review');
-            $this->db->join('transaksi', 'review.id_transaksi = transaksi.id_transaksi');
-            $this->db->join('user', 'user.id_user = transaksi.id_user');
-            $this->db->where('review.id_transaksi', $id);
+            $this->db->join('mobil', 'mobil.id_mobil = mobil.id_mobil');
+            $this->db->join('user', 'user.id_user = review.id_user');
+            $this->db->join('transaksi', 'transaksi.id_transaksi = review.id_transaksi');
+            $this->db->where('review.id_mobil', $id);
             $query = $this->db->get();
             return $query->row_array();
         }
 
         //menambahkan review baru
-        public function add_review()
+        public function add_review($data)
         {
-            $data = [
-                "id_user"       => $this->input->post('id_user', true),
-                "id_transaksi"  => $this->input->post('id_transaksi', true),
-                "review"        => $this->input->post('review', true),
-                "star"          => $this->input->post('star', true),
-                "status"        => 0,
-                "created"       => date('Y-m-d H:i:s'),
-                "created_by"    => $this->session->userdata('nama')
-            ];
-
             $this->db->insert('review', $data);
         }
 

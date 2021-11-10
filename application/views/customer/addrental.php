@@ -11,7 +11,7 @@
 						<h3 class="">Ukir Keindahan Perjalananmu Sekarang !</h3>
 						<div id="flash" data-flash="<?= $this->session->flashdata('success'); ?>"></div>
 					</div>
-				</div>
+				</div>	
 				<div class="bd-example bd-example-tabs">
 					<div class="d-flex justify-content-center">
 						<ul class="nav nav-pills " id="pills-tab" role="tablist">
@@ -30,6 +30,18 @@
 					<div class="tab-content" id="pills-tabContent">
 						<div class="tab-pane fade show active" id="pills-description" role="tabpanel"
 							aria-labelledby="pills-description-tab">
+							<?php if($this->session->flashdata('failed') != null) : ?>
+							<div class="row">
+								<div class="col-md-12 mx-0" id="flash" data-flash="<?= $this->session->flashdata('failed'); ?>">
+									<div class="alert alert-danger alert-dismissible fade show" role="alert">
+										<strong>Transaksi Gagal</strong> <?php echo $this->session->flashdata('failed')?>
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+								</div>
+							</div>
+							<?php endif?>
 							<div class="row">
 								<div class="col-12">
 									<form action="<?= base_url('Customer/addRental/') . $detail['id_mobil'] ?>"
@@ -537,9 +549,6 @@
     foreach ($transaksi as $t) {
 		$tgl_rental = date('d-n-Y',strtotime($t['tgl_rental']));
 		$tgl_check_sebelum_rental = date('j-n-Y',strtotime('-1 days',strtotime($t['tgl_rental'])));
-
-		echo $tgl_check_sebelum_rental . ',';
-
         $tgl_kembali = date('d-n-Y',strtotime('+1 days',strtotime($t['tgl_kembali'])));
         
         while ($tgl_rental <= $tgl_kembali) {
