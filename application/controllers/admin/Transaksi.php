@@ -63,7 +63,7 @@ class Transaksi extends CI_Controller
   {
     $this->load->helper('download');
     $filePembayaran = $this->rental_model->downloadPembayaran($id);
-    $file = 'assets/upload/' . $filePembayaran['bukti_pembayaran'];
+    $file = 'assets/upload/struk' . $filePembayaran['bukti_pembayaran'];
     force_download($file, NULL);
   }
 
@@ -82,8 +82,6 @@ class Transaksi extends CI_Controller
     $id                  = $this->input->post('id_rental');
     $id_mobil            = $this->input->post('id_mobil');
     $tgl_pengembalian    = $this->input->post('tgl_pengembalian');
-    // $status_rental       = $this->input->post('status_rental');
-    // $status_pengembalian = $this->input->post('status_pengembalian');
     $tgl_kembali         = $this->input->post('tgl_kembali');
     $denda               = $this->input->post('denda');
 
@@ -98,8 +96,8 @@ class Transaksi extends CI_Controller
       'status_pengembalian' => 'Kembali',
       'total_denda'         => $total_denda
     );
-    $data2 = array('status' => 1);
 
+    $data2 = array('status' => 1);
     $where  = array('id_rental' => $id);
     $where2 = array('id_mobil' => $id_mobil);
 

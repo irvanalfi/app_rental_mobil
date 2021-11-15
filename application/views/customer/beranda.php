@@ -47,7 +47,7 @@
                     <?php foreach ($mobil as $mb) : ?>
                         <div class="item">
                             <div class="car-wrap rounded ftco-animate">
-                                <div class="img rounded d-flex align-items-end" style="background-image: url(<?= base_url() ?>assets/upload/<?= $mb['gambar'] ?>);">
+                                <div class="img rounded d-flex align-items-end" style="background-image: url(<?= base_url() ?>assets/upload/car/<?= $mb['gambar'] ?>);">
                                 </div>
                                 <div class="text">
                                     <h2 class="mb-0">

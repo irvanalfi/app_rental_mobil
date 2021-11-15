@@ -15,7 +15,7 @@
         <div class="row justify-content-center">
             <div class="col-md-7">
                 <div class="car-details">
-                    <div class="img rounded" style="background-image: url(<?= base_url() ?>assets/upload/<?= $detail['gambar'] ?>);"></div>
+                    <div class="img rounded" style="background-image: url(<?= base_url() ?>assets/upload/car/<?= $detail['gambar'] ?>);"></div>
                 </div>
             </div>
             <div class="col-md-5">
@@ -99,11 +99,7 @@
                             </div>
                         </div>
                     </div>
-                    <?php if ($detail['status'] == '1') { ?>
-                        <a href="<?= base_url('mobil/addrental/' . $detail['id_mobil']) ?>" class="btn btn-primary py-2 px-5 mr-1">Book now</a>
-                    <?php } else { ?>
-                        <a href="#" class="btn btn-primary py-2 px-5 mr-1 disabled" style="text-decoration: line-through;">Book now</a>
-                    <?php } ?>
+                    <a href="<?= base_url('mobil/addrental/' . $detail['id_mobil']) ?>" class="btn btn-primary py-2 px-5 mr-1">Book now</a>
                 </div>
             </div>
         </div>
@@ -311,7 +307,7 @@
             <?php foreach ($mobil as $mb) : ?>
                 <div class="col-md-4">
                     <div class="car-wrap rounded ftco-animate">
-                        <div class="img rounded d-flex align-items-end" style="background-image: url(<?= base_url() ?>assets/upload/<?= $mb['gambar'] ?>);">
+                        <div class="img rounded d-flex align-items-end" style="background-image: url(<?= base_url() ?>assets/upload/car/<?= $mb['gambar'] ?>);">
                         </div>
                         <div class="text">
                             <h2 class="mb-0">

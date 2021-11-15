@@ -1,6 +1,4 @@
-<section class="hero-wrap hero-wrap-2 js-fullheight"
-	style="background-image: url('<?= base_url() ?>assets/assets_customer/images/banner.jpg');"
-	data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('<?= base_url() ?>assets/assets_customer/images/banner.jpg');" data-stellar-background-ratio="0.5">
 	<div class="overlay"></div>
 	<div class="container">
 		<div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
@@ -17,20 +15,19 @@
 	<div id="flash" data-flash="<?= $this->session->flashdata('success'); ?>"></div>
 	<div class="container">
 		<?php
-            $tanggal_rental       = strtotime($bayar['tgl_rental']);
-            $tanggal_kembali      = strtotime($bayar['tgl_kembali']);
-            $selisih              = abs($tanggal_rental - $tanggal_kembali) / (60 * 60 * 24) + 1;
-            $total_harga_supir    = $bayar['total_harga_supir'];
-            $harga_supir          = $total_harga_supir / $selisih;
-            ?>
+		$tanggal_rental       = strtotime($bayar['tgl_rental']);
+		$tanggal_kembali      = strtotime($bayar['tgl_kembali']);
+		$selisih              = abs($tanggal_rental - $tanggal_kembali) / (60 * 60 * 24) + 1;
+		$total_harga_supir    = $bayar['total_harga_supir'];
+		$harga_supir          = $total_harga_supir / $selisih;
+		?>
 		<div class="row">
 			<div class="col-md-8">
 				<div class=" card">
 					<h5 class="card-header bg-dark text-light text-center">Informasi Rental</h5>
 
 					<div class="card-body">
-						<img class="card-img-top" src="<?= base_url() ?>assets/upload/<?= $bayar['gambar'] ?>"
-							alt="Card image cap">
+						<img class="card-img-top" src="<?= base_url() ?>assets/upload/car/<?= $bayar['gambar'] ?>" alt="Card image cap">
 						<h5 class="card-title text-center mt-2"><b><?= $bayar['merek']; ?> Tahun <?= $bayar['tahun']; ?></b>
 						</h5>
 						<ul class="list-group list-group-flush">
@@ -59,13 +56,13 @@
 										<?= indo_currency($bayar['total_akhir']); ?><br>
 										Status Pembayaran :
 										<?= $bayar['status_pembayaran'] == 0 ? 'Belum Lunas' : 'Lunas'; ?> <br>
-                                        <?php if($bayar['status_rental'] == "Batal") : ?>
-                                            <hr>
-                                        Data Cancel <br>
-                                        <hr>
-                                        Tanggal Cancel &nbsp; &nbsp; &nbsp; &nbsp;: <?= indo_date($bayar['tgl_cancel'])?> <br>
-                                        Total Refund &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;: <?= indo_currency($bayar['total_refund'])?>
-                                        <?php endif?>
+										<?php if ($bayar['status_rental'] == "Batal") : ?>
+											<hr>
+											Data Cancel <br>
+											<hr>
+											Tanggal Cancel &nbsp; &nbsp; &nbsp; &nbsp;: <?= indo_date($bayar['tgl_cancel']) ?> <br>
+											Total Refund &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;: <?= indo_currency($bayar['total_refund']) ?>
+										<?php endif ?>
 									</li>
 								</div>
 							</div>
@@ -88,31 +85,29 @@
 							<br>
 						</ul>
 
-                        <div class="btn-group-vertical">
-						<?php if ($bayar['bukti_pembayaran'] == '') : ?>
-                            <?php if($bayar['status_rental'] == "Gagal") : ?>
-                                <button class="btn my-1 btn-danger"><span class="icon-times"></span> Transaksi Gagal</button>
-                                <a href="<?= base_url('customer/delete_transaksi/' . $bayar['id_transaksi']) ?>" 
-                                    class="btn btn-danger"><span class="icon-trash"></span> Hapus Transaksi</a>
-                                
-                            <?php else : ?>
-                                <a href="#" class="btn my-1 btn-warning"><span class="icon-clock-o"></span> <span id="demo"></span></a>
-                                <a href="#" class="btn my-1 btn-primary" data-toggle="modal" data-target="#exampleModal"><span
-                                            class="icon-upload"></span> Upload Bukti Transfer</a>
-                            <?php endif?>
-						
-                        <?php elseif ($bayar['status_pembayaran'] == 0) : ?>
-                            <button class="btn my-1 btn-warning"><span class="icon-clock-o"></span> Menunggu Konfirmasi</button>
-						
-                        <?php elseif ($bayar['status_pembayaran'] == 1) : ?>
-                            <?php if($bayar['status_rental'] == "Batal") : ?>
-                                <button type="button" class="btn my-1 btn-primary" data-toggle="modal" data-target="#buktiRefund"> 
-                                    <span class="icon-image"> </span> <span>Bukti Refund</span>
-								</button>
-                            <?php endif?>
-                            <button class="btn my-1 btn-success"><span class="icon-check"></span> Pembayaran Berhasil</button>
-						<?php endif; ?>
-                        </div>
+						<div class="btn-group-vertical">
+							<?php if ($bayar['bukti_pembayaran'] == '') : ?>
+								<?php if ($bayar['status_rental'] == "Gagal") : ?>
+									<button class="btn my-1 btn-danger"><span class="icon-times"></span> Transaksi Gagal</button>
+									<a href="<?= base_url('customer/delete_transaksi/' . $bayar['id_transaksi']) ?>" class="btn btn-danger"><span class="icon-trash"></span> Hapus Transaksi</a>
+
+								<?php else : ?>
+									<a href="#" class="btn my-1 btn-warning"><span class="icon-clock-o"></span> <span id="demo"></span></a>
+									<a href="#" class="btn my-1 btn-primary" data-toggle="modal" data-target="#exampleModal"><span class="icon-upload"></span> Upload Bukti Transfer</a>
+								<?php endif ?>
+
+							<?php elseif ($bayar['status_pembayaran'] == 0) : ?>
+								<button class="btn my-1 btn-warning"><span class="icon-clock-o"></span> Menunggu Konfirmasi</button>
+
+							<?php elseif ($bayar['status_pembayaran'] == 1) : ?>
+								<?php if ($bayar['status_rental'] == "Batal") : ?>
+									<button type="button" class="btn my-1 btn-primary" data-toggle="modal" data-target="#buktiRefund">
+										<span class="icon-image"> </span> <span>Bukti Refund</span>
+									</button>
+								<?php endif ?>
+								<button class="btn my-1 btn-success"><span class="icon-check"></span> Pembayaran Berhasil</button>
+							<?php endif; ?>
+						</div>
 
 					</div>
 				</div>
@@ -160,60 +155,59 @@
 			</div>
 			<div class="modal-body">
 				<!-- image bukti refund by id transaksi -->
-                <?php if($bayar['bukti_refund'] == '') : ?>
-                    <p>Biaya refung sedang diproses. Silahkan menunggu.</p>
-                <?php else :?>
-                    <img src="<?php echo base_url('assets/upload/refund/') . $bayar['bukti_refund']?>" alt="bukti transfer" class="img-thumbnail"><br>
-                    <p>Silahkan cek saldo Anda.</p>
-                <?php endif?>
+				<?php if ($bayar['bukti_refund'] == '') : ?>
+					<p>Biaya refung sedang diproses. Silahkan menunggu.</p>
+				<?php else : ?>
+					<img src="<?php echo base_url('assets/upload/refund/') . $bayar['bukti_refund'] ?>" alt="bukti transfer" class="img-thumbnail"><br>
+					<p>Silahkan cek saldo Anda.</p>
+				<?php endif ?>
 			</div>
 			<div class="modal-footer">
-				<a href="<?= base_url('customer/download_bukti_refund/') . $bayar['id_transaksi']?>" type="button" class="btn btn-success <?= $bayar['bukti_refund'] == '' ? 'disabled' : '' ?>">Download</a>
+				<a href="<?= base_url('customer/download_bukti_refund/') . $bayar['id_transaksi'] ?>" type="button" class="btn btn-success <?= $bayar['bukti_refund'] == '' ? 'disabled' : '' ?>">Download</a>
 			</div>
 		</div>
 	</div>
 </div>
 
-<?php 
-    $tgl_rental = $bayar['tgl_rental'];
-    $id_transaksi = $bayar['id_transaksi'];
+<?php
+$tgl_rental = $bayar['tgl_rental'];
+$id_transaksi = $bayar['id_transaksi'];
 ?>
 
 
 <!-- apabila customer belum mengirimkan bukti transfer maka timer akan berjalan -->
-<?php if($bayar['bukti_pembayaran'] == null) : ?>
+<?php if ($bayar['bukti_pembayaran'] == null) : ?>
 
-<script>
-	// Mengatur waktu akhir perhitungan mundur
-	var countDownDate = new Date("<?php echo $tgl_rental?>").getTime();
+	<script>
+		// Mengatur waktu akhir perhitungan mundur
+		var countDownDate = new Date("<?php echo $tgl_rental ?>").getTime();
 
-	// Memperbarui hitungan mundur setiap 1 detik
-	var x = setInterval(function () {
+		// Memperbarui hitungan mundur setiap 1 detik
+		var x = setInterval(function() {
 
-		// Untuk mendapatkan tanggal dan waktu hari ini
-		var now = new Date().getTime();
+			// Untuk mendapatkan tanggal dan waktu hari ini
+			var now = new Date().getTime();
 
-		// Temukan jarak antara sekarang dan tanggal hitung mundur
-		var distance = countDownDate - now;
+			// Temukan jarak antara sekarang dan tanggal hitung mundur
+			var distance = countDownDate - now;
 
-		// Perhitungan waktu untuk hari, jam, menit dan detik
-		var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-		var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-		var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+			// Perhitungan waktu untuk hari, jam, menit dan detik
+			var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+			var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+			var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-		// Keluarkan hasil dalam elemen dengan id = "demo"
-		document.getElementById("demo").innerHTML = days + "d " + hours + "h " +
-			minutes + "m " + seconds + "s ";
+			// Keluarkan hasil dalam elemen dengan id = "demo"
+			document.getElementById("demo").innerHTML = days + "d " + hours + "h " +
+				minutes + "m " + seconds + "s ";
 
-		// Jika hitungan mundur selesai, tulis beberapa teks 
-		if (distance < 0) {
-			clearInterval(x);
-            console.log(days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
-			window.location='<?php echo site_url('customer/countdown_selesai/'.$id_transaksi) ?>';
-		}
-	}, 1000);
+			// Jika hitungan mundur selesai, tulis beberapa teks 
+			if (distance < 0) {
+				clearInterval(x);
+				console.log(days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
+				window.location = '<?php echo site_url('customer/countdown_selesai/' . $id_transaksi) ?>';
+			}
+		}, 1000);
+	</script>
 
-</script>
-
-<?php endif?>
+<?php endif ?>

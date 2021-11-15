@@ -16,11 +16,11 @@
             <?php foreach ($mobil as $mb) : ?>
                 <div class="col-md-4">
                     <div class="car-wrap rounded ftco-animate">
-                        <div class="img rounded d-flex align-items-end" style="background-image: url(<?= base_url() ?>assets/upload/<?= $mb['gambar'] ?>);">
+                        <div class="img rounded d-flex align-items-end" style="background-image: url(<?= base_url() ?>assets/upload/car/<?= $mb['gambar'] ?>);">
                         </div>
                         <div class="text">
                             <h2 class="mb-0">
-                                    <a href="<?= base_url('mobil/detailmobil/' . $mb['id_mobil']) ?>"><?= $mb['merek']; ?></a>
+                                <a href="<?= base_url('mobil/detailmobil/' . $mb['id_mobil']) ?>"><?= $mb['merek']; ?></a>
                             </h2>
                             <div class="d-flex mb-3">
                                 <span class="cat">Tahun <?= $mb['tahun']; ?></span>

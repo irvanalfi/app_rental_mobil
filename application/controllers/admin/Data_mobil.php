@@ -83,7 +83,7 @@ class Data_mobil extends CI_Controller
 
       if ($gambar = '') {
       } else {
-        $config['upload_path']    = './assets/upload';
+        $config['upload_path']    = './assets/upload/car/';
         $config['allowed_types']  = 'jpg|jpeg|png|tiff|gif';
         $config['max_size']       = 5120;
         $config['file_name']      = 'car-' . date('dmy') . '-' . substr(md5(rand()), 0, 10);
@@ -187,7 +187,7 @@ class Data_mobil extends CI_Controller
       $gambar       = $_FILES['gambar']['name'];
 
       if ($gambar) {
-        $config['upload_path']    = './assets/upload/';
+        $config['upload_path']    = './assets/upload/car/';
         $config['allowed_types']  = 'jpg|jpeg|png|tiff|gif';
         $config['max_size']       = 5120;
         $config['file_name']      = 'car-' . date('dmy') . '-' . substr(md5(rand()), 0, 10);
