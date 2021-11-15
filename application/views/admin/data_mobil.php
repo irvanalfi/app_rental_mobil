@@ -28,7 +28,7 @@
           <td>
             <img width="70px;" src="<?= base_url('assets/upload/'). $mb->gambar; ?>" alt="">
           </td>
-          <td><?= $mb->kode_tipe; ?></td>
+          <td><?= $mb->id_tipe; ?></td>
           <td><?= $mb->merek; ?></td>
           <td><?= $mb->no_plat; ?></td>
           <td>
