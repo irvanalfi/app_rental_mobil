@@ -60,16 +60,14 @@ class Customer extends CI_Controller
             )
         );
 
-        
+
         if ($this->form_validation->run() ==  FALSE) {
             $this->template->load('templateCustomer', 'customer/contact', $data);
         } else {
             $this->addContact();
         }
-        
-
     }
-
+    //proses input data contact ke database
     public function addContact()
     {
         $id_user = $this->session->userdata('id_user');
@@ -86,12 +84,10 @@ class Customer extends CI_Controller
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('success', '<b>Pesan berhasil terkirim!</b> Admin akan segera menghubungi Anda.');
             redirect('customer/contact');
-        }else{
+        } else {
             $this->session->set_flashdata('failed', '<b>Pesan gagal terkirim!</b> Silahkan mengirim pesan kembali.');
             redirect('customer/contact');
         }
-
-
     }
     // tampilan halaman form rental
     public function addRental($id)
@@ -147,17 +143,14 @@ class Customer extends CI_Controller
     public function prosesRental()
     {
         check_not_login();
-        
+
         $harga                = $this->input->post('hrg_hari', true);
         $hrg_supir            = $this->input->post('hrg_supir', true);
         $id_mobil             = $this->input->post('id_mobil', true);
-        
+
         // mencari selisih dari tanggal rental dan tanggal kembali 
         $tanggal_rental       = strtotime($this->input->post('tgl_rental', true));
         $tanggal_kembali      = strtotime($this->input->post('tgl_kembali', true));
-        // $tanggal_rental       = $this->input->post('tgl_rental', true);
-        // $tanggal_kembali      = $this->input->post('tgl_kembali', true);
-        
         $selisih              = abs($tanggal_rental - $tanggal_kembali) / (60 * 60 * 24) + 1;
         // melakukan perhitungan untuk total akhir
         $total_harga          = $selisih *  $harga;
@@ -166,8 +159,8 @@ class Customer extends CI_Controller
         // perubahan format tanggal
         $tanggal_rental_f     = $this->input->post('tgl_rental', true);
         $tanggal_kembali_f    = $this->input->post('tgl_kembali', true);
-        
-        
+
+
         $data = [
             "id_user"               => $this->session->userdata('id_user'),
             "id_mobil"              => $id_mobil,
@@ -193,11 +186,11 @@ class Customer extends CI_Controller
             "created"               => date('Y-m-d H:i:s'),
             "created_by"            => $this->session->userdata('id_user'),
         ];
-        
+
         $status_booking = $this->cek_ketersediaan_rental($tanggal_rental_f, $tanggal_kembali_f, $id_mobil);
 
         if ($status_booking != "terbooking") {
-                // input data ke tabel transaksi 
+            // input data ke tabel transaksi 
             $this->Transaksi_model->add_transaksi($data);
             if ($this->db->affected_rows() > 0) {
                 // alert pemberitahuan berhasil melakukan penginputan 
@@ -215,15 +208,15 @@ class Customer extends CI_Controller
     {
         $status = "tidak terbooking";
 
-        $tgl_booking = array();    
+        $tgl_booking = array();
         while ($tgl_rental <= $tgl_kembali) {
             array_push($tgl_booking, $tgl_rental);
-            $tgl_rental = date('Y/m/d',strtotime('+1 days',strtotime($tgl_rental)));
+            $tgl_rental = date('Y/m/d', strtotime('+1 days', strtotime($tgl_rental)));
         }
         $tgl_terbooking = $this->Transaksi_model->get_transaksi_by_id_mobil_saja($id_mobil);
 
         foreach ($tgl_terbooking as $tt) {
-            foreach($tgl_booking as $key => $tb){
+            foreach ($tgl_booking as $key => $tb) {
                 if ($tb == $tt['tgl_rental'] || $tb == $tt['tgl_kembali']) {
                     $status = "terbooking";
                     $this->session->set_flashdata('failed', 'Tanggal Sudah terbooking!');
@@ -242,10 +235,10 @@ class Customer extends CI_Controller
         $id_user = $this->session->userdata('id_user');
         $data['transaksi_terlambat'] = $this->Transaksi_model->get_transaksi_by_id_user($id_user);
         $data['review'] = $this->Review_model->get_all_review();
-        
+
         // melakukan check apakah ada transaksi yang tidak terbayar.
         $this->transaksi_gagal_karena_tidak_terbayar($data['transaksi_terlambat'], $id_user);
-        
+
         $data['transaksi'] = $this->Transaksi_model->get_transaksi_by_id_user($id_user);
         $this->template->load('templateCustomer', 'customer/transaksi', $data);
     }
@@ -289,7 +282,7 @@ class Customer extends CI_Controller
             </button></div>');
         redirect('transaksi');
     }
-    
+
     // pembatalan transaksi 
     public function delete_transaksi($id_transaksi)
     {
@@ -301,8 +294,9 @@ class Customer extends CI_Controller
     }
 
     //hapus transaksi apabila melewati batas pembayaran
-    public function countdown_selesai($id_transaksi){
-        
+    public function countdown_selesai($id_transaksi)
+    {
+
         $data = [
             "status_pengembalian"   => "Kembali",
             "status_rental"         => "Gagal",
@@ -331,25 +325,24 @@ class Customer extends CI_Controller
                         "updated"               => date('Y-m-d H:i:s'),
                         "updated_by"            => $this->session->userdata('id_user'),
                     ];
-                    
+
                     $this->Transaksi_model->update_transaksi($data, $t['id_transaksi']);
-                    
-                    $this->session->set_flashdata('failed', '<b>Transaksi Gagal!</b> Transaksi rental mobil <b>' 
-                        . $t['merek'] . '('.$t['no_plat'].')</b> dengan tanggal rental <b>' . $t['tgl_rental']. ' - ' 
-                        . $t['tgl_kembali'].'</b> telah gagal karena Anda telat membayar biaya rental!');  
-                    
-                        // redirect('transaksi'); 
+
+                    $this->session->set_flashdata('failed', '<b>Transaksi Gagal!</b> Transaksi rental mobil <b>'
+                        . $t['merek'] . '(' . $t['no_plat'] . ')</b> dengan tanggal rental <b>' . $t['tgl_rental'] . ' - '
+                        . $t['tgl_kembali'] . '</b> telah gagal karena Anda telat membayar biaya rental!');
+
+                    // redirect('transaksi'); 
                 }
             }
         }
-        
     }
-    
+
     //refund biaya ketika cancel kurang dari tanggal rental
-    public function transaksi_full_refund($id_transaksi)    
+    public function transaksi_full_refund($id_transaksi)
     {
         $transaksi = $this->Transaksi_model->get_transaksi_by_id($id_transaksi);
-        
+
         $data = [
             "tgl_cancel"            => date('Y/m/d'),
             "status_rental"         => "Batal",
@@ -362,22 +355,22 @@ class Customer extends CI_Controller
 
         $this->Transaksi_model->update_transaksi($data, $id_transaksi);
 
-        $this->session->set_flashdata('success', '<b>Transaksi berhasil dibatalkan!</b> Biaya refund akan segera diproses oleh admin. Silahkan cek pembayaran.');  
-        
-        redirect('transaksi'); 
+        $this->session->set_flashdata('success', '<b>Transaksi berhasil dibatalkan!</b> Biaya refund akan segera diproses oleh admin. Silahkan cek pembayaran.');
 
+        redirect('transaksi');
     }
 
     //update transaksi ketika pembatalan di hari h tanggal rental
-    public function batal_hari_h($id_transaksi){
+    public function batal_hari_h($id_transaksi)
+    {
         $transaksi = $this->Transaksi_model->get_transaksi_by_id($id_transaksi);
-        
+
         $harga_mobil = $transaksi['harga'];
         $total_akhir = $transaksi['total_akhir'];
 
         $total_refund = $total_akhir - ($harga_mobil / 2);
         $total_akhir = $harga_mobil / 2;
-        
+
         $data = [
             "tgl_cancel"            => date('Y/m/d'),
             "status_rental"         => "Batal",
@@ -386,15 +379,14 @@ class Customer extends CI_Controller
             "updated"               => date('Y-m-d H:i:s'),
             "updated_by"            => $this->session->userdata('id_user'),
         ];
-        
-        $this->Transaksi_model->update_transaksi($data, $id_transaksi);
-        
-        $this->session->set_flashdata('success', '<b>Transaksi berhasil dibatalkan!</b> Biaya refund akan segera diproses oleh admin. Silahkan cek pembayaran.');  
-        
-        redirect('transaksi'); 
 
+        $this->Transaksi_model->update_transaksi($data, $id_transaksi);
+
+        $this->session->set_flashdata('success', '<b>Transaksi berhasil dibatalkan!</b> Biaya refund akan segera diproses oleh admin. Silahkan cek pembayaran.');
+
+        redirect('transaksi');
     }
-    
+
 
     // download bukti refund
     public function download_bukti_refund($id_transaksi)
@@ -409,29 +401,28 @@ class Customer extends CI_Controller
     {
         check_not_login();
         $data['transaksi'] = $this->Transaksi_model->get_transaksi_by_id($id_transaksi);
-        
+
         $this->form_validation->set_rules(
             'review',
             'Review',
             'required',
             array(
                 'required' => '<p class="text-danger"> Kamu belum mengisi %s !</p>'
-                )
+            )
         );
-        
+
         if ($this->form_validation->run() == FALSE) {
             $this->template->load('templateCustomer', 'customer/review', $data);
         } else {
             $this->addReview();
         }
-        
     }
-    
+
     // menginputkan review ke database
     public function addReview()
     {
         $id_transaksi =  $this->input->post('id_transaksi', true);
-            
+
         $data = [
             "id_user"       => $this->session->userdata('id_user'),
             "id_mobil"      => $this->input->post('id_mobil', true),
@@ -444,23 +435,21 @@ class Customer extends CI_Controller
         ];
 
         $this->Review_model->add_review($data);
-        
+
         if ($this->db->affected_rows() > 0) {
             // alert pemberitahuan berhasil melakukan penginputan 
             $this->session->set_flashdata('success', '<b>Review terkirim!</b> Terimakasih atas review.');
             redirect('transaksi');
-        }else{
+        } else {
             $this->session->set_flashdata('failed', '<b>Review gagal terkirim!</b> Silahkan lakukan review kembali.');
             redirect('transaksi/review/' . $id_transaksi);
         }
-
     }
-    
+
     // print struk invoice 
     public function cetak_invoice($id)
     {
         $data['transaksi'] = $this->db->query("SELECT * FROM transaksi tr, mobil mb, customer cs WHERE tr.id_mobil=mb.id_mobil AND tr.id_customer=cs.id_customer AND tr.id_rental='$id'")->result();
         $this->load->view('customer/cetak_invoice', $data);
     }
-    
 }

@@ -3,127 +3,143 @@
 class Data_tipe extends CI_Controller
 {
 
+
   public function __construct()
   {
     parent::__construct();
-
-    if (empty($this->session->userdata('username'))) {
-      $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Anda belum login!</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>');
-      redirect('auth/login');
-    } elseif ($this->session->userdata('role') != '1') {
-      $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Anda tidak punya akses ke halaman ini!</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>');
-      redirect('customer/dashboard');
-    }
+    check_not_login(); /*pengecekan status login */
+    check_admin(); /*pengecekan status level admin atau bukan */
+    // load semua model yang dibutuhkan
+    $this->load->model('Tipe_model');
   }
+
 
   public function index()
   {
-    $data['tipe'] = $this->rental_model->get_data('tipe')->result();
-    $this->load->view('templates_admin/header');
-    $this->load->view('templates_admin/sidebar');
-    $this->load->view('admin/data_tipe', $data);
-    $this->load->view('templates_admin/footer');
+    $data['tipe'] = $this->Tipe_model->get_all_tipe();
+    $this->template->load('templateAdmin', 'admin/data_tipe', $data);
   }
-
-  public function tambah_tipe()
+  //tampilkan halaman tambah tipe
+  public function addTipe()
   {
-    $this->load->view('templates_admin/header');
-    $this->load->view('templates_admin/sidebar');
-    $this->load->view('admin/form_tambah_tipe');
-    $this->load->view('templates_admin/footer');
-  }
+    $this->form_validation->set_rules(
+      'kode_tipe',
+      'Kode Tipe',
+      'required|is_unique[tipe.kode_tipe]',
+      array(
+        'required' => '<p class="text-danger">  * Kamu belum mengisi %s !</p>',
+        'is_unique' => '<p class="text-danger">  * %s ini telah digunakan!</p>'
+      )
+    );
 
-  public function tambah_tipe_aksi()
-  {
-    $this->_rules();
+    $this->form_validation->set_rules(
+      'nama_tipe',
+      'Nama Tipe',
+      'required|is_unique[tipe.nama_tipe]',
+      array(
+        'required' => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+        'is_unique' => '<p class="text-danger">  * %s ini telah digunakan!</p>'
+      )
+    );
 
-    if ($this->form_validation->run() == FALSE) {
-      $this->tambah_tipe();
+    if ($this->form_validation->run() ==  FALSE) {
+      $this->template->load('templateAdmin', 'admin/form_tambah_tipe');
     } else {
-      $kode_tipe = $this->input->post('kode_tipe');
-      $nama_tipe = $this->input->post('nama_tipe');
+      $this->addTipeProses();
+    }
+  }
+  //proses tambah atau input data pada tabel tipe
+  public function addTipeProses()
+  {
+    $data = [
+      "kode_tipe"     => $this->input->post('kode_tipe'),
+      "nama_tipe"     => $this->input->post('nama_tipe'),
+      "created"       => date('Y-m-d H:i:s'),
+      "created_by"    => $this->session->userdata('id_user')
+    ];
 
-      $data = array(
-        'kode_tipe' => $kode_tipe,
-        'nama_tipe' => $nama_tipe,
-      );
+    $this->Tipe_model->add_tipe($data);
 
-      $this->rental_model->insert_data($data, 'tipe');
-      $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-      Data tipe berhasil ditambahkan
-      <button type="button" class="close" data-dismiss="alert" aria-label="close">
-        <span aria-hidden="true">&times;</span>
-      </button></div>');
+    if ($this->db->affected_rows() > 0) {
+      $this->session->set_flashdata('success', '<b>Data berhasil diinput!</b> Silahkan cek kembali data Anda.');
+      redirect('admin/data_tipe');
+    } else {
+      $this->session->set_flashdata('failed', '<b>Data gagal diinput!</b> Silahkan cek kembali data Anda.');
       redirect('admin/data_tipe');
     }
   }
 
   public function update_tipe($id)
   {
-    $where = array('id_tipe' => $id);
-    $data['tipe'] = $this->db->query("SELECT * FROM tipe WHERE id_tipe = '$id'")->result();
-    $this->load->view('templates_admin/header');
-    $this->load->view('templates_admin/sidebar');
-    $this->load->view('admin/form_update_tipe', $data);
-    $this->load->view('templates_admin/footer');
+    $is_unique_k = '|is_unique[tipe.kode_tipe]';
+    $is_unique_n = '|is_unique[tipe.nama_tipe]';
+
+    $old_nama_tipe    = $this->input->post('old_nama_tipe');
+    $old_kode_tipe    = $this->input->post('old_kode_tipe');
+    $nama_tipe        = $this->input->post('nama_tipe');
+    $kode_tipe        = $this->input->post('kode_tipe');
+
+    if ($old_kode_tipe == $kode_tipe) {
+      $is_unique_k = '';
+    }
+
+    if ($old_nama_tipe == $nama_tipe) {
+      $is_unique_n = '';
+    }
+
+    $this->form_validation->set_rules(
+      'kode_tipe',
+      'Kode Tipe',
+      'required' . $is_unique_k,
+      array(
+        'required' => '<p class="text-danger">  * Kamu belum mengisi %s !</p>',
+        'is_unique' => '<p class="text-danger">  * %s ini telah digunakan!</p>'
+      )
+    );
+
+    $this->form_validation->set_rules(
+      'nama_tipe',
+      'Nama Tipe',
+      'required' . $is_unique_n,
+      array(
+        'required' => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+        'is_unique' => '<p class="text-danger">  * %s ini telah digunakan!</p>'
+      )
+    );
+
+    if ($this->form_validation->run() ==  FALSE) {
+      $data['tipe'] = $this->Tipe_model->get_tipe_by_id($id);
+      $this->template->load('templateAdmin', 'admin/form_update_tipe', $data);
+    } else {
+      $this->updateTipeProses();
+    }
   }
 
-  public function update_tipe_aksi()
+  public function updateTipeProses()
   {
-    $this->_rules();
+    $data = [
+      "kode_tipe"     => $this->input->post('kode_tipe'),
+      "nama_tipe"     => $this->input->post('nama_tipe'),
+      "updated"       => date('Y-m-d H:i:s'),
+      "updated_by"    => $this->session->userdata('id_user')
+    ];
+    $whare = $this->input->post('id_tipe');
 
-    if ($this->form_validation->run() == FALSE) {
-      $id = $this->input->post('id_tipe');
-      $this->update_tipe($id);
+    $this->Tipe_model->update_tipe($data, $whare);
+
+    if ($this->db->affected_rows() > 0) {
+      $this->session->set_flashdata('success', '<b>Data berhasil diupdate!</b> Silahkan cek kembali data Anda.');
+      redirect('admin/data_tipe');
     } else {
-      $id        = $this->input->post('id_tipe');
-      $kode_tipe = $this->input->post('kode_tipe');
-      $nama_tipe = $this->input->post('nama_tipe');
-
-      $data = array(
-        'kode_tipe' => $kode_tipe,
-        'nama_tipe' => $nama_tipe,
-      );
-
-      $where = array('id_tipe' => $id);
-
-      $this->rental_model->update_data('tipe', $data, $where);
-      $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-      Data tipe berhasil diupdate
-      <button type="button" class="close" data-dismiss="alert" aria-label="close">
-        <span aria-hidden="true">&times;</span>
-      </button></div>');
+      $this->session->set_flashdata('failed', '<b>Data gagal diupdate!</b> Silahkan cek kembali data Anda.');
       redirect('admin/data_tipe');
     }
   }
 
   public function delete_tipe($id)
   {
-    $where = array('id_tipe' => $id);
-    $this->rental_model->delete_data($where, 'tipe');
-    $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-    Data tipe berhasil dihapus
-    <button type="button" class="close" data-dismiss="alert" aria-label="close">
-      <span aria-hidden="true">&times;</span>
-    </button></div>');
+    $this->Tipe_model->delete_tipe($id);
+    $this->session->set_flashdata('success', '<b>Data berhasil dihapus!</b> Silahkan cek kembali data Anda.');
     redirect('admin/data_tipe');
-  }
-
-
-
-  public function _rules()
-  {
-    $this->form_validation->set_rules('kode_tipe', 'Kode Tipe', 'required');
-    $this->form_validation->set_rules('nama_tipe', 'Nama Tipe', 'required');
   }
 }

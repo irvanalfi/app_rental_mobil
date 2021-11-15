@@ -20,8 +20,8 @@ function check_not_login()
 function check_admin()
 {
     $CI = &get_instance();
-    $CI->load->library('fungsi');
-    if ($CI->fungsi->user_login()->level != 1) {
+    // $CI->load->library('fungsi');
+    if ($CI->session->userdata('role') != 1) {
         redirect('beranda');
     }
 }
