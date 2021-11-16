@@ -6,43 +6,22 @@ class Data_mobil extends CI_Controller
   public function __construct()
   {
     parent::__construct();
-
-    if (empty($this->session->userdata('username'))) {
-      $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Anda belum login!</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>');
-      redirect('auth/login');
-    } elseif ($this->session->userdata('role') != '1') {
-      $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Anda tidak punya akses ke halaman ini!</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>');
-      redirect('customer/dashboard');
-    }
+    check_not_login(); /*pengecekan status login */
+    check_admin(); /*pengecekan status level admin atau bukan */
+    // load semua model yang dibutuhkan
+    $this->load->model('Mobil_model');
   }
 
   public function index()
   {
-    $data['mobil'] = $this->rental_model->get_data('mobil')->result();
-    $data['tipe'] = $this->rental_model->get_data('tipe')->result();
-    $this->load->view('templates_admin/header');
-    $this->load->view('templates_admin/sidebar');
-    $this->load->view('admin/data_mobil', $data);
-    $this->load->view('templates_admin/footer');
+    $data['mobil'] = $this->Mobil_model->get_all_mobil();
+    $this->template->load('templateAdmin', 'admin/data_mobil', $data);
   }
 
   public function tambah_mobil()
   {
     $data['tipe'] = $this->rental_model->get_data('tipe')->result();
-    $this->load->view('templates_admin/header');
-    $this->load->view('templates_admin/sidebar');
-    $this->load->view('admin/form_tambah_mobil', $data);
-    $this->load->view('templates_admin/footer');
+    $this->template->load('templateAdmin', 'admin/data_mobil', $data);
   }
 
   public function tambah_mobil_aksi()

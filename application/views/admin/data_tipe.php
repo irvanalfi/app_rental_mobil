@@ -1,7 +1,14 @@
 <div class="main-content">
   <section class="section">
     <div class="section-header">
-      <h1>Data Tipe Mobil</h1>
+      <h1>DataTables</h1>
+      <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item text-capitalize"><?= $this->uri->segment(1) ?></div>
+        <div class="breadcrumb-item text-capitalize"><?= $this->uri->segment(2) ?></div>
+        <?php if ($this->uri->segment(3) != '') : ?>
+          <div class="breadcrumb-item text-capitalize">$this->uri->segment(3)</div>
+        <?php endif; ?>
+      </div>
     </div>
 
     <a href="<?= base_url('admin/data_tipe/addTipe'); ?>" class="btn btn-primary mb-3">Tambah Data</a>
@@ -63,7 +70,6 @@
                   <?php endforeach ?>
                 </tbody>
               </table>
-
             </div>
           </div>
         </div>
