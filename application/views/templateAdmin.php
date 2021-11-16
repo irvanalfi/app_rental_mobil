@@ -171,21 +171,22 @@
                         <a href="index.html">HRC</a>
                     </div>
                     <ul class="sidebar-menu">
-                        <li><a class="nav-link" href="<?= base_url('admin/dashboard'); ?>"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
-                        <li class="menu-header">Stisla</li>
-                        <li class="dropdown">
+                        <br>
+                        <li class="<?= $this->uri->segment(2) == 'dashboard' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/dashboard'); ?>"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+                        <li class="dropdown <?= $this->uri->segment(2) == 'data_mobil' ||  $this->uri->segment(2) == 'data_review' ||  $this->uri->segment(2) == 'data_tipe' ? 'active' : ''; ?>">
                             <a href="#" class="nav-link has-dropdown"><i class="fas fa-car"></i><span>Mobil</span></a>
                             <ul class="dropdown-menu">
-                                <li><a class="nav-link" href="<?= base_url('admin/data_mobil'); ?>"><i class="fas fa-car"></i> <span>Data Mobil</span></a></li>
-                                <li><a class="nav-link" href="<?= base_url('admin/data_review'); ?>"><i class="fas fa-star"></i> <span>Data Review</span></a></li>
+                                <li class="<?= $this->uri->segment(2) == 'data_mobil' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/data_mobil'); ?>"><i class="fas fa-car"></i> <span>Data Mobil</span></a></li>
+                                <li class="<?= $this->uri->segment(2) == 'data_review' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/data_review'); ?>"><i class="fas fa-star"></i> <span>Data Review</span></a></li>
+                                <li class="<?= $this->uri->segment(2) == 'data_tipe' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/data_tipe'); ?>"><i class="fas fa-grip-horizontal"></i> <span>Data Tipe</span></a></li>
                             </ul>
                         </li>
-                        <li><a class="nav-link" href="<?= base_url('admin/data_tipe'); ?>"><i class="fas fa-grip-horizontal"></i> <span>Data Tipe</span></a></li>
-                        <li><a class="nav-link" href="<?= base_url('admin/data_customer'); ?>"><i class="fas fa-users"></i> <span>Data Customer</span></a></li>
-                        <li><a class="nav-link" href="<?= base_url('admin/transaksi'); ?>"><i class="fas fa-random"></i> <span>Transaksi</span></a></li>
-                        <li><a class="nav-link" href="<?= base_url('admin/laporan'); ?>"><i class="fas fa-clipboard-list"></i> <span>Laporan</span></a></li>
+                        <li class="<?= $this->uri->segment(2) == 'data_cutomer' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/data_customer'); ?>"><i class="fas fa-users"></i> <span>Data Customer</span></a></li>
+                        <li class="<?= $this->uri->segment(2) == 'data_contact' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/data_contact'); ?>"><i class="fas fa-headset"></i> <span>Data Contact</span></a></li>
+                        <li class="<?= $this->uri->segment(2) == 'transaksi' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/transaksi'); ?>"><i class="fas fa-random"></i> <span>Transaksi</span></a></li>
+                        <li class="<?= $this->uri->segment(2) == 'laporan' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/laporan'); ?>"><i class="fas fa-clipboard-list"></i> <span>Laporan</span></a></li>
                         <li><a class="nav-link" href="<?= base_url('auth/logout'); ?>"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
-                        <li><a class="nav-link" href="<?= base_url('auth/ganti_password'); ?>"><i class="fas fa-lock"></i> <span>Ganti Password</span></a></li>
+                        <li class="<?= $this->uri->segment(2) == 'ganti_password' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('auth/ganti_password'); ?>"><i class="fas fa-lock"></i> <span>Ganti Password</span></a></li>
                     </ul>
 
                 </aside>
@@ -239,6 +240,18 @@
         $("#alert1").fadeTo(2000, 500).slideUp(500, function() {
             $("#alert1").slideUp(500);
         });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '#dtl_psn', function() {
+                var subject = $(this).data('subject');
+                var pesan = $(this).data('pesan');
+                $('#subject1').text(subject);
+                $('#pesan1').text(pesan);
+            })
+        })
     </script>
 </body>
 
