@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <a href="<?= base_url('admin/data_tipe/addTipe'); ?>" class="btn btn-primary mb-3">Tambah Data</a>
+    <a href="<?= base_url('admin/Tipe/addTipe'); ?>" class="btn btn-primary mb-3">Tambah Data</a>
 
     <?php if ($this->session->flashdata('success') != null) : ?>
       <div class="row">
@@ -63,8 +63,8 @@
                       <td><?= $tp['kode_tipe'] ?></td>
                       <td><?= $tp['nama_tipe'] ?></td>
                       <td class="align-middle">
-                        <a href="<?= base_url('admin/data_tipe/update_tipe/') . $tp['id_tipe'] ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
-                        <a href="<?= base_url('admin/data_tipe/delete_tipe/') . $tp['id_tipe'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')"><i class="fas fa-trash"></i></a>
+                        <a href="<?= base_url('admin/Tipe/update_tipe/') . $tp['id_tipe'] ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                        <a href="<?= base_url('admin/Tipe/delete_tipe/') . $tp['id_tipe'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')"><i class="fas fa-trash"></i></a>
                       </td>
                     </tr>
                   <?php endforeach ?>
