@@ -36,15 +36,12 @@
                 <ul class="navbar-nav navbar-right">
                     <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle beep"><i class="far fa-envelope"></i></a>
                         <div class="dropdown-menu dropdown-list dropdown-menu-right">
-                            <div class="dropdown-header">Messages
-                                <div class="float-right">
-                                    <a href="#">Mark All As Read</a>
-                                </div>
+                            <div class="dropdown-header">Contact Masuk
                             </div>
                             <div class="dropdown-list-content dropdown-list-message">
                                 <a href="#" class="dropdown-item dropdown-item-unread">
                                     <div class="dropdown-item-avatar">
-                                        <img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle">
+                                        <img alt="image" src="<?= base_url('assets/assets_admin/assets/img/avatar/') ?>avatar-1.png" class="rounded-circle">
                                         <div class="is-online"></div>
                                     </div>
                                     <div class="dropdown-item-desc">
@@ -55,7 +52,7 @@
                                 </a>
                                 <a href="#" class="dropdown-item dropdown-item-unread">
                                     <div class="dropdown-item-avatar">
-                                        <img alt="image" src="assets/img/avatar/avatar-2.png" class="rounded-circle">
+                                        <img alt="image" src="<?= base_url('assets/assets_admin/assets/img/avatar/') ?>avatar-2.png" class="rounded-circle">
                                     </div>
                                     <div class="dropdown-item-desc">
                                         <b>Dedik Sugiharto</b>
@@ -63,44 +60,13 @@
                                         <div class="time">12 Hours Ago</div>
                                     </div>
                                 </a>
-                                <a href="#" class="dropdown-item dropdown-item-unread">
-                                    <div class="dropdown-item-avatar">
-                                        <img alt="image" src="assets/img/avatar/avatar-3.png" class="rounded-circle">
-                                        <div class="is-online"></div>
-                                    </div>
-                                    <div class="dropdown-item-desc">
-                                        <b>Agung Ardiansyah</b>
-                                        <p>Sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        <div class="time">12 Hours Ago</div>
-                                    </div>
-                                </a>
-                                <a href="#" class="dropdown-item">
-                                    <div class="dropdown-item-avatar">
-                                        <img alt="image" src="assets/img/avatar/avatar-4.png" class="rounded-circle">
-                                    </div>
-                                    <div class="dropdown-item-desc">
-                                        <b>Ardian Rahardiansyah</b>
-                                        <p>Duis aute irure dolor in reprehenderit in voluptate velit ess</p>
-                                        <div class="time">16 Hours Ago</div>
-                                    </div>
-                                </a>
-                                <a href="#" class="dropdown-item">
-                                    <div class="dropdown-item-avatar">
-                                        <img alt="image" src="assets/img/avatar/avatar-5.png" class="rounded-circle">
-                                    </div>
-                                    <div class="dropdown-item-desc">
-                                        <b>Alfa Zulkarnain</b>
-                                        <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
-                                        <div class="time">Yesterday</div>
-                                    </div>
-                                </a>
                             </div>
                             <div class="dropdown-footer text-center">
-                                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                                <a href="<?= site_url('admin/data_contact'); ?>">View All <i class="fas fa-chevron-right"></i></a>
                             </div>
                         </div>
                     </li>
-                    <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
+                    <!-- <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
                         <div class="dropdown-menu dropdown-list dropdown-menu-right">
                             <div class="dropdown-header">Notifications
                                 <div class="float-right">
@@ -158,7 +124,7 @@
                                 <a href="#">View All <i class="fas fa-chevron-right"></i></a>
                             </div>
                         </div>
-                    </li>
+                    </li> -->
                     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user" aria-expanded="false">
                             <img alt="image" src="<?= base_url('assets/upload/user/avatar/') . $this->session->userdata('avatar'); ?>" class="rounded-circle mr-1">
                             <div class="d-sm-none d-lg-inline-block"><?= $this->session->userdata('nama') ?></div>
@@ -188,7 +154,7 @@
                             <a href="<?= site_url('admin/dashboard'); ?>" class="nav-link <?= $this->uri->segment(2) == 'dashboard' ? 'active' : ''; ?>"><i class="fas fa-fire"></i><span>Dashboard</span></a>
                         </li>
                         <li class="menu-header">Mobil</li>
-                        <li class="nav-item dropdown <?= $this->uri->segment(2) == 'data_mobil' || $this->uri->segment(2) == 'data_review' || $this->uri->segment(2) == 'tipe' ? 'active' : ''; ?>">
+                        <li class="nav-item dropdown <?= $this->uri->segment(2) == 'data_mobil' || $this->uri->segment(2) == 'review' || $this->uri->segment(2) == 'tipe' ? 'active' : ''; ?>">
                             <a href=" #" class="nav-link has-dropdown"><i class="fas fa-car"></i> <span>Mobil</span></a>
                             <ul class="dropdown-menu">
                                 <li class="<?= $this->uri->segment(2) == 'data_mobil' ? 'active' : ''; ?>">
@@ -197,8 +163,8 @@
                                 <li class="<?= $this->uri->segment(2) == 'tipe' ? 'active' : ''; ?>">
                                     <a class=" nav-link" href="<?= site_url('admin/tipe'); ?>"><i class="fas fa-grip-horizontal"></i> <span>Data Tipe Mobil</span></a>
                                 </li>
-                                <li class="<?= $this->uri->segment(2) == 'data_review' ? 'active' : ''; ?>">
-                                    <a class=" nav-link" href="<?= site_url('admin/data_review'); ?>"><i class="fas fa-star"></i> <span>Data Review</span></a>
+                                <li class="<?= $this->uri->segment(2) == 'review' ? 'active' : ''; ?>">
+                                    <a class=" nav-link" href="<?= site_url('admin/review'); ?>"><i class="fas fa-star"></i> <span>Data Review</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -288,6 +254,16 @@
                 var pesan = $(this).data('pesan');
                 $('#subject1').text(subject);
                 $('#pesan1').text(pesan);
+            })
+        })
+
+        // tampil detail review 
+        $(document).ready(function() {
+            $(document).on('click', '#dtl_rvw', function() {
+                var bintang = $(this).data('star');
+                var review = $(this).data('review');
+                $('#bintang').text(bintang);
+                $('#review').text(review);
             })
         })
 

@@ -26,12 +26,6 @@ class Contact_model extends CI_Model
         return $query->row_array();
     }
 
-    //menambahkan contact baru
-    // public function add_contact($data)
-    // {
-    //     $this->db->insert('contact', $data);
-    // }
-
     //mengupdate data contact
     public function update_contact($id_contact)
     {
