@@ -3,6 +3,8 @@
 class Data_user extends CI_Controller
 {
 
+  public $statusUpload = true;
+
   public function __construct()
   {
     parent::__construct();
@@ -107,6 +109,7 @@ class Data_user extends CI_Controller
         'required' => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
       )
     );
+
     if (empty($_FILES['foto_ktp']['name'])) {
       $this->form_validation->set_rules(
         'foto_ktp',
@@ -117,6 +120,7 @@ class Data_user extends CI_Controller
         )
       );
     }
+    
     // untuk foto profile tidak wajib 
     if (empty($_FILES['avatar']['name'])) {
       $this->form_validation->set_rules(
@@ -138,47 +142,7 @@ class Data_user extends CI_Controller
 
   public function addUserProses()
   {
-    // upload gambar ktp
-    $foto_ktp       = $_FILES['foto_ktp']['name'];
-    if ($foto_ktp = '') {
-    } else {
-      $config['upload_path']    = './assets/upload/user/ktp/';
-      $config['allowed_types']  = 'jpg|jpeg|png|tiff|gif';
-      $config['detect_mime']    = TRUE;
-      $config['max_size']       = 5120;
-      $config['file_name']      = 'ktp-' . date('dmy') . '-' . substr(md5(rand()), 0, 10);
-
-      $this->load->library('upload', $config);
-
-      if (!$this->upload->do_upload('foto_ktp')) {
-        $eror = array('error' => $this->upload->display_errors());
-        $this->session->set_flashdata('failed', $eror);
-        $this->template->load('templateAdmin', 'admin/form_tambah_user');
-      } else {
-        $foto_ktp = $this->upload->data('file_name');
-      }
-    }
-    // upload foto profil 
-    $avatar       = $_FILES['avatar']['name'];
-    if ($avatar = '') {
-    } else {
-      $config['upload_path']    = './assets/upload/user/avatar/';
-      $config['allowed_types']  = 'jpg|jpeg|png|tiff|gif';
-      $config['detect_mime']    = TRUE;
-      $config['max_size']       = 5120;
-      $config['file_name']      = 'avatar-' . date('dmy') . '-' . substr(md5(rand()), 0, 10);
-
-      $this->load->library('upload', $config);
-
-      if (!$this->upload->do_upload('avatar')) {
-        $eror = array('error' => $this->upload->display_errors());
-        $this->session->set_flashdata('failed', $eror);
-        $this->template->load('templateAdmin', 'admin/form_tambah_user');
-      } else {
-        $avatar = $this->upload->data('file_name');
-      }
-    }
-
+    $file = explode(",", $this->uploadFoto());
     $data = [
       "nama"        => $this->input->post('nama'),
       "username"    => $this->input->post('username'),
@@ -186,11 +150,11 @@ class Data_user extends CI_Controller
       "email"       => $this->input->post('email'),
       "no_telepon"  => $this->input->post('no_telepon'),
       "no_ktp"      => $this->input->post('no_ktp'),
-      "password"    => $this->input->post('password'),
+      "password"    => md5($this->input->post('password')),
       "gender"      => $this->input->post('gender'),
       "role"        => $this->input->post('role'),
-      "foto_ktp"    => $foto_ktp,
-      "avatar"      => $avatar,
+      "foto_ktp"    => $file[0],
+      "avatar"      => $file[1],
       "created"     => date('Y-m-d H:i:s'),
       "created_by"  => $this->session->userdata('id_user')
     ];
@@ -218,40 +182,40 @@ class Data_user extends CI_Controller
 
   public function update_user_aksi()
   {
-    $this->_rules();
+    // $this->_rules();
 
-    if ($this->form_validation->run() == FALSE) {
-      $id = $this->input->post('id_user');
-      $this->update_user($id);
-    } else {
-      $id         = $this->input->post('id_user');
-      $nama       = $this->input->post('nama');
-      $username   = $this->input->post('username');
-      $alamat     = $this->input->post('alamat');
-      $gender     = $this->input->post('gender');
-      $no_telepon = $this->input->post('no_telepon');
-      $no_ktp     = $this->input->post('no_ktp');
-      $password   = md5($this->input->post('password'));
+    // if ($this->form_validation->run() == FALSE) {
+    //   $id = $this->input->post('id_user');
+    //   $this->update_user($id);
+    // } else {
+    //   $id         = $this->input->post('id_user');
+    //   $nama       = $this->input->post('nama');
+    //   $username   = $this->input->post('username');
+    //   $alamat     = $this->input->post('alamat');
+    //   $gender     = $this->input->post('gender');
+    //   $no_telepon = $this->input->post('no_telepon');
+    //   $no_ktp     = $this->input->post('no_ktp');
+    //   $password   = md5($this->input->post('password'));
 
-      $data = array(
-        'nama'       => $nama,
-        'username'   => $username,
-        'alamat'     => $alamat,
-        'gender'     => $gender,
-        'no_telepon' => $no_telepon,
-        'no_ktp'     => $no_ktp,
-        'password'   => $password,
-      );
+    //   $data = array(
+    //     'nama'       => $nama,
+    //     'username'   => $username,
+    //     'alamat'     => $alamat,
+    //     'gender'     => $gender,
+    //     'no_telepon' => $no_telepon,
+    //     'no_ktp'     => $no_ktp,
+    //     'password'   => $password,
+    //   );
 
-      $where = array('id_user' => $id);
-      $this->rental_model->update_data('user', $data, $where);
-      $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-      Data user berhasil diupdate
-      <button type="button" class="close" data-dismiss="alert" aria-label="close">
-        <span aria-hidden="true">&times;</span>
-      </button></div>');
-      redirect('admin/data_user');
-    }
+    //   $where = array('id_user' => $id);
+    //   $this->rental_model->update_data('user', $data, $where);
+    //   $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+    //   Data user berhasil diupdate
+    //   <button type="button" class="close" data-dismiss="alert" aria-label="close">
+    //     <span aria-hidden="true">&times;</span>
+    //   </button></div>');
+    //   redirect('admin/data_user');
+    // }
   }
 
   public function delete_user($id)
@@ -266,15 +230,39 @@ class Data_user extends CI_Controller
     redirect('admin/data_user');
   }
 
-
-  public function _rules()
+  public function uploadFoto()
   {
-    $this->form_validation->set_rules('nama', 'Nama', 'required');
-    $this->form_validation->set_rules('username', 'Username', 'required');
-    $this->form_validation->set_rules('alamat', 'Alamat', 'required');
-    $this->form_validation->set_rules('gender', 'Gender', 'required');
-    $this->form_validation->set_rules('no_telepon', 'No. telepon', 'required');
-    $this->form_validation->set_rules('no_ktp', 'No. KTP', 'required|numeric');
-    $this->form_validation->set_rules('password', 'Password', 'required');
+    $config1['upload_path']    = './assets/upload/user/ktp/';
+    $config1['allowed_types']  = 'jpg|jpeg|png';
+    $config1['detect_mime']    = TRUE;
+    $config1['max_size']       = 5120;
+    $config1['file_name']      = 'ktp-' . date('dmy') . '-' . substr(md5(rand()), 0, 10);
+
+    $this->upload->initialize($config1);
+    $uploadKTP    = $this->upload->do_upload('foto_ktp');
+    $namaKTP      = $this->upload->data('file_name');
+    
+    $config['upload_path']    = './assets/upload/user/avatar/';
+    $config['allowed_types']  = 'jpg|jpeg|png';
+    $config['detect_mime']    = TRUE;
+    $config['max_size']       = 5120;
+    $config['file_name']      = 'avatar-' . date('dmy') . '-' . substr(md5(rand()), 0, 10);
+    
+    $this->upload->initialize($config);
+    $uploadAvatar = $this->upload->do_upload('avatar');
+    $namaAvatar   = $this->upload->data('file_name');
+    
+    if ($uploadKTP && $uploadAvatar) {
+      return $namaKTP . ',' . $namaAvatar; 
+    }elseif(!$uploadKTP){
+      $this->session->set_flashdata('failed', "<b>Eror !</b> File foto yang dimasukkan tidak sesuai, silahkan pilih gambar yang lain.");
+      unlink('./assets/upload/user/avatar/'.$namaAvatar);
+      redirect('admin/data_user/addUser');
+    }elseif(!$uploadAvatar){
+      $this->session->set_flashdata('failed', "<b>Eror !</b> File foto yang dimasukkan tidak sesuai, silahkan pilih gambar yang lain.");
+      unlink('./assets/upload/user/ktp/'.$namaKTP);
+      redirect('admin/data_user/addUser');
+    }
   }
+
 }

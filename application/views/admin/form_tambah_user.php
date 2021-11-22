@@ -28,7 +28,7 @@
     <div class="card">
 
       <?php if ($this->session->flashdata('failed') != null) : ?>
-        <div class="row">
+        <div class="row mt-2">
           <div class="col-md-12 mx-0" id="flash" data-flash="<?= $this->session->flashdata('failed'); ?>">
             <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alert1">
               <?php echo $this->session->flashdata('failed') ?>

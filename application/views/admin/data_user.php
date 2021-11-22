@@ -66,7 +66,7 @@
                   foreach ($user as $us) : ?>
                     <tr>
                       <td><?= $no++; ?>.</td>
-                      <td><img alt="image" src="<?= base_url('assets/upload/user/avatar/' . $us['avatar']); ?>" class="rounded-circle mr-1" width="30px"></td>
+                      <td><img alt="image" src="<?= base_url('assets/upload/user/avatar/' . $us['avatar']); ?>" class="rounded-circle mr-1" width="30px" height="30px"></td>
                       <td><?= $us['nama']; ?></td>
                       <td><?= $us['username']; ?></td>
                       <td><?= $us['alamat']; ?></td>
