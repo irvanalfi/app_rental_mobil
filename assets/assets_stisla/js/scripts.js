@@ -1,5 +1,7 @@
 "use strict";
 
+const { ready } = require("jquery");
+
 // ChartJS
 if(window.Chart) {
   Chart.defaults.global.defaultFontFamily = "'Nunito', 'Segoe UI', 'Arial'";

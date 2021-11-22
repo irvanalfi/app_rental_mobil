@@ -2866,6 +2866,14 @@ body.layout-3 .main-footer {
   width: 100%;
   position: relative; }
 
+  #tpassword{
+    display: none;
+  }
+
+  #tcpassword{
+    display: none;
+  }
+
 .main-footer {
   padding: 20px 30px 20px 280px;
   margin-top: 40px;

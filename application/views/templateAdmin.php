@@ -181,7 +181,7 @@
                                 <li class="<?= $this->uri->segment(2) == 'data_tipe' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/data_tipe'); ?>"><i class="fas fa-grip-horizontal"></i> <span>Data Tipe</span></a></li>
                             </ul>
                         </li>
-                        <li class="<?= $this->uri->segment(2) == 'data_cutomer' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/data_customer'); ?>"><i class="fas fa-users"></i> <span>Data Customer</span></a></li>
+                        <li class="<?= $this->uri->segment(2) == 'data_user' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/data_user'); ?>"><i class="fas fa-users"></i> <span>Data User</span></a></li>
                         <li class="<?= $this->uri->segment(2) == 'data_contact' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/data_contact'); ?>"><i class="fas fa-headset"></i> <span>Data Contact</span></a></li>
                         <li class="<?= $this->uri->segment(2) == 'transaksi' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/transaksi'); ?>"><i class="fas fa-random"></i> <span>Transaksi</span></a></li>
                         <li class="<?= $this->uri->segment(2) == 'laporan' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/laporan'); ?>"><i class="fas fa-clipboard-list"></i> <span>Laporan</span></a></li>
@@ -236,23 +236,78 @@
 
     <!-- Page Specific JS File -->
     <script src="<?= base_url('assets/assets_stisla/'); ?>js/page/index-0.js"></script>
-    <script type="text/javascript">
+    <script>
+        // auto close alert
         $("#alert1").fadeTo(2000, 500).slideUp(500, function() {
             $("#alert1").slideUp(500);
         });
-    </script>
+        // upload foto profile
+        function previewPhoto() {
+            const photo = document.querySelector('#avatar');
+            const photoLabel = document.querySelector('.cfl');
+            const imgPreview = document.querySelector('.ip');
 
+            photoLabel.textContent = photo.files[0].name;
+
+            const filePhoto = new FileReader();
+            filePhoto.readAsDataURL(photo.files[0]);
+
+            filePhoto.onload = function(e) {
+                imgPreview.src = e.target.result;
+            }
+        }
+        // upload gambar ktp
+        function previewPhoto1() {
+            const photo = document.querySelector('#ktp');
+            const photoLabel = document.querySelector('.cfl1');
+            const imgPreview = document.querySelector('.ip1');
+
+            photoLabel.textContent = photo.files[0].name;
+
+            const filePhoto = new FileReader();
+            filePhoto.readAsDataURL(photo.files[0]);
+
+            filePhoto.onload = function(e) {
+                imgPreview.src = e.target.result;
+            }
+        }
+    </script>
 
     <script>
-        $(document).ready(function() {
-            $(document).on('click', '#dtl_psn', function() {
-                var subject = $(this).data('subject');
-                var pesan = $(this).data('pesan');
-                $('#subject1').text(subject);
-                $('#pesan1').text(pesan);
-            })
-        })
+        // tampil password 
+        function tampilPassword() {
+            var x = document.getElementById("password");
+            var y = document.getElementById("tpassword");
+            var z = document.getElementById("tpassword1");
+
+            if (x.type === 'password') {
+                x.type = "text";
+                y.style.display = "block";
+                z.style.display = "none";
+            } else {
+                x.type = "password";
+                y.style.display = "none";
+                z.style.display = "block";
+            }
+        }
+        // tampil password confirm 
+        function tampilCPassword() {
+            var x = document.getElementById("cpassword");
+            var y = document.getElementById("tcpassword");
+            var z = document.getElementById("tcpassword1");
+
+            if (x.type === 'password') {
+                x.type = "text";
+                y.style.display = "block";
+                z.style.display = "none";
+            } else {
+                x.type = "password";
+                y.style.display = "none";
+                z.style.display = "block";
+            }
+        }
     </script>
+
 </body>
 
 </html>
