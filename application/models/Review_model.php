@@ -9,9 +9,22 @@
         {    
             $this->db->select('*');
             $this->db->from('review');
-            $this->db->join('mobil', 'mobil.id_mobil = mobil.id_mobil');
+            $this->db->join('mobil', 'mobil.id_mobil = review.id_mobil');
             $this->db->join('user', 'user.id_user = review.id_user');
             $this->db->join('transaksi', 'transaksi.id_transaksi = review.id_transaksi');
+            $query = $this->db->get();
+            return $query->result_array();
+        }
+
+        //menampilkan semua review dengan status 1
+        public function get_all_review_approved()
+        {    
+            $this->db->select('*');
+            $this->db->from('review');
+            $this->db->join('mobil', 'mobil.id_mobil = review.id_mobil');
+            $this->db->join('user', 'user.id_user = review.id_user');
+            $this->db->join('transaksi', 'transaksi.id_transaksi = review.id_transaksi');
+            $this->db->where('review.status', 1);
             $query = $this->db->get();
             return $query->result_array();
         }
@@ -21,7 +34,7 @@
         {
             $this->db->select('*');
             $this->db->from('review');
-            $this->db->join('mobil', 'mobil.id_mobil = mobil.id_mobil');
+            $this->db->join('mobil', 'mobil.id_mobil = review.id_mobil');
             $this->db->join('user', 'user.id_user = review.id_user');
             $this->db->join('transaksi', 'transaksi.id_transaksi = review.id_transaksi');
             $this->db->where('review.id_review', $id);
@@ -34,12 +47,13 @@
         {
             $this->db->select('*');
             $this->db->from('review');
-            $this->db->join('mobil', 'mobil.id_mobil = mobil.id_mobil');
+            $this->db->join('mobil', 'mobil.id_mobil = review.id_mobil');
             $this->db->join('user', 'user.id_user = review.id_user');
             $this->db->join('transaksi', 'transaksi.id_transaksi = review.id_transaksi');
             $this->db->where('review.id_mobil', $id);
+            $this->db->where('review.status', 1);
             $query = $this->db->get();
-            return $query->row_array();
+            return $query->result_array();
         }
 
         //menambahkan review baru

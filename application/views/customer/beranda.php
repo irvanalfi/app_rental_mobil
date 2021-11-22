@@ -161,61 +161,18 @@
         <div class="row ftco-animate">
             <div class="col-md-12">
                 <div class="carousel-testimony owl-carousel ftco-owl">
+                    <?php foreach($review as $r) : ?>
                     <div class="item">
                         <div class="testimony-wrap rounded text-center py-4 pb-5">
-                            <div class="user-img mb-2" style="background-image: url(<?= base_url() ?>assets/assets_customer/images/person_1.jpg)">
+                            <div class="user-img mb-2" style="background-image: url(<?= base_url() ?>assets/upload/user/avatar/<?= $r['avatar']?>)">
                             </div>
                             <div class="text pt-4">
-                                <p class="mb-4">Wenak mobile ditumpak i ki kursine iso mentul2, setire iso diputer2 barngunu pedal gas e nek di idek ki iso mlaku mobile.</p>
-                                <p class="name">Oktaviano Andy</p>
-                                <span class="position">Bapack2 Ketche</span>
+                                <p class="mb-4"><?= $r['review']?></p>
+                                <p class="name"><?= $r['nama']?></p>
                             </div>
                         </div>
                     </div>
-                    <div class="item">
-                        <div class="testimony-wrap rounded text-center py-4 pb-5">
-                            <div class="user-img mb-2" style="background-image: url(<?= base_url() ?>assets/assets_customer/images/person_2.jpg)">
-                            </div>
-                            <div class="text pt-4">
-                                <p class="mb-4">Rim e keset iso mandeg langsung mak set. dadi nek sak wayah wayah enek pitik lewat ki aku iso ngatasi gak sampek keplindes.</p>
-                                <p class="name">Sadewa Mukti</p>
-                                <span class="position">Bakul xiomay</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimony-wrap rounded text-center py-4 pb-5">
-                            <div class="user-img mb-2" style="background-image: url(<?= base_url() ?>assets/assets_customer/images/person_3.jpg)">
-                            </div>
-                            <div class="text pt-4">
-                                <p class="mb-4">kapok aku rental mobil ndek wong lio selain HRC. sumpah ketagihan ngerental ndek HRC supir e ramah sampek cerito utang barang.</p>
-                                <p class="name">Mas isyak touring</p>
-                                <span class="position">Ketua Hurlay Club</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimony-wrap rounded text-center py-4 pb-5">
-                            <div class="user-img mb-2" style="background-image: url(<?= base_url() ?>assets/assets_customer/images/person_1.jpg)">
-                            </div>
-                            <div class="text pt-4">
-                                <p class="mb-4">Kapan kapan aku rental nggen e sampean neh cak. sumpah supir e cag ceg cag ceg, kesit, tepat waktu. nek macet iso miber barang.</p>
-                                <p class="name">Salamun Gaming</p>
-                                <span class="position">Bendahara PUBG indo</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimony-wrap rounded text-center py-4 pb-5">
-                            <div class="user-img mb-2" style="background-image: url(<?= base_url() ?>assets/assets_customer/images/person_1.jpg)">
-                            </div>
-                            <div class="text pt-4">
-                                <p class="mb-4">Perjalanan Aman nyaman sejahtera sentosa. berkat HRC cicilan panci saya lunas. tidak lagi di kejar kejar bank tetel. saya bisa fokus hutang di HRC.</p>
-                                <p class="name">Siti Kondi Lati</p>
-                                <span class="position">Pecinta bank tetel</span>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach?>
                 </div>
             </div>
         </div>

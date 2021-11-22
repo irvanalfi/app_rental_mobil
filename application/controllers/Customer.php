@@ -21,6 +21,7 @@ class Customer extends CI_Controller
     {
         $data['mobil'] = $this->Mobil_model->get_all_mobil();
         $data['jmlh_cutomer'] = $this->User_model->get_jumlah_customer();
+        $data['review'] = $this->Review_model->get_all_review_approved();
         $this->template->load('templateCustomer', 'customer/beranda', $data);
     }
     // tampilan halaman mobil 
