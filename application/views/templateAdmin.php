@@ -281,10 +281,21 @@
 
     <!-- Page Specific JS File -->
     <script>
+        // tampil detail pesan 
+        $(document).ready(function() {
+            $(document).on('click', '#dtl_psn', function() {
+                var subject = $(this).data('subject');
+                var pesan = $(this).data('pesan');
+                $('#subject1').text(subject);
+                $('#pesan1').text(pesan);
+            })
+        })
+
         // auto close alert
         $("#alert1").fadeTo(2000, 500).slideUp(500, function() {
             $("#alert1").slideUp(500);
         });
+
         // upload foto profile
         function previewPhoto() {
             const photo = document.querySelector('#avatar');
@@ -300,6 +311,7 @@
                 imgPreview.src = e.target.result;
             }
         }
+
         // upload gambar ktp
         function previewPhoto1() {
             const photo = document.querySelector('#ktp');
@@ -315,9 +327,7 @@
                 imgPreview.src = e.target.result;
             }
         }
-    </script>
 
-    <script>
         // tampil password 
         function tampilPassword() {
             var x = document.getElementById("password");
@@ -334,6 +344,7 @@
                 z.style.display = "block";
             }
         }
+
         // tampil password confirm 
         function tampilCPassword() {
             var x = document.getElementById("cpassword");
@@ -351,7 +362,6 @@
             }
         }
     </script>
-
 </body>
 
 </html>
