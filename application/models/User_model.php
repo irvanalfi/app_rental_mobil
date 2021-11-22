@@ -30,21 +30,8 @@ class User_model extends CI_Model
     }
 
     //menambahkan user baru
-    public function add_user()
+    public function add_user($data)
     {
-        $data = [
-            "nama"          => $this->input->post('nama', true),
-            "username"      => $this->input->post('username', true),
-            "alamat"        => $this->input->post('alamat', true),
-            "gender"        => $this->input->post('gender', true),
-            "no_telepon"    => $this->input->post('no_telepon', true),
-            "no_ktp"        => $this->input->post('no_ktp', true),
-            "password"      => $this->input->post('password', true),
-            "role"          => $this->input->post('role', true),
-            "created"       => date('Y-m-d H:i:s'),
-            "created_by"    => $this->session->userdata('nama'),
-        ];
-
         $this->db->insert('user', $data);
     }
 
