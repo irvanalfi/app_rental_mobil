@@ -6,10 +6,8 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>HRC</title>
 
-    <!-- General CSS Files -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="<?= base_url('node_modules/'); ?>datatables.net-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="<?= base_url('node_modules/'); ?>datatables.net-select-bs4/css/select.bootstrap4.min.css">
@@ -175,24 +173,27 @@
                     <div class="sidebar-brand sidebar-brand-sm">
                         <a href="index.html">HRC</a>
                     </div>
-                    <ul class="sidebar-menu">
-                        <br>
+                    <ul class="sidebar-menu mt-4">
+                        <li class="menu-header">Dashboard</li>
                         <li class="<?= $this->uri->segment(2) == 'dashboard' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/dashboard'); ?>"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
-                        <li class="dropdown <?= $this->uri->segment(2) == 'data_mobil' ||  $this->uri->segment(2) == 'data_review' ||  $this->uri->segment(2) == 'data_tipe' ? 'active' : ''; ?>">
-                            <a href="#" class="nav-link has-dropdown"><i class="fas fa-car"></i><span>Mobil</span></a>
-                            <ul class="dropdown-menu">
-                                <li class="<?= $this->uri->segment(2) == 'data_mobil' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/data_mobil'); ?>"><i class="fas fa-car"></i> <span>Data Mobil</span></a></li>
-                                <li class="<?= $this->uri->segment(2) == 'data_review' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/data_review'); ?>"><i class="fas fa-star"></i> <span>Data Review</span></a></li>
-                                <li class="<?= $this->uri->segment(2) == 'data_tipe' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/data_tipe'); ?>"><i class="fas fa-grip-horizontal"></i> <span>Data Tipe</span></a></li>
-                            </ul>
-                        </li>
-                        <li class="<?= $this->uri->segment(2) == 'data_user' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/data_user'); ?>"><i class="fas fa-users"></i> <span>Data User</span></a></li>
+                        
+                        <li class="menu-header">Mobil</li>
+                        <li class="<?= $this->uri->segment(2) == 'data_mobil' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/data_mobil'); ?>"><i class="fas fa-car"></i> <span>Data Mobil</span></a></li>
+                        <li class="<?= $this->uri->segment(2) == 'data_review' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/data_review'); ?>"><i class="fas fa-star"></i> <span>Data Review</span></a></li>
+                        <li class="<?= $this->uri->segment(2) == 'Tipe' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/Tipe'); ?>"><i class="fas fa-grip-horizontal"></i> <span>Data Tipe</span></a></li>
+                        
+                        
+                        <li class="menu-header">Contact</li>
                         <li class="<?= $this->uri->segment(2) == 'data_contact' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/data_contact'); ?>"><i class="fas fa-headset"></i> <span>Data Contact</span></a></li>
+                        
+                        <li class="menu-header">Transaksi</li>
                         <li class="<?= $this->uri->segment(2) == 'transaksi' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/transaksi'); ?>"><i class="fas fa-random"></i> <span>Transaksi</span></a></li>
                         <li class="<?= $this->uri->segment(2) == 'laporan' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/laporan'); ?>"><i class="fas fa-clipboard-list"></i> <span>Laporan</span></a></li>
+                        
+                        <li class="menu-header">User</li>    
+                        <li class="<?= $this->uri->segment(2) == 'data_user' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/data_user'); ?>"><i class="fas fa-users"></i> <span>Data User</span></a></li>
                         <li class="<?= $this->uri->segment(2) == 'ganti_password' ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('auth/ganti_password'); ?>"><i class="fas fa-lock"></i> <span>Ganti Password</span></a></li>
                     </ul>
-
                 </aside>
             </div>
 
@@ -239,7 +240,6 @@
     <script src="<?= base_url('assets/assets_stisla/'); ?>js/page/modules-datatables.js"></script>
 
     <!-- Page Specific JS File -->
-    <script src="<?= base_url('assets/assets_stisla/'); ?>js/page/index-0.js"></script>
     <script>
         // auto close alert
         $("#alert1").fadeTo(2000, 500).slideUp(500, function() {

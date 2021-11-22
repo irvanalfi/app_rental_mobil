@@ -91,8 +91,9 @@
                 <label for="">Password *</label>
                 <input type="password" name="password" id="password" class="form-control" value="<?= set_value('') ?>">
                 <span class="eye" onclick="tampilPassword()">
-                  <i class="fas fa-eye mt-2" id="tpassword"> Sembunyikan Password</i>
+                  <i class="fas fa-eye mt-2" id="tpassword" style="display: none;"> Sembunyikan Password</i>
                   <i class="fas fa-eye-slash mt-2" id="tpassword1"> Tampilkan Password</i>
+                  
                 </span>
                 <?= form_error('password', '<div class="text-small text-danger">', '</div>') ?>
               </div>
@@ -102,7 +103,7 @@
                 <label for="">Confirm Password *</label>
                 <input type="password" name="cpassword" id="cpassword" class="form-control" value="<?= set_value('') ?>">
                 <span class="eye" onclick="tampilCPassword()">
-                  <i class="fas fa-eye mt-2" id="tcpassword"> Sembunyikan Password</i>
+                  <i class="fas fa-eye mt-2" id="tcpassword" style="display: none;"> Sembunyikan Password</i>
                   <i class="fas fa-eye-slash mt-2" id="tcpassword1"> Tampilkan Password</i>
                 </span>
                 <?= form_error('cpassword', '<div class="text-small text-danger">', '</div>') ?>
