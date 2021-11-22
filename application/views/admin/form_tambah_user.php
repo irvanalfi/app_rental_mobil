@@ -1,16 +1,3 @@
-<script>
-  // tampil password 
-  $(document).ready(function() {
-    $('tpassword').click(function() {
-      if ($(this).is(':checked ')) {
-        $('#password').attr('type', 'text');
-      } else {
-        $('#password').attr('type', 'password');
-      }
-    })
-  })
-</script>
-
 <div class="main-content">
   <section class="section">
     <div class="section-header">
@@ -91,9 +78,12 @@
                 <label for="">Password *</label>
                 <input type="password" name="password" id="password" class="form-control" value="<?= set_value('') ?>">
                 <span class="eye" onclick="tampilPassword()">
-                  <i class="fas fa-eye mt-2" id="tpassword" style="display: none;"> Sembunyikan Password</i>
-                  <i class="fas fa-eye-slash mt-2" id="tpassword1"> Tampilkan Password</i>
-                  
+                  <div id="tpassword" style="display: none;">
+                    <i class="fas fa-eye mt-2"></i><span style="font-size: 12px;"> Sembunyikan Password</span>
+                  </div>
+                  <div id="tpassword1">
+                    <i class="fas fa-eye-slash mt-2"></i><span style="font-size: 12px;"> Tampilkan Password</span>
+                  </div>
                 </span>
                 <?= form_error('password', '<div class="text-small text-danger">', '</div>') ?>
               </div>
@@ -103,8 +93,12 @@
                 <label for="">Confirm Password *</label>
                 <input type="password" name="cpassword" id="cpassword" class="form-control" value="<?= set_value('') ?>">
                 <span class="eye" onclick="tampilCPassword()">
-                  <i class="fas fa-eye mt-2" id="tcpassword" style="display: none;"> Sembunyikan Password</i>
-                  <i class="fas fa-eye-slash mt-2" id="tcpassword1"> Tampilkan Password</i>
+                  <div id="tcpassword" style="display: none;">
+                    <i class="fas fa-eye mt-2"></i><span style="font-size: 12px;"> Sembunyikan Password</span>
+                  </div>
+                  <div id="tcpassword1">
+                    <i class="fas fa-eye-slash mt-2"></i><span style="font-size: 12px;"> Tampilkan Password</span>
+                  </div>
                 </span>
                 <?= form_error('cpassword', '<div class="text-small text-danger">', '</div>') ?>
               </div>
