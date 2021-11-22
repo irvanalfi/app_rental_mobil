@@ -1,6 +1,6 @@
 <?php
 
-class Data_tipe extends CI_Controller
+class Tipe extends CI_Controller
 {
 
 
@@ -62,10 +62,10 @@ class Data_tipe extends CI_Controller
 
     if ($this->db->affected_rows() > 0) {
       $this->session->set_flashdata('success', '<b>Data berhasil diinput!</b> Silahkan cek kembali data Anda.');
-      redirect('admin/data_tipe');
+      redirect('admin/Tipe');
     } else {
       $this->session->set_flashdata('failed', '<b>Data gagal diinput!</b> Silahkan cek kembali data Anda.');
-      redirect('admin/data_tipe');
+      redirect('admin/Tipe');
     }
   }
 
@@ -129,10 +129,10 @@ class Data_tipe extends CI_Controller
 
     if ($this->db->affected_rows() > 0) {
       $this->session->set_flashdata('success', '<b>Data berhasil diupdate!</b> Silahkan cek kembali data Anda.');
-      redirect('admin/data_tipe');
+      redirect('admin/Tipe');
     } else {
       $this->session->set_flashdata('failed', '<b>Data gagal diupdate!</b> Silahkan cek kembali data Anda.');
-      redirect('admin/data_tipe');
+      redirect('admin/Tipe');
     }
   }
 
@@ -140,6 +140,6 @@ class Data_tipe extends CI_Controller
   {
     $this->Tipe_model->delete_tipe($id);
     $this->session->set_flashdata('success', '<b>Data berhasil dihapus!</b> Silahkan cek kembali data Anda.');
-    redirect('admin/data_tipe');
+    redirect('admin/Tipe');
   }
 }

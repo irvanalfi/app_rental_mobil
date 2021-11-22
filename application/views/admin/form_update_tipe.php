@@ -4,7 +4,7 @@
       <h1>Form Update Tipe Mobil</h1>
     </div>
 
-    <form action="<?= base_url('admin/data_tipe/update_tipe/' . $tipe['id_tipe']) ?>" method="post">
+    <form action="<?= base_url('admin/Tipe/update_tipe/' . $tipe['id_tipe']) ?>" method="post">
       <input type="hidden" name="id_tipe" value="<?= $tipe['id_tipe']; ?>">
       <div class="form-group">
         <label for="">Nama Tipe</label>

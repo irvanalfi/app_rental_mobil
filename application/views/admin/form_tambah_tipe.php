@@ -4,7 +4,7 @@
       <h1>Form Input Tipe Mobil</h1>
     </div>
 
-    <form action="<?= base_url('admin/data_tipe/addTipe') ?>" method="post">
+    <form action="<?= base_url('admin/Tipe/addTipe') ?>" method="post">
       <div class="form-group">
         <label for="">Nama Tipe</label>
         <input type="text" name="nama_tipe" class="form-control" value="<?= set_value('nama_tipe'); ?>">
