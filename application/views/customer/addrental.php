@@ -89,23 +89,14 @@
 												</div>
 											<?php endif ?>
 										</div>
-										<div class="form-group mt-3">
-											<input type="submit" value="Rental Sekarang" class="btn btn-secondary py-3" style="border-radius: 50px !important;" onclick="return confirm('Yakin data anda sudah benar?')">
+										<div class="form-group">
+											<div class="custom-control custom-checkbox">
+												<input type="checkbox" name="setuju" class="custom-control-input" id="centang2">
+												<label class="custom-control-label text-light" for="centang2">Saya setuju dengan <a class="text-dark" href="<?= site_url('auth/termcondition'); ?>">syarat dan ketentuan HRC</a></label>
+											</div>
 										</div>
-										<div class="mt-5">
-											<p class="text-light">Note :</p>
-											<ol class="text-light">
-												<li>Alamat otomatis tertulis alamat pengguna akun, tetapi bisa dirubah
-													sesuai lokasi penjemputan yang diinginkan oleh penyewa.</li>
-												<li>Jika ingin mengambil sendiri mobil di tempat rental, maka alamat
-													bisa diisikan <b>Kantor Rental HRC</b>.</li>
-												<li>Untuk Mobil yang <b>tidak</b> memiliki fitur lepas kunci, maka wajib
-													memakai jasa supir.</li>
-												<li>Untuk Mobil yang memiliki fitur lepas kunci, maka bisa memilih
-													menggunakan jasa supir atau tidak.</li>
-												<li>Apabila telat mengembalikan mobil maka akan didenda sejumlah (harga
-													denda perhari * total hari telat mengembalikan).</li>
-											</ol>
+										<div class="form-group mt-5">
+											<input type="submit" id="btn-rntl" value="Rental Sekarang" class="btn btn-secondary py-3" style="border-radius: 50px !important;" onclick="return confirm('Yakin data anda sudah benar?')" disabled>
 										</div>
 									</form>
 								</div>

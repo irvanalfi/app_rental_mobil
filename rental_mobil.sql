@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 16, 2021 at 08:56 AM
+-- Generation Time: Nov 23, 2021 at 08:14 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.24
 
@@ -45,7 +45,7 @@ CREATE TABLE `contact` (
 
 INSERT INTO `contact` (`id_contact`, `id_user`, `subject`, `pesan`, `status`, `created`, `updated`, `created_by`, `updated_by`) VALUES
 (1, 4, 'Tanya soal mobil', 'Permisi boleh dong spil saldonya', '1', '2021-11-10 22:08:49', '2021-11-16 14:42:24', '4', '7'),
-(2, 7, 'hey hey hey', 'tes tes dicoba low satu dua', '0', '2021-11-16 06:36:18', '2021-11-16 06:36:18', '7', NULL);
+(2, 7, 'hey hey hey', 'tes tes dicoba low satu dua', '1', '2021-11-16 06:36:18', '2021-11-22 21:12:16', '7', '7');
 
 -- --------------------------------------------------------
 
@@ -242,8 +242,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `nama`, `username`, `email`, `alamat`, `gender`, `no_telepon`, `no_ktp`, `password`, `avatar`, `foto_ktp`, `role`, `created`, `updated`, `created_by`, `updated_by`) VALUES
-(4, 'Joko Santoso', 'joko', 'joko@gmail.com', 'Jl. Satu Pekanbaru', 'laki-laki', '6285707745485', '215654532767', '81dc9bdb52d04dc20036dbd8313ed055', 'person_1.jpg', '', 2, '2021-09-30 19:23:12', NULL, '0', '0'),
-(7, 'Arif', 'admin', 'arif@gmail.com', 'Pekanbaru', 'laki-laki', '6282244922833', '1764578345', '21232f297a57a5a743894a0e4a801fc3', 'person_2.jpg', '', 1, '2021-09-30 19:23:12', NULL, '0', '0');
+(4, 'Joko Santoso', 'joko', 'joko@gmail.com', 'Jl. Satu Pekanbaru', 'L', '6285707745485', '215654532767', '81dc9bdb52d04dc20036dbd8313ed055', 'avatar-221121-e6a0d6635c.jpg', 'ktp-221121-c8db65f709.png', 2, '2021-09-30 19:23:12', NULL, '0', '0'),
+(7, 'Arif', 'admin', 'arif@gmail.com', 'Pekanbaru', 'L', '6282244922833', '1764578345', '21232f297a57a5a743894a0e4a801fc3', 'default.jpg', 'ktp-221121-0f58150553.jpg', 1, '2021-09-30 19:23:12', NULL, '0', '0'),
+(11, 'M. Irvan Alfi Hidayat', 'irvan', 'irvanhidayat0623@gmail.com', 'Kencono, Sragi, Songgon, Banyuwangi', 'L', '082244922833', '351019230698', '25d55ad283aa400af464c76d713c07ad', 'avatar-231121-eea9bc9e3b.JPG', 'ktp-231121-a97489eabb.jpeg', 1, '2021-11-23 10:29:02', NULL, 'irvan', NULL);
 
 --
 -- Indexes for dumped tables
@@ -343,7 +344,7 @@ ALTER TABLE `transaksi`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables

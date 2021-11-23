@@ -19,6 +19,7 @@ class User_model extends CI_Model
         return $this->db->get_where('user', ['id_user' => $id])->row_array();
     }
 
+
     // menampilkan jumlah seluruh mobil
     public function get_jumlah_customer()
     {
@@ -74,7 +75,7 @@ class User_model extends CI_Model
         $this->db->update('user', $data);
     }
 
-    //menghapus data mobil
+    //menghapus data user
     public function dalete_user($id)
     {
         $this->db->where('id_user', $id);

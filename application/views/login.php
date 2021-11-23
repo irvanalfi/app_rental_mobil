@@ -20,6 +20,31 @@
     <div id="app">
         <section class="section">
             <div class="container mt-5">
+                <?php if ($this->session->flashdata('success') != null) : ?>
+                    <div class="row">
+                        <div class="col-md-12 mx-0" id="flash" data-flash="<?= $this->session->flashdata('success'); ?>">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert1">
+                                <?php echo $this->session->flashdata('success') ?>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif ?>
+
+                <?php if ($this->session->flashdata('failed') != null) : ?>
+                    <div class="row">
+                        <div class="col-md-12 mx-0" id="flash" data-flash="<?= $this->session->flashdata('failed'); ?>">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alert1">
+                                <?php echo $this->session->flashdata('failed') ?>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif ?>
                 <div class="row">
                     <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
 
@@ -86,6 +111,13 @@
     <!-- Template JS File -->
     <script src="<?= base_url() ?>assets/assets_admin/assets/js/scripts.js"></script>
     <script src="<?= base_url() ?>assets/assets_admin/assets/js/custom.js"></script>
+
+    <script>
+        // auto close alert
+        $("#alert1").fadeTo(2000, 500).slideUp(500, function() {
+            $("#alert1").slideUp(500);
+        });
+    </script>
 
 </body>
 

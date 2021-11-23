@@ -1656,7 +1656,9 @@ h6 .badge {
       padding-bottom: 4px;
       font-weight: 600; }
       .navbar .nav-link.nav-link-user img {
-        width: 30px; }
+        width: 30px;
+        height: 30px !important;
+      }
     .navbar .nav-link.nav-link-img {
       padding-top: 4px;
       padding-bottom: 4px;

@@ -7,47 +7,61 @@ class Auth extends CI_Controller
   public function __construct()
   {
     parent::__construct();
-    //Do your magic here
-    check_already_login();
-    $this->load->model('User_model');
+    $this->load->model('User_model'); //load User Model
   }
-
 
   public function login()
   {
-    $this->_rules();
-
-    if ($this->form_validation->run() == FALSE) {
+    check_already_login(); //cek apakah sudah login. jika sudah maka tidak bisa mengakses halaman login
+    $this->form_validation->set_rules(
+      'username',
+      'Username',
+      'required',
+      array(
+        'required'    => '<p class="text-danger">  * Kamu belum mengisi %s !</p>'
+      )
+    );
+    $this->form_validation->set_rules(
+      'password',
+      'Password',
+      'required',
+      array(
+        'required'    => '<p class="text-danger">  * Kamu belum mengisi %s !</p>'
+      )
+    );
+    if ($this->form_validation->run() ==  FALSE) {
       $this->load->view('login');
     } else {
-      $username = $this->input->post('username');
-      $password = md5($this->input->post('password'));
-      $cek = $this->User_model->cek_login($username, $password);
-      if ($cek == FALSE) {
-        $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-        Username atau Password salah!
-        <button type="button" class="close" data-dismiss="alert" aria-label="close">
-          <span aria-hidden="true">&times;</span>
-        </button></div>');
-        redirect('auth/login');
-      } else {
-        $this->session->set_userdata('id_user', $cek->id_user);
-        $this->session->set_userdata('username', $cek->username);
-        $this->session->set_userdata('role', $cek->role);
-        $this->session->set_userdata('nama', $cek->nama);
-        $this->session->set_userdata('avatar', $cek->avatar);
-        // echo $cek->role;
-        // die();
-        switch ($cek->role) {
-          case 1:
-            redirect('admin/dashboard');
-            break;
-          case 2:
-            redirect('beranda');
-            break;
-          default:
-            break;
-        }
+      $this->loginProses();
+    }
+  }
+
+  public function loginProses()
+  {
+    $username   = $this->input->post('username');
+    $password   = md5($this->input->post('password'));
+    $cek        = $this->User_model->cek_login($username, $password);
+    if ($cek == FALSE) {
+      $this->session->set_flashdata('failed', '<b>Gagal login !</b> Silahkan cek kembali username dan password anda.');
+      redirect('auth/login');
+    } else {
+      $params = array(
+        'id_user'   => $cek->id_user,
+        'username'  => $cek->username,
+        'nama'      => $cek->nama,
+        'role'      => $cek->role,
+        'avatar'    => $cek->avatar,
+      );
+      $this->session->set_userdata($params);
+      switch ($cek->role) {
+        case 1:
+          redirect('admin/dashboard');
+          break;
+        case 2:
+          redirect('beranda');
+          break;
+        default:
+          break;
       }
     }
   }
@@ -60,6 +74,7 @@ class Auth extends CI_Controller
 
   public function register()
   {
+    check_already_login(); //cek apakah sudah login. jika sudah maka tidak bisa mengakses halaman login
     $this->form_validation->set_rules(
       'nama',
       'Nama',
@@ -151,7 +166,6 @@ class Auth extends CI_Controller
       );
     }
 
-    // untuk foto profile tidak wajib 
     if (empty($_FILES['avatar']['name'])) {
       $this->form_validation->set_rules(
         'avatar',
@@ -186,17 +200,17 @@ class Auth extends CI_Controller
       "foto_ktp"    => $file[0],
       "avatar"      => $file[1],
       "created"     => date('Y-m-d H:i:s'),
-      "created_by"  => $this->session->userdata('id_user')
+      "created_by"  => $this->input->post('username')
     ];
 
     $this->User_model->add_user($data);
 
     if ($this->db->affected_rows() > 0) {
-      $this->session->set_flashdata('success', '<b>Data User berhasil diinput!</b> Silahkan cek kembali data Anda.');
-      redirect('admin/data_user');
+      $this->session->set_flashdata('success', '<b>Register sukses!</b> Silahkan login.');
+      redirect('auth/login');
     } else {
-      $this->session->set_flashdata('failed', '<b>Data User gagal diinput!</b> Silahkan cek kembali data Anda.');
-      redirect('admin/data_user');
+      $this->session->set_flashdata('failed', '<b>Register gagal!</b> Silahkan cek kembali data Anda.');
+      redirect('auth/register');
     }
   }
 
@@ -268,11 +282,13 @@ class Auth extends CI_Controller
     }
   }
 
-
-
-  public function _rules()
+  public function termcondition()
   {
-    $this->form_validation->set_rules('username', 'Username', 'required');
-    $this->form_validation->set_rules('password', 'Password', 'required');
+    $this->load->view('termcondition');
+  }
+
+  public function backOne()
+  {
+    redirect($_SERVER['HTTP_REFERER']);
   }
 }

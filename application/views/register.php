@@ -20,6 +20,18 @@
     <div id="app">
         <section class="section">
             <div class="container mt-5">
+                <?php if ($this->session->flashdata('failed') != null) : ?>
+                    <div class="row">
+                        <div class="col-md-12 mx-0" id="flash" data-flash="<?= $this->session->flashdata('failed'); ?>">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alert1">
+                                <?php echo $this->session->flashdata('failed') ?>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif ?>
                 <div class="row">
                     <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
                         <div class="card card-primary">
@@ -28,7 +40,7 @@
                             </div>
 
                             <div class="card-body">
-                                <form action="<?= base_url('admin/data_user/addUser') ?>" enctype="multipart/form-data" method="post">
+                                <form action="<?= base_url('auth/register') ?>" enctype="multipart/form-data" method="post">
                                     <div class="row mb-3">
                                         <div class="col-lg-6 col-md-12">
                                             <div class="form-group">
@@ -102,7 +114,7 @@
                                                 <?= form_error('cpassword', '<div class="text-small text-danger">', '</div>') ?>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-md-12">
+                                        <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="">Gender *</label>
                                                 <select class="form-control" name="gender">
@@ -112,7 +124,6 @@
                                                 <?= form_error('gender', '<div class="text-small text-danger">', '</div>') ?>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-md-12"></div>
                                         <div class="col-lg-6 col-md-12">
                                             <div class="form-group">
                                                 <label for="">KTP *</label>
@@ -135,12 +146,19 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" name="setuju" class="custom-control-input" id="centang">
+                                                    <label class="custom-control-label" for="centang">Saya setuju dengan <a href="<?= site_url('auth/termcondition'); ?>">syarat dan ketentuan HRC</a></label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="float-right">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <button type="submit" class="btn btn-primary" id="btn-rgs" disabled>Register</button>
                                         <button type="reset" class="btn btn-warning ml-2">Reset</button>
                                     </div>
-
                                 </form>
                             </div>
                             <div class="text-muted text-center mt-2 mb-5 centered">
@@ -173,7 +191,7 @@
 
     <!-- JS Libraies -->
     <script src="<?= base_url() ?>assets/assets_admin/node_modules/jquery-pwstrength/jquery.pwstrength.min.js"></script>
-    <script src="<?= base_url() ?>assets/assets_admin/node_modules/jquery-selectric/jquery.selectric.min.js"></script>
+    <script src="<?= base_url() ?>assets/assets_admin/assets/js/jquery.selectric.min.js"></script>
 
     <!-- Page Specific JS File -->
     <script src="<?= base_url() ?>assets/assets_admin/assets/js/page/auth-register.js"></script>
@@ -182,6 +200,17 @@
     <script src="<?= base_url() ?>assets/assets_admin/assets/js/scripts.js"></script>
     <script src="<?= base_url() ?>assets/assets_admin/assets/js/custom.js"></script>
     <script>
+        // enabel submit button
+        $(document).ready(function() {
+            $('#centang').click(function() {
+                if ($(this).is(':checked')) {
+                    $('#btn-rgs').removeAttr('disabled');
+                } else {
+                    $('#btn-rgs').attr('disabled', 'disabled');
+                }
+            })
+        })
+
         // upload foto profile
         function previewPhoto() {
             const photo = document.querySelector('#avatar');

@@ -208,7 +208,7 @@ class Data_user extends CI_Controller
   public function update_user($id)
   {
     // $where = array('id_user' => $id);
-    $data['user'] = $this->db->query("SELECT * FROM user WHERE id_user = '$id'")->result();
+    $data['user'] = $this->User_model->get_user_by_id($id);
     $this->load->view('templates_admin/header');
     $this->load->view('templates_admin/sidebar');
     $this->load->view('admin/form_update_user', $data);
@@ -217,13 +217,30 @@ class Data_user extends CI_Controller
 
   public function delete_user($id)
   {
-    $where = array('id_user' => $id);
-    $this->rental_model->delete_data($where, 'user');
-    $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-    Data user berhasil dihapus
-    <button type="button" class="close" data-dismiss="alert" aria-label="close">
-      <span aria-hidden="true">&times;</span>
-    </button></div>');
-    redirect('admin/data_user');
+    $user = $this->User_model->get_user_by_id($id);
+    if ($user['id_user'] != $this->session->userdata('id_user')) {
+      if ($user['avatar'] != null) {
+        if ($user['avatar'] != 'default.jpg') {
+          $target_file = '../assets/upload/user/avatar/' . $user['avatar'];
+          unlink($target_file);
+        }
+      }
+      if ($user['foto_ktp'] != 'default.jpg') {
+        if ($user['foto_ktp'] != null) {
+          $target_file = '../assets/upload/user/ktp/' . $user['foto_ktp'];
+          unlink($target_file);
+        }
+      }
+
+      $this->User_model->delete_user($id);
+
+      if ($this->db->affected_rows() > 0) {
+        $this->session->set_flashdata('success', '<b>Data User berhasil diinput!</b> Silahkan cek kembali data Anda.');
+        redirect('admin/data_user');
+      }
+    } else {
+      $this->session->set_flashdata('failed', '<b>Data sedang digunakan untuk login!</b> Tidak bisa dihapus.');
+      redirect('admin/data_user');
+    }
   }
 }

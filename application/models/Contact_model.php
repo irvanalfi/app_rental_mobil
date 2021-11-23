@@ -15,17 +15,6 @@ class Contact_model extends CI_Model
         return $query->result_array();
     }
 
-    //menampilkan contact berdasarkan id
-    public function get_user_by_id($id)
-    {
-        $this->db->select('*');
-        $this->db->from('contact');
-        $this->db->join('user', 'user.id_user = contact.id_user');
-        $this->db->where('contact.id_contact', $id);
-        $query = $this->db->get();
-        return $query->row_array();
-    }
-
     //mengupdate data contact
     public function update_contact($id_contact)
     {
