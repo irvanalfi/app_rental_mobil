@@ -146,7 +146,8 @@
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
                         <div class="sidebar-brand">
-                            <a href="<?= base_url('admin/dashboard'); ?>">Halim Rental Car</a>
+                            <img src="<?= base_url('assets/upload/hrc.png') ?>" alt="Logo HRC" style="height: 40px;">
+                            <!-- <a href="<?= base_url('admin/dashboard'); ?>">Halim Rental Car</a> -->
                         </div>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">

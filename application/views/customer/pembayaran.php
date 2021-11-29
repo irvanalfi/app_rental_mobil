@@ -19,7 +19,6 @@
 		$tanggal_kembali      = strtotime($bayar['tgl_kembali']);
 		$selisih              = abs($tanggal_rental - $tanggal_kembali) / (60 * 60 * 24) + 1;
 		$total_harga_supir    = $bayar['total_harga_supir'];
-		$harga_supir          = $total_harga_supir / $selisih;
 		?>
 		<div class="row">
 			<div class="col-md-8">
@@ -48,13 +47,15 @@
 									<li class="list-group-item text-dark">Data Rental</li>
 									<li class="list-group-item text-dark">
 										Total Hari Rental &nbsp; &nbsp; &nbsp; &nbsp;: <?= $selisih ?> Hari<br>
-										Total Rental &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:
+										Total Rental &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; :
 										<?= indo_currency($bayar['total_harga']); ?><br>
 										Total Supir &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; :
 										<?= indo_currency($bayar['total_harga_supir']); ?><br>
-										Total Akhir &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; :
+										PPh &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:
+										<?= indo_currency($bayar['pajak']); ?><br>
+										Total Akhir &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:
 										<?= indo_currency($bayar['total_akhir']); ?><br>
-										Status Pembayaran :
+										Status Pembayaran &nbsp;:
 										<?= $bayar['status_pembayaran'] == 0 ? 'Belum Lunas' : 'Lunas'; ?> <br>
 										<?php if ($bayar['status_rental'] == "Batal") : ?>
 											<hr>
@@ -107,6 +108,8 @@
 								<?php endif ?>
 								<button class="btn my-1 btn-success"><span class="icon-check"></span> Pembayaran Berhasil</button>
 							<?php endif; ?>
+
+							<a href="<?= base_url('customer/cetakStruk/' . $bayar['id_transaksi']) ?>" class="btn my-1 btn-success"><span class="icon-print"></span> Cetak Struk<span id="demo"></span></a>
 						</div>
 
 					</div>
@@ -126,7 +129,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form action="<?= base_url('transaksi/prosesPembayaran') ?>" method="post" enctype="multipart/form-data">
+			<form action="<?= base_url('customer/prosesPembayaran') ?>" method="post" enctype="multipart/form-data">
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="">Upload bukti transfer</label>

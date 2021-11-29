@@ -16,7 +16,7 @@
 		<?php if ($this->session->flashdata('success') != null) : ?>
 			<div class="row">
 				<div class="col-md-12 mx-0" id="flash" data-flash="<?= $this->session->flashdata('success'); ?>">
-					<div class="alert alert-success alert-dismissible fade show" role="alert">
+					<div class="alert alert-success alert-dismissible fade show" role="alert" id="alert1">
 						<?php echo $this->session->flashdata('success') ?>
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -29,7 +29,7 @@
 		<?php if ($this->session->flashdata('failed') != null) : ?>
 			<div class="row">
 				<div class="col-md-12 mx-0" id="flash" data-flash="<?= $this->session->flashdata('failed'); ?>">
-					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+					<div class="alert alert-danger alert-dismissible fade show" role="alert" id="alert1">
 						<?php echo $this->session->flashdata('failed') ?>
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -95,6 +95,7 @@
 
 										<?php if ($tr['status_rental'] == 'Selesai') : ?>
 											<?php foreach ($review as $r) : ?>
+												lksadjflakdsjlkfjalskdejl
 												<?php if ($r['id_transaksi'] != $tr['id_transaksi']) : ?>
 													<h3>
 														<a href="<?= base_url('transaksi/review/' . $tr['id_transaksi']) ?>" class="btn btn-sm btn-primary">

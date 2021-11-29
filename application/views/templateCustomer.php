@@ -172,6 +172,11 @@
 				}
 			})
 		})
+
+		// auto close alert
+		$("#alert1").fadeTo(2000, 500).slideUp(500, function() {
+			$("#alert1").slideUp(500);
+		});
 	</script>
 
 
