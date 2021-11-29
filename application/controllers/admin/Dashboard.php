@@ -19,8 +19,7 @@ class Dashboard extends CI_Controller
     $data['mobil']      = $this->Mobil_model->get_jumlah_mobil();
     $data['customer']   = $this->User_model->get_jumlah_customer();
     $data['transaksi']  = $this->Transaksi_model->get_jumlah_transaksi();
-    $data['laporan']    = $this->Transaksi_model->get_jumlah_transaksi_selesai();
-
+    $data['laporan']    = $this->Transaksi_model->get_jumlah_transaksi_selesai();   
     $this->template->load('templateAdmin', 'admin/dashboard', $data);
   }
 }

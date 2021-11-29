@@ -34,35 +34,36 @@
                     </ul>
                 </form>
                 <ul class="navbar-nav navbar-right">
-                    <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle beep"><i class="far fa-envelope"></i></a>
+                    <?php $jumlahUnreadContact = getJumlahUnreadContact()?>
+                    <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle <?php echo $jumlahUnreadContact != 0 ? 'beep' : '' ?>"><i class="far fa-envelope"></i></a>
                         <div class="dropdown-menu dropdown-list dropdown-menu-right">
-                            <div class="dropdown-header">Contact Masuk
-                            </div>
+                            <div class="dropdown-header">Contact Masuk</div>
                             <div class="dropdown-list-content dropdown-list-message">
-                                <a href="#" class="dropdown-item dropdown-item-unread">
-                                    <div class="dropdown-item-avatar">
-                                        <img alt="image" src="<?= base_url('assets/assets_admin/assets/img/avatar/') ?>avatar-1.png" class="rounded-circle">
-                                        <div class="is-online"></div>
-                                    </div>
-                                    <div class="dropdown-item-desc">
-                                        <b>Kusnaedi</b>
-                                        <p>Hello, Bro!</p>
-                                        <div class="time">10 Hours Ago</div>
-                                    </div>
-                                </a>
-                                <a href="#" class="dropdown-item dropdown-item-unread">
-                                    <div class="dropdown-item-avatar">
-                                        <img alt="image" src="<?= base_url('assets/assets_admin/assets/img/avatar/') ?>avatar-2.png" class="rounded-circle">
-                                    </div>
-                                    <div class="dropdown-item-desc">
-                                        <b>Dedik Sugiharto</b>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-                                        <div class="time">12 Hours Ago</div>
-                                    </div>
-                                </a>
+                                <?php if($jumlahUnreadContact == 0) :  ?>
+                                    <a href="#" class="dropdown-item dropdown-item-unread disabled">
+                                        <div class="pesan text-center">
+                                            <p>Tidak ada pesan masuk</p>
+                                        </div>
+                                    </a>
+                                <?php else : ?>
+                                    <?php $contact = getUnreadContact()?>
+                                    <?php foreach ($contact as $c): ?>
+                                    <a href="#" class="dropdown-item dropdown-item-unread disabled">
+                                        <div class="dropdown-item-avatar">
+                                            <img alt="image" src="<?= base_url('assets/upload/user/avatar/') . $c['avatar']?>" class="rounded-circle">
+
+                                        </div>
+                                        <div class="dropdown-item-desc">
+                                            <b><?php echo $c['nama']?></b>
+                                            <p><?php echo $c['pesan']?></p>
+                                            <div class="time"><?php echo  date('d F Y, H:i', strtotime($c['contact_created']))?></div>
+                                        </div>
+                                    </a>
+                                    <?php endforeach?>
+                                <?php endif?>
                             </div>
                             <div class="dropdown-footer text-center">
-                                <a href="<?= site_url('admin/data_contact'); ?>">View All <i class="fas fa-chevron-right"></i></a>
+                                <a href="<?= site_url('admin/contact'); ?>">Lihat Semua Pesan <i class="fas fa-chevron-right"></i></a>
                             </div>
                         </div>
                     </li>

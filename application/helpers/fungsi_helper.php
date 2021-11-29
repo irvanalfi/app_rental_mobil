@@ -39,3 +39,17 @@ function indo_date($date)
     $y = substr($date, 0, 4);
     return $d . '/' . $m . '/' . $y;
 }
+
+function getUnreadContact(){
+    $CI = &get_instance();
+    $CI->load->model('Contact_model', '', true);
+    $contact = $CI->Contact_model->get_all_unread_contact();
+    return $contact;
+}
+
+function getJumlahUnreadContact(){
+    $CI = &get_instance();
+    $CI->load->model('Contact_model', '', true);
+    $jumlah_contact = $CI->Contact_model->get_jumlah_unread_contact();
+    return $jumlah_contact;
+}
