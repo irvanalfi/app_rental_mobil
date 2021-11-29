@@ -108,7 +108,7 @@ class Customer extends CI_Controller
         $data['transaksi'] = $this->Transaksi_model->get_transaksi_by_id_mobil_saja($id);
         $data['review']   = $this->Review_model->get_review_by_id_mobil($id);
         $data['jumlahReview'] = $this->Review_model->get_jumlah_review_approved_by_id_mobil($id);
-        
+
         // form validation 
         $this->form_validation->set_rules(
             'alamat_penjemputan',
@@ -164,10 +164,11 @@ class Customer extends CI_Controller
         $tanggal_rental       = strtotime($this->input->post('tgl_rental', true));
         $tanggal_kembali      = strtotime($this->input->post('tgl_kembali', true));
         $selisih              = abs($tanggal_rental - $tanggal_kembali) / (60 * 60 * 24) + 1;
-        // melakukan perhitungan untuk total akhir
+        // melakukan perhitungan untuk pajak dan total akhir
         $total_harga          = $selisih *  $harga;
+        $pajak                = $total_harga * 0.02;
         $total_harga_supir    = $hrg_supir * $selisih;
-        $total_akhir          = $total_harga_supir + $total_harga;
+        $total_akhir          = $total_harga_supir + $total_harga + $pajak;
         // perubahan format tanggal
         $tanggal_rental_f     = $this->input->post('tgl_rental', true);
         $tanggal_kembali_f    = $this->input->post('tgl_kembali', true);
@@ -181,6 +182,7 @@ class Customer extends CI_Controller
             "alamat_penjemputan"    => $this->input->post('alamat_penjemputan', true),
             "waktu_penjemputan"     => $this->input->post('waktu_penjemputan', true),
             "total_harga"           => $total_harga,
+            "pajak"                 => $pajak,
             "total_harga_supir"     => $total_harga_supir,
             "total_denda"           => 0,
             "total_refund"          => 0,
@@ -269,30 +271,33 @@ class Customer extends CI_Controller
     {
         $id               = $this->input->post('id_transaksi');
         $bukti_pembayaran = $_FILES['bukti_pembayaran']['name'];
-
         if ($bukti_pembayaran = '') {
         } else {
-            $config['upload_path']    = './assets/upload/struk';
+            $config['upload_path']    = './assets/upload/struk/';
             $config['allowed_types']  = 'jpg|jpeg|png|tiff|gif';
+            $config['detect_mime']    = TRUE;
             $config['max_size']       = 5120;
             $config['file_name']      = 'Struk-' . date('dmy') . '-' . substr(md5(rand()), 0, 10);
 
-            $this->load->library('upload', $config);
-            if (!$this->upload->do_upload('bukti_pembayaran')) {
-                echo "Bukti pembayaran mobil gagal diupload";
-            } else {
-                $struk = $this->upload->data('file_name');
+            $this->upload->initialize($config);
+            $upload = $this->upload->do_upload('bukti_pembayaran');
+            $struk = $this->upload->data('file_name');
+            if (!$upload) {
+                $this->session->set_flashdata('failed', '<b>Proses upload bukti pembayarn gagal!</b> Silahkan upload kembali');
+                redirect('transaksi');
             }
         }
 
-        $this->Transaksi_model->update_bukti_pembayaran($struk, $id);
+        $data = [
+            'bukti_pembayaran' => $struk
+        ];
 
-        $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            Bukti pembayaran anda berhasil diupload
-            <button type="button" class="close" data-dismiss="alert" aria-label="close">
-                <span aria-hidden="true">&times;</span>
-            </button></div>');
-        redirect('transaksi');
+        $this->Transaksi_model->update_transaksi($data, $id);
+
+        if ($this->db->affected_rows() > 0) {
+            $this->session->set_flashdata('success', '<b>Proses upload bukti pembayarn berhasil!</b> Silahkan mengunggu konfirmasi admin.');
+            redirect('transaksi');
+        }
     }
 
     // pembatalan transaksi 
@@ -375,18 +380,21 @@ class Customer extends CI_Controller
     //update transaksi ketika pembatalan di hari h tanggal rental
     public function batal_hari_h($id_transaksi)
     {
-        $transaksi = $this->Transaksi_model->get_transaksi_by_id($id_transaksi);
+        $transaksi    = $this->Transaksi_model->get_transaksi_by_id($id_transaksi);
 
-        $harga_mobil = $transaksi['harga'];
-        $total_akhir = $transaksi['total_akhir'];
+        $harga_mobil  = $transaksi['harga'];
+        $total_akhir  = $transaksi['total_akhir'];
 
         $total_refund = $total_akhir - ($harga_mobil / 2);
-        $total_akhir = $harga_mobil / 2;
+        $stengahHarga = $harga_mobil / 2;
+        $pajak        = $stengahHarga * 0.02;
+        $total_akhir  = $stengahHarga + $pajak;
 
         $data = [
             "tgl_cancel"            => date('Y/m/d'),
             "status_rental"         => "Batal",
             "total_refund"          => $total_refund,
+            "pajak"                 => $pajak,
             "total_akhir"           => $total_akhir,
             "updated"               => date('Y-m-d H:i:s'),
             "updated_by"            => $this->session->userdata('id_user'),
@@ -459,10 +467,9 @@ class Customer extends CI_Controller
     }
 
     // print struk invoice 
-    public function cetak_invoice($id)
+    public function cetakStruk($id)
     {
-        $data['transaksi'] = $this->db->query("SELECT * FROM transaksi tr, mobil mb, customer cs WHERE tr.id_mobil=mb.id_mobil AND tr.id_customer=cs.id_customer AND tr.id_rental='$id'")->result();
+        $data['transaksi'] = $this->Transaksi_model->get_transaksi_by_id($id);
         $this->load->view('customer/cetak_invoice', $data);
     }
-
 }

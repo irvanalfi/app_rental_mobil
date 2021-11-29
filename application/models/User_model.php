@@ -55,9 +55,9 @@ class User_model extends CI_Model
     }
 
     //mengupdate data user
-    public function update_user($data, $id_user)
+    public function update_user($data, $id)
     {
-        $this->db->where('id_user', $id_user);
+        $this->db->where('id_user', $id);
         $this->db->update('user', $data);
     }
 
