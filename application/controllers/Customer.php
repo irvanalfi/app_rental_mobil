@@ -16,6 +16,7 @@ class Customer extends CI_Controller
         $this->load->model('Review_model');
         $this->load->model('Contact_model');
     }
+
     // tampilan halaman beranda 
     public function beranda()
     {
@@ -24,19 +25,24 @@ class Customer extends CI_Controller
         $data['review'] = $this->Review_model->get_all_review_approved();
         $this->template->load('templateCustomer', 'customer/beranda', $data);
     }
+
     // tampilan halaman mobil 
     public function mobil()
     {
         $data['mobil'] = $this->Mobil_model->get_all_mobil();
         $this->template->load('templateCustomer', 'customer/mobil', $data);
     }
+
     // tampilan halaman detail mobil 
     public function detailMobil($id)
     {
         $data['mobil']    = $this->Mobil_model->get_all_mobil();
         $data['detail']   = $this->Mobil_model->get_mobil_by_id($id);
+        $data['review']   = $this->Review_model->get_review_by_id_mobil($id);
+        $data['jumlahReview'] = $this->Review_model->get_jumlah_review_approved_by_id_mobil($id);
         $this->template->load('templateCustomer', 'customer/detailmobil', $data);
     }
+
     // tampilan halaman kontak
     public function contact()
     {
@@ -68,6 +74,7 @@ class Customer extends CI_Controller
             $this->addContact();
         }
     }
+
     //proses input data contact ke database
     public function addContact()
     {
@@ -90,6 +97,7 @@ class Customer extends CI_Controller
             redirect('customer/contact');
         }
     }
+
     // tampilan halaman form rental
     public function addRental($id)
     {
@@ -98,6 +106,9 @@ class Customer extends CI_Controller
         $data['detail']   = $this->Mobil_model->get_mobil_by_id($id);
         $data['user']     = $this->User_model->get_user_by_id($id_user);
         $data['transaksi'] = $this->Transaksi_model->get_transaksi_by_id_mobil_saja($id);
+        $data['review']   = $this->Review_model->get_review_by_id_mobil($id);
+        $data['jumlahReview'] = $this->Review_model->get_jumlah_review_approved_by_id_mobil($id);
+        
         // form validation 
         $this->form_validation->set_rules(
             'alamat_penjemputan',
@@ -453,4 +464,5 @@ class Customer extends CI_Controller
         $data['transaksi'] = $this->db->query("SELECT * FROM transaksi tr, mobil mb, customer cs WHERE tr.id_mobil=mb.id_mobil AND tr.id_customer=cs.id_customer AND tr.id_rental='$id'")->result();
         $this->load->view('customer/cetak_invoice', $data);
     }
+
 }

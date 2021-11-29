@@ -8,7 +8,7 @@ class Review_model extends CI_Model
     //menampilkan semua review
     public function get_all_review()
     {
-        $this->db->select('*');
+        $this->db->select('*, review.status as status_review');
         $this->db->from('review');
         $this->db->join('mobil', 'mobil.id_mobil = review.id_mobil');
         $this->db->join('user', 'user.id_user = review.id_user');
@@ -55,6 +55,20 @@ class Review_model extends CI_Model
         $this->db->where('review.status', 1);
         $query = $this->db->get();
         return $query->result_array();
+    }
+
+    //menampilkan jumlah review yang sudah diapprove berdasarkan id mobil
+    public function get_jumlah_review_approved_by_id_mobil($id)
+    {
+        $this->db->select('*');
+        $this->db->from('review');
+        $this->db->join('mobil', 'mobil.id_mobil = review.id_mobil');
+        $this->db->join('user', 'user.id_user = review.id_user');
+        $this->db->join('transaksi', 'transaksi.id_transaksi = review.id_transaksi');
+        $this->db->where('review.id_mobil', $id);
+        $this->db->where('review.status', 1);
+        $query = $this->db->count_all_results();
+        return $query;
     }
 
     //mengupdate data review

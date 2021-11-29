@@ -29,7 +29,7 @@
 
       <span class="mt-4 ml-4">* Isikan Nama, Alamat, No. KTP, dan Jenis Kelamin Sesuai dengan KTP</span>
       <div class="card-body">
-        <form action="<?= base_url('admin/data_user/addUser') ?>" enctype="multipart/form-data" method="post">
+        <form action="<?= base_url('admin/user/addUser') ?>" enctype="multipart/form-data" method="post">
           <div class="row">
             <div class="col-lg-6 col-md-12">
               <div class="form-group">

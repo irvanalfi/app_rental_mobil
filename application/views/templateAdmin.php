@@ -130,6 +130,9 @@
                             <div class="d-sm-none d-lg-inline-block"><?= $this->session->userdata('nama') ?></div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
+                            <a href="<?= base_url('admin/password') ?>" class="dropdown-item has-icon">
+                                <i class="fas fa-lock"></i> Ganti Password
+                            </a>
                             <div class="dropdown-divider"></div>
                             <a href="<?= base_url('Auth/logout') ?>" class="dropdown-item has-icon text-danger">
                                 <i class="fas fa-sign-out-alt"></i> Logout
@@ -154,11 +157,11 @@
                             <a href="<?= site_url('admin/dashboard'); ?>" class="nav-link <?= $this->uri->segment(2) == 'dashboard' ? 'active' : ''; ?>"><i class="fas fa-fire"></i><span>Dashboard</span></a>
                         </li>
                         <li class="menu-header">Mobil</li>
-                        <li class="nav-item dropdown <?= $this->uri->segment(2) == 'data_mobil' || $this->uri->segment(2) == 'review' || $this->uri->segment(2) == 'tipe' ? 'active' : ''; ?>">
+                        <li class="nav-item dropdown <?= $this->uri->segment(2) == 'mobil' || $this->uri->segment(2) == 'review' || $this->uri->segment(2) == 'tipe' ? 'active' : ''; ?>">
                             <a href=" #" class="nav-link has-dropdown"><i class="fas fa-car"></i> <span>Mobil</span></a>
                             <ul class="dropdown-menu">
-                                <li class="<?= $this->uri->segment(2) == 'data_mobil' ? 'active' : ''; ?>">
-                                    <a class=" nav-link" href="<?= site_url('admin/data_mobil'); ?>"><i class="fas fa-car"></i> <span>Data Mobil</span></a>
+                                <li class="<?= $this->uri->segment(2) == 'mobil' ? 'active' : ''; ?>">
+                                    <a class=" nav-link" href="<?= site_url('admin/mobil'); ?>"><i class="fas fa-car"></i> <span>Data Mobil</span></a>
                                 </li>
                                 <li class="<?= $this->uri->segment(2) == 'tipe' ? 'active' : ''; ?>">
                                     <a class=" nav-link" href="<?= site_url('admin/tipe'); ?>"><i class="fas fa-grip-horizontal"></i> <span>Data Tipe Mobil</span></a>
@@ -169,8 +172,8 @@
                             </ul>
                         </li>
                         <li class="menu-header">Contact</li>
-                        <li class="<?= $this->uri->segment(2) == 'data_contact' ? 'active' : ''; ?>">
-                            <a class=" nav-link" href="<?= site_url('admin/data_contact'); ?>"><i class="fas fa-headset"></i> <span>Data Contact</span></a>
+                        <li class="<?= $this->uri->segment(2) == 'contact' ? 'active' : ''; ?>">
+                            <a class=" nav-link" href="<?= site_url('admin/contact'); ?>"><i class="fas fa-headset"></i> <span>Data Contact</span></a>
                         </li>
                         <li class="menu-header">Transaksi</li>
                         <li class="nav-item dropdown <?= $this->uri->segment(2) == 'transaksi' || $this->uri->segment(2) == 'laporan' ? 'active' : ''; ?>">
@@ -185,16 +188,8 @@
                             </ul>
                         </li>
                         <li class="menu-header">User</li>
-                        <li class="nav-item dropdown <?= $this->uri->segment(2) == 'data_user' || $this->uri->segment(2) == 'ganti_password' ? 'active' : ''; ?>">
-                            <a href=" #" class="nav-link has-dropdown"><i class="fas fa-random"></i> <span>User</span></a>
-                            <ul class="dropdown-menu">
-                                <li class="<?= $this->uri->segment(2) == 'data_user' ? 'active' : ''; ?>">
-                                    <a class=" nav-link" href="<?= site_url('admin/data_user'); ?>"><i class="fas fa-users"></i> <span>Data User</span></a>
-                                </li>
-                                <li class="<?= $this->uri->segment(2) == 'ganti_password' ? 'active' : ''; ?>">
-                                    <a class=" nav-link" href="<?= site_url('auth/ganti_password'); ?>"><i class="fas fa-lock"></i> <span>Ganti Password</span></a>
-                                </li>
-                            </ul>
+                        <li class="<?= $this->uri->segment(2) == 'user' ? 'active' : ''; ?>">
+                            <a class=" nav-link" href="<?= site_url('admin/user'); ?>"><i class="fas fa-users"></i> <span>Data User</span></a>
                         </li>
                     </ul>
                 </aside>
@@ -302,6 +297,13 @@
             filePhoto.onload = function(e) {
                 imgPreview.src = e.target.result;
             }
+        }
+
+        function previewPhoto2() {
+            const photo = document.querySelector('#gambar');
+            const photoLabel = document.querySelector('.cfl1');
+
+            photoLabel.textContent = photo.files[0].name;
         }
 
         // tampil password 

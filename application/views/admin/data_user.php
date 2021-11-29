@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <a href="<?= base_url('admin/data_user/adduser'); ?>" class="btn btn-primary mb-3">Tambah Data</a>
+    <a href="<?= base_url('admin/user/adduser'); ?>" class="btn btn-primary mb-3">Tambah Data</a>
 
     <?php if ($this->session->flashdata('success') != null) : ?>
       <div class="row">
@@ -58,7 +58,7 @@
                     <th>No. Telepon</th>
                     <th>No. KTP</th>
                     <th>Level</th>
-                    <th width="180px">Action</th>
+                    <th width="50px">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -75,8 +75,8 @@
                       <td><?= $us['no_ktp']; ?></td>
                       <td><?= $us['role'] == 1 ? 'Admin' : 'Customer' ?></td>
                       <td class="align-middle">
-                        <a href="<?= base_url('admin/data_user/update_user/') . $us['id_user'] ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
-                        <a href="<?= base_url('admin/data_user/delete_user/') . $us['id_user'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')"><i class="fas fa-trash"></i></a>
+                        <a href="<?= base_url('admin/user/update_user/') . $us['id_user'] ?>" class="btn btn-sm btn-primary" title="Update Data"><i class="fas fa-edit"></i></a>
+                        <a href="<?= base_url('admin/user/delete_user/') . $us['id_user'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus Data"><i class="fas fa-trash"></i></a>
                       </td>
                     </tr>
                   <?php endforeach ?>

@@ -52,10 +52,10 @@
                                         </th>
                                         <th>Nama</th>
                                         <th>Email</th>
-                                        <th width="130px;">No. Telpon</th>
+                                        <th>No. Telpon</th>
                                         <th width="40px;" class="align-middle">Pesan</th>
                                         <th width="100px;">Status</th>
-                                        <th width="150px;">Aksi</th>
+                                        <th width="50px;">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -67,13 +67,13 @@
                                                 <img alt="image" src="<?= base_url('assets/upload/user/avatar/' . $ct['avatar']); ?>" class="rounded-circle mr-1" width="30px">
                                                 <?= $ct['nama'] ?>
                                             </td>
-                                            <td><a href="mailto:<?= $ct['email'] ?>?subject=Balasan dari HRC &body=Subject%20Anda%20%3A%20<?= $ct['subject'] ?>%0APesan%20Anda%20%3A%20<?= $ct['pesan'] ?>%0ATanggal Kontak%20Anda%20%3A%20<?= $ct['created'] ?>%0A%0ABalas%20%3A%20" class="btn btn-sm btn-danger" target="_blank"><i class="fa fa-envelope"></i></a> <?= $ct['email'] ?></td>
-                                            <td><a href="https://api.whatsapp.com/send?phone=<?= $ct['no_telepon'] ?>&text=Subject : <?= $ct['subject'] ?>%0APesan :<?= $ct['pesan'] ?>%0ATanggal : <?= $ct['created'] ?>%0A%0ABalas : " class=" btn btn-sm btn-success" target="_blank"><i class=" fab fa-whatsapp"></i></a> <?= $ct['no_telepon'] ?></td>
-                                            <td class="align-middle"><a href="#" class="btn btn-sm btn-success" id="dtl_psn" data-toggle="modal" data-target="#pesan-detail" data-subject="<?= $ct['subject'] ?>" data-pesan="<?= $ct['pesan'] ?>"><i class="fa fa-eye"></i></a></td>
+                                            <td><a href="mailto:<?= $ct['email'] ?>?subject=Balasan dari HRC &body=Subject%20Anda%20%3A%20<?= $ct['subject'] ?>%0APesan%20Anda%20%3A%20<?= $ct['pesan'] ?>%0ATanggal Kontak%20Anda%20%3A%20<?= $ct['created'] ?>%0A%0ABalas%20%3A%20" class="btn btn-sm btn-danger" target="_blank" title="Balas dengan Email"><i class="fa fa-envelope"></i></a> <?= $ct['email'] ?></td>
+                                            <td><a href="https://api.whatsapp.com/send?phone=<?= $ct['no_telepon'] ?>&text=Subject : <?= $ct['subject'] ?>%0APesan :<?= $ct['pesan'] ?>%0ATanggal : <?= $ct['created'] ?>%0A%0ABalas : " class=" btn btn-sm btn-success" target="_blank" title="Balas dengan WhatsApp"><i class=" fab fa-whatsapp"></i></a> <?= $ct['no_telepon'] ?></td>
+                                            <td class="align-middle"><a href="#" class="btn btn-sm btn-success" id="dtl_psn" data-toggle="modal" data-target="#pesan-detail" data-subject="<?= $ct['subject'] ?>" data-pesan="<?= $ct['pesan'] ?>" title="Lihat Pesan"><i class="fa fa-eye"></i></a></td>
                                             <td><?= $ct['status'] == 0 ? '<div class="badge badge-warning">Belum dibalas</div>' : '<div class="badge badge-success">Sudah dibalas</div>' ?></td>
                                             <td>
-                                                <a href="<?= base_url('admin/data_contact/update_contact_status/') . $ct['id_contact'] ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> Update Status</a>
-                                                <a href="<?= base_url('admin/data_contact/delete_contact/') . $ct['id_contact'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')"><i class="fas fa-trash"></i></a>
+                                                <a href="<?= base_url('admin/contact/update_contact_status/') . $ct['id_contact'] ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit" title="Update Status"></i></a>
+                                                <a href="<?= base_url('admin/contact/delete_contact/') . $ct['id_contact'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus Data"><i class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     <?php endforeach ?>

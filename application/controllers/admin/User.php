@@ -1,6 +1,6 @@
 <?php
 
-class Data_user extends CI_Controller
+class User extends CI_Controller
 {
 
   public $statusUpload = true;
@@ -30,6 +30,7 @@ class Data_user extends CI_Controller
         'required'    => '<p class="text-danger">  * Kamu belum mengisi %s !</p>'
       )
     );
+    
     $this->form_validation->set_rules(
       'username',
       'Username',
@@ -74,6 +75,7 @@ class Data_user extends CI_Controller
         'is_unique'   => '<p class="text-danger">  * %s ini telah digunakan!</p>'
       )
     );
+    
     $this->form_validation->set_rules(
       'password',
       'Password',
@@ -93,6 +95,7 @@ class Data_user extends CI_Controller
         'matches'     => '<p class="text-danger">  * %s tidak sama dengan password!</p>'
       )
     );
+
     $this->form_validation->set_rules(
       'gender',
       'Gender',
@@ -163,10 +166,10 @@ class Data_user extends CI_Controller
 
     if ($this->db->affected_rows() > 0) {
       $this->session->set_flashdata('success', '<b>Data User berhasil diinput!</b> Silahkan cek kembali data Anda.');
-      redirect('admin/data_user');
+      redirect('admin/user');
     } else {
       $this->session->set_flashdata('failed', '<b>Data User gagal diinput!</b> Silahkan cek kembali data Anda.');
-      redirect('admin/data_user');
+      redirect('admin/user');
     }
   }
 
@@ -197,11 +200,11 @@ class Data_user extends CI_Controller
     } elseif (!$uploadKTP) {
       $this->session->set_flashdata('failed', "<b>Eror !</b> File foto yang dimasukkan tidak sesuai, silahkan pilih gambar yang lain.");
       unlink('./assets/upload/user/avatar/' . $namaAvatar);
-      redirect('admin/data_user/addUser');
+      redirect('admin/user/addUser');
     } elseif (!$uploadAvatar) {
       $this->session->set_flashdata('failed', "<b>Eror !</b> File foto yang dimasukkan tidak sesuai, silahkan pilih gambar yang lain.");
       unlink('./assets/upload/user/ktp/' . $namaKTP);
-      redirect('admin/data_user/addUser');
+      redirect('admin/user/addUser');
     }
   }
 
@@ -221,13 +224,13 @@ class Data_user extends CI_Controller
     if ($user['id_user'] != $this->session->userdata('id_user')) {
       if ($user['avatar'] != null) {
         if ($user['avatar'] != 'default.jpg') {
-          $target_file = '../assets/upload/user/avatar/' . $user['avatar'];
+          $target_file = 'assets/upload/user/avatar/' . $user['avatar'];
           unlink($target_file);
         }
       }
       if ($user['foto_ktp'] != 'default.jpg') {
         if ($user['foto_ktp'] != null) {
-          $target_file = '../assets/upload/user/ktp/' . $user['foto_ktp'];
+          $target_file = 'assets/upload/user/ktp/' . $user['foto_ktp'];
           unlink($target_file);
         }
       }
@@ -235,12 +238,65 @@ class Data_user extends CI_Controller
       $this->User_model->delete_user($id);
 
       if ($this->db->affected_rows() > 0) {
-        $this->session->set_flashdata('success', '<b>Data User berhasil diinput!</b> Silahkan cek kembali data Anda.');
-        redirect('admin/data_user');
+        $this->session->set_flashdata('success', '<b>Data User berhasil dihapus!</b> Silahkan cek kembali data Anda.');
+        redirect('admin/user');
       }
     } else {
       $this->session->set_flashdata('failed', '<b>Data sedang digunakan untuk login!</b> Tidak bisa dihapus.');
-      redirect('admin/data_user');
+      redirect('admin/user');
     }
   }
+
+  public function ubah_password()
+  {
+    $this->form_validation->set_rules(
+      'password',
+      'Password',
+      'required|min_length[5]',
+      array(
+        'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+        'min_length'  => '<p class="text-danger">  * %s harus lebih dari 5 karakter!</p>'
+      )
+    );
+    $this->form_validation->set_rules(
+      'cpassword',
+      'Konfirmasi Password',
+      'required|min_length[5]|matches[password]',
+      array(
+        'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+        'min_length'  => '<p class="text-danger">  * %s harus lebih dari 5 karakter!</p>',
+        'matches'     => '<p class="text-danger">  * %s tidak sama dengan password!</p>'
+      )
+    );
+
+    
+    if ($this->form_validation->run() == FALSE) {
+      $this->template->load('templateAdmin', 'admin/form_ganti_password');
+    } else {
+      $this->ubah_password_aksi();
+    }
+    
+  }
+
+  public function ubah_password_aksi()
+  {
+    $id_user = $this->session->userdata('id_user');
+    $data = [
+      "password"    => md5($this->input->post('password')),
+      "updated"     => date('Y-m-d H:i:s'),
+      "updated_by"   => $this->session->userdata('id_user')
+    ];
+
+    $this->User_model->update_user($data, $id_user);
+
+    if ($this->db->affected_rows() > 0) {
+      $this->session->set_flashdata('success', '<b>Password berhasil diubah!</b> Silahkan logout dan login kembali untuk mencoba password.');
+      redirect('admin/password');
+    }else{
+      $this->session->set_flashdata('failed', '<b>Password gagal diubah!</b> Silahkan ulangi lagi.');
+      redirect('admin/password');
+    }
+
+  }
+
 }

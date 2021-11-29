@@ -19,7 +19,6 @@ class User_model extends CI_Model
         return $this->db->get_where('user', ['id_user' => $id])->row_array();
     }
 
-
     // menampilkan jumlah seluruh mobil
     public function get_jumlah_customer()
     {
@@ -56,30 +55,17 @@ class User_model extends CI_Model
     }
 
     //mengupdate data user
-    public function update_user()
+    public function update_user($data, $id_user)
     {
-        $data = [
-            "nama"          => $this->input->post('nama', true),
-            "username"      => $this->input->post('username', true),
-            "alamat"        => $this->input->post('alamat', true),
-            "gender"        => $this->input->post('gender', true),
-            "no_telepon"    => $this->input->post('no_telepon', true),
-            "no_ktp"        => $this->input->post('no_ktp', true),
-            "password"      => $this->input->post('password', true),
-            "role"          => $this->input->post('role', true),
-            "updated"       => date('Y-m-d H:i:s'),
-            "updated_by"    => $this->input->post('updated_by', true)
-        ];
-
-        $this->db->where('id_user', $this->input->post('id_user'));
+        $this->db->where('id_user', $id_user);
         $this->db->update('user', $data);
     }
 
     //menghapus data user
-    public function dalete_user($id)
+    public function delete_user($id)
     {
         $this->db->where('id_user', $id);
-        $this->db->delete('id_user');
+        $this->db->delete('user');
     }
 
     public function cek_login($username, $password)

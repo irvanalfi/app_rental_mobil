@@ -64,6 +64,7 @@ $route['transaksi/pembayaran/(:num)']   = 'Customer/halamanPembayaran/$1';
 $route['transaksi/prosesPembayaran']    = 'Customer/prosesPembayaran';
 $route['transaksi/review/(:num)']       = 'Customer/halamanReview/$1';
 
+$route['admin/password']    = 'admin/user/ubah_password';
 
 // $route['customer/add'] = 'pelanggan/add';
 // $route['customer/process'] = 'pelanggan/process';

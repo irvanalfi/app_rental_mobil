@@ -1,6 +1,6 @@
 <?php
 
-class Data_contact extends CI_Controller
+class Contact extends CI_Controller
 {
 
 
@@ -25,10 +25,10 @@ class Data_contact extends CI_Controller
 
     if ($this->db->affected_rows() > 0) {
       $this->session->set_flashdata('success', '<b>Data berhasil diupdate!</b> Silahkan cek kembali data Anda.');
-      redirect('admin/data_contact');
+      redirect('admin/contact');
     } else {
       $this->session->set_flashdata('failed', '<b>Data gagal diupdate!</b> Silahkan cek kembali data Anda.');
-      redirect('admin/data_contact');
+      redirect('admin/contact');
     }
   }
 
@@ -36,6 +36,6 @@ class Data_contact extends CI_Controller
   {
     $this->Contact_model->delete_contact($id);
     $this->session->set_flashdata('success', '<b>Data berhasil dihapus!</b> Silahkan cek kembali data Anda.');
-    redirect('admin/data_contact');
+    redirect('admin/contact');
   }
 }

@@ -41,29 +41,20 @@ class Mobil_model extends CI_Model
         return $query;
     }
 
-    //menambahkan mobil baru
-    public function add_mobil()
+    // mendapatkan id_mobil terbaru
+    public function get_latest_id_mobil()
     {
-        $data = [
-            "id_tipe"       => $this->input->post('id_tipe', true),
-            "merk"          => $this->input->post('merk', true),
-            "no_plat"       => $this->input->post('no_plat', true),
-            "warna"         => $this->input->post('warna', true),
-            "transmisi"     => $this->input->post('transmisi', true),
-            "jmlh_kursi"    => $this->input->post('jmlh_kursi', true),
-            "bagasi"        => $this->input->post('bagasi', true),
-            "bbm"           => $this->input->post('bbm', true),
-            "tahun"         => $this->input->post('tahun', true),
-            "km"            => $this->input->post('km', true),
-            "status"        => $this->input->post('status', true),
-            "harga"         => $this->input->post('status', true),
-            "denda"         => $this->input->post('denda', true),
-            "gambar"        => $this->input->post('gambar', true),
-            "detail"        => $this->input->post('detail', true),
-            "created"       => date('Y-m-d H:i:s'),
-            "created_by"    => $this->session->userdata('nama')
-        ];
+        $this->db->select('id_mobil');
+        $this->db->from('mobil');
+        $this->db->order_by('id_mobil', 'desc');
+        $this->db->limit(1);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
 
+    //menambahkan mobil baru
+    public function add_mobil($data)
+    {
         $this->db->insert('mobil', $data);
     }
 
@@ -108,7 +99,7 @@ class Mobil_model extends CI_Model
     }
 
     //mengahpus data mobil
-    public function dalete_mobil($id)
+    public function delete_mobil($id)
     {
         $this->db->where('id_mobil', $id);
         $this->db->delete('mobil');

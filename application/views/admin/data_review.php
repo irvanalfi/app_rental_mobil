@@ -56,7 +56,7 @@
                                         <th width="130px;">Tanggal</th>
                                         <th width="40px;" class="align-middle">Detail</th>
                                         <th width="100px;">Status</th>
-                                        <th width="80px;">Aksi</th>
+                                        <th width="75px;">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -72,14 +72,14 @@
                                             <td><?= $rv['no_plat'] ?></td>
                                             <td><?= $rv['created'] ?></td>
                                             <td class="align-middle">
-                                                <a href="#" class="btn btn-sm btn-success" id="dtl_rvw" data-toggle="modal" data-target="#review-detail" data-star="<?= $rv['star'] ?>" data-review="<?= $rv['review'] ?>">
+                                                <a href="#" class="btn btn-sm btn-success" id="dtl_rvw" data-toggle="modal" data-target="#review-detail" data-star="<?= $rv['star'] ?>" data-review="<?= $rv['review'] ?>" title="Lihat Review">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                             </td>
-                                            <td><?= $rv['status'] == 0 ? '<div class="badge badge-warning">Hide</div>' : '<div class="badge badge-success">Show</div>' ?></td>
+                                            <td><?= $rv['status_review'] == 0 ? '<div class="badge badge-warning">Sembuyi</div>' : '<div class="badge badge-success">Tampil</div>' ?></td>
                                             <td>
-                                                <a href="<?= base_url('admin/review/update_review_status/') . $rv['id_review'] ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> Update Status</a>
-                                                <a href="<?= base_url('admin/review/delete_review/') . $rv['id_review'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')"><i class="fas fa-trash"></i></a>
+                                                <a href="<?= base_url('admin/review/update_review_status/') . $rv['id_review'] ?>" class="btn btn-sm btn-primary" title="Update Status"><i class="fas fa-edit"></i></a>
+                                                <a href="<?= base_url('admin/review/delete_review/') . $rv['id_review'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus Review"><i class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     <?php endforeach ?>

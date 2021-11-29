@@ -251,9 +251,7 @@ class Auth extends CI_Controller
 
   public function ganti_password()
   {
-    $this->load->view('templates_admin/header');
-    $this->load->view('ganti_password');
-    $this->load->view('templates_admin/footer');
+    
   }
 
   public function ganti_password_aksi()
