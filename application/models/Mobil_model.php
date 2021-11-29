@@ -59,29 +59,9 @@ class Mobil_model extends CI_Model
     }
 
     //mengupdate data mobil
-    public function update_mobil()
+    public function update_mobil($data, $id)
     {
-        $data = [
-            "id_tipe"       => $this->input->post('id_tipe', true),
-            "merk"          => $this->input->post('merk', true),
-            "no_plat"       => $this->input->post('no_plat', true),
-            "warna"         => $this->input->post('warna', true),
-            "transmisi"     => $this->input->post('transmisi', true),
-            "jmlh_kursi"    => $this->input->post('jmlh_kursi', true),
-            "bagasi"        => $this->input->post('bagasi', true),
-            "bbm"           => $this->input->post('bbm', true),
-            "tahun"         => $this->input->post('tahun', true),
-            "km"            => $this->input->post('km', true),
-            "status"        => $this->input->post('status', true),
-            "harga"         => $this->input->post('status', true),
-            "denda"         => $this->input->post('denda', true),
-            "gambar"        => $this->input->post('gambar', true),
-            "detail"        => $this->input->post('detail', true),
-            "updated"       => date('Y-m-d H:i:s'),
-            "updated_by"    => $this->session->userdata('nama')
-        ];
-
-        $this->db->where('id_mobil', $this->input->post('id_mobil'));
+        $this->db->where('id_mobil', $id);
         $this->db->update('mobil', $data);
     }
 

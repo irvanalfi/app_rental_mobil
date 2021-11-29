@@ -14,6 +14,7 @@
 							<input type="hidden" name="id_mobil" value="<?php echo $mobil['id_mobil']?>">
 							<input type="hidden" name="id_fitur" value="<?php echo $mobil['id_fitur']?>">
 							<input type="hidden" name="gambar_lama" value="<?php echo $mobil['gambar']?>">
+							<input type="hidden" name="no_plat_lama" value="<?php echo $mobil['no_plat']?>">
 
 							<div class="form-group">
 								<label for="">Gambar</label>

@@ -351,94 +351,187 @@ class Mobil extends CI_Controller
 
   public function update_mobil($id)
   {
+    
     $data['mobil'] = $this->Mobil_model->get_mobil_by_id($id);
     $data['tipe'] = $this->Tipe_model->get_all_tipe();
     $data['bbm'] = array("Solar","Bensin","Pertalite", "Pertamax");
     $data['transmisi'] = array("Manual","Matic");
+    
+    $is_unique_plat = '|is_unique[mobil.no_plat]';
+    $no_plat_lama = $this->input->post('no_plat_lama');
+    $no_plat = $this->input->post('no_plat');
+    
+    if ($no_plat == $no_plat_lama) {
+      $is_unique_plat = '';
+    }
+    
+    $this->form_validation->set_rules(
+      'merek',
+      'Merek',
+      'required|min_length[5]',
+      array(
+        'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+        'min_length'  => '<p class="text-danger">  * %s harus lebih dari 5 karakter!</p>'
+      )
+    );
 
-    $this->template->load('templateAdmin', 'admin/form_update_mobil', $data);
+    $this->form_validation->set_rules(
+      'no_plat',
+      'Nomor Plat',
+      'required|min_length[5]'.$is_unique_plat,
+      array(
+        'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+        'min_length'  => '<p class="text-danger">  * %s harus lebih dari 5 karakter!</p>',
+        'is_unique'   => '<p class="text-danger">  * %s ini telah digunakan!</p>'
+      )
+    );
 
+    $this->form_validation->set_rules(
+      'jmlh_kursi',
+      'Jumlah kursi',
+      'required',
+      array(
+        'required' => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
+      )
+    );
+
+    $this->form_validation->set_rules(
+      'warna',
+      'Warna',
+      'required',
+      array(
+        'required' => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
+      )
+    );
+
+    $this->form_validation->set_rules(
+      'bagasi',
+      'Bagasi',
+      'required',
+      array(
+        'required' => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
+      )
+    );
+
+    $this->form_validation->set_rules(
+      'tahun',
+      'Tahun',
+      'required',
+      array(
+        'required' => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
+      )
+    );
+
+    $this->form_validation->set_rules(
+      'km',
+      'Kilometer Mobil',
+      'required',
+      array(
+        'required' => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
+      )
+    );
+
+    $this->form_validation->set_rules(
+      'harga',
+      'Harga Mobil',
+      'required',
+      array(
+        'required' => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
+      )
+    );
+
+    $this->form_validation->set_rules(
+      'denda',
+      'Denda Telat',
+      'required',
+      array(
+        'required' => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
+      )
+    );
+
+    $this->form_validation->set_rules(
+      'detail',
+      'Detail',
+      'required',
+      array(
+        'required' => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
+      )
+    );
+
+    $this->form_validation->set_rules(
+      'hrg_supir',
+      'Harga Supir',
+      'required',
+      array(
+        'required' => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
+      )
+    );
+    
+    if ($this->form_validation->run() == FALSE) {
+      $this->template->load('templateAdmin', 'admin/form_update_mobil', $data);
+    } else {
+      $this->update_mobil_aksi();
+    }
+    
   }
 
   public function update_mobil_aksi()
   {
-    if ($this->form_validation->run() == FALSE) {
-      $id = $this->input->post('id_mobil');
-      $this->update_mobil($id);
+    $id_mobil = $this->input->post('id_mobil');
+    $id_fitur = $this->input->post('id_fitur');
+    $namaGambarMobil = $this->ubah_gambar_mobil($id_mobil);
+
+    $data_mobil = [
+      "id_mobil"      => $id_mobil,
+      "id_tipe"       => $this->input->post('id_tipe', true),
+      "merek"         => $this->input->post('merek', true),
+      "no_plat"       => $this->input->post('no_plat', true),
+      "warna"         => $this->input->post('warna', true),
+      "transmisi"     => $this->input->post('transmisi', true),
+      "jmlh_kursi"    => $this->input->post('jmlh_kursi', true),
+      "bagasi"        => $this->input->post('bagasi', true),
+      "bbm"           => $this->input->post('bbm', true),
+      "tahun"         => $this->input->post('tahun', true),
+      "km"            => $this->input->post('km', true),
+      "status"        => $this->input->post('status', true),
+      "harga"         => $this->input->post('harga', true),
+      "denda"         => $this->input->post('denda', true),
+      "gambar"        => $namaGambarMobil,
+      "detail"        => $this->input->post('detail', true),
+      "updated"       => date('Y-m-d H:i:s'),
+      "updated_by"    => $this->session->userdata('id_user')
+    ];
+
+    $data_fitur_mobil = [
+      "id_mobil"      => $id_mobil,
+      "supir"         => $this->input->post('supir', true),
+      "hrg_supir"     => $this->input->post('hrg_supir', true),
+      "ac"            => $this->input->post('ac', true),
+      "seat_belt"     => $this->input->post('seat_belt', true),
+      "air"           => $this->input->post('air', true),
+      "p3k"           => $this->input->post('p3k', true),
+      "audio_input"   => $this->input->post('audio_input', true),
+      "mp3_player"    => $this->input->post('mp3_player', true),
+      "bluetooth"     => $this->input->post('bluetooth', true),
+      "vidio"         => $this->input->post('vidio', true),
+      "central_lock"  => $this->input->post('central_lock', true),
+      "ban_serep"     => $this->input->post('ban_serep', true),
+      "car_kit"       => $this->input->post('car_kit', true),
+      "updated"       => date('Y-m-d H:i:s'),
+      "updated_by"    => $this->session->userdata('id_user')
+    ];
+
+    $this->Mobil_model->update_mobil($data_mobil, $id_mobil);
+    $this->Fitur_model->update_fitur($data_fitur_mobil, $id_fitur);
+    
+    if ($this->db->affected_rows() > 0) {
+      $this->session->set_flashdata('success', '<b>Data Mobil berhasil diupdate!</b> Silahkan cek kembali data Anda.');
+      redirect('admin/mobil');
     } else {
-      $id           = $this->input->post('id_mobil');
-      $kode_tipe    = $this->input->post('kode_tipe');
-      $merek        = $this->input->post('merek');
-      $no_plat      = $this->input->post('no_plat');
-      $warna        = $this->input->post('warna');
-      $jmlh_kursi   = $this->input->post('jmlh_kursi');
-      $bagasi       = $this->input->post('bagasi');
-      $transmisi    = $this->input->post('transmisi');
-      $km           = $this->input->post('km');
-      $bbm          = $this->input->post('bbm');
-      $tahun        = $this->input->post('tahun');
-      $status       = $this->input->post('status');
-      $harga        = $this->input->post('harga');
-      $hrg_supir    = $this->input->post('hrg_supir');
-      $denda        = $this->input->post('denda');
-      $sopir        = $this->input->post('sopir');
-      $ac           = $this->input->post('ac');
-      $seat_belt    = $this->input->post('seat_belt');
-      $air          = $this->input->post('air');
-      $p3k          = $this->input->post('p3k');
-      $audio_input  = $this->input->post('audio_input');
-      $mp3_player   = $this->input->post('mp3_player');
-      $bluethooth   = $this->input->post('bluethooth');
-      $vidio        = $this->input->post('vidio');
-      $central_lock = $this->input->post('central_lock');
-      $ban_serep    = $this->input->post('ban_serep');
-      $car_kit      = $this->input->post('car_kit');
-      $detail       = $this->input->post('detail');
-      $gambar       = $_FILES['gambar']['name'];
-
-      if ($gambar) {
-        
-      }
-      $data = array(
-        'kode_tipe'    => $kode_tipe,
-        'merek'        => $merek,
-        'no_plat'      => $no_plat,
-        'tahun'        => $tahun,
-        'warna'        => $warna,
-        'jmlh_kursi'   => $jmlh_kursi,
-        'bagasi'       => $bagasi,
-        'transmisi'    => $transmisi,
-        'km'           => $km,
-        'bbm'          => $bbm,
-        'status'       => $status,
-        'harga'        => $harga,
-        'hrg_supir'    => $hrg_supir,
-        'denda'        => $denda,
-        'sopir'        => $sopir,
-        'ac'           => $ac,
-        'seat_belt'    => $seat_belt,
-        'air'          => $air,
-        'p3k'          => $p3k,
-        'audio_input'  => $audio_input,
-        'mp3_player'   => $mp3_player,
-        'bluethooth'   => $bluethooth,
-        'central_lock' => $central_lock,
-        'vidio'        => $vidio,
-        'ban_serep'    => $ban_serep,
-        'car_kit'      => $car_kit,
-        'detail'       => $detail,
-        'gambar'       => $gambar,
-      );
-      $where = array('id_mobil' => $id);
-
-      $this->rental_model->update_data('mobil', $data, $where);
-      $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-      Data berhasil diupdate
-      <button type="button" class="close" data-dismiss="alert" aria-label="close">
-        <span aria-hidden="true">&times;</span>
-      </button></div>');
-      redirect('admin/data_mobil');
+      $this->session->set_flashdata('failed', '<b>Data Mobil gagal diupdate!</b> Silahkan cek kembali data Anda.');
+      redirect('admin/mobil');
     }
+    
   }
 
   public function detail_mobil($id)
@@ -449,14 +542,8 @@ class Mobil extends CI_Controller
 
   public function delete_mobil($id)
   {
-    $mobil = $this->Mobil_model->get_mobil_by_id($id);
-    $fotoMobil = $mobil['gambar'];
-    
-    $target_file = 'assets/upload/car/' . $fotoMobil;
-    unlink($target_file);
-
+    $this->hapus_gambar_mobil($id);
     $this->Mobil_model->delete_mobil($id);
-
     if ($this->db->affected_rows() > 0) {
       $this->session->set_flashdata('success', '<b>Data User berhasil dihapus!</b> Silahkan cek kembali data Anda.');
       redirect('admin/mobil');
@@ -466,10 +553,11 @@ class Mobil extends CI_Controller
     }
   }
 
+  // function untuk mengupload foto
   private function upload_gambar_mobil(){
     $config['upload_path']    = './assets/upload/car/';
-    $config['allowed_types']  = 'jpg|jpeg|png|tiff|gif';
-    $config1['detect_mime']    = TRUE;
+    $config['allowed_types']  = 'jpg|jpeg|png';
+    $config1['detect_mime']   = TRUE;
     $config['max_size']       = 5120;
     $config['file_name']      = 'car-' . date('dmy') . '-' . substr(md5(rand()), 0, 10);
 
@@ -483,6 +571,26 @@ class Mobil extends CI_Controller
       $this->session->set_flashdata('failed', "<b>Eror !</b> File foto yang dimasukkan tidak sesuai, silahkan pilih gambar yang lain.");
       redirect('admin/mobil/tambah_mobil');
     }
+  }
+
+  //funtcion untuk mengubah foto ketika update
+  private function ubah_gambar_mobil($id){
+    if (empty($_FILES['gambar']['name'])) {
+      $gambar = $this->input->post('gambar_lama');
+    } else {
+      $this->hapus_gambar_mobil($id);
+      $gambar = $this->upload_gambar_mobil();
+    }
+    return $gambar;
+  }
+
+//funtcion untuk menghapus foto
+  private function hapus_gambar_mobil($id){
+    $mobil = $this->Mobil_model->get_mobil_by_id($id);
+    $fotoMobil = $mobil['gambar'];
+    
+    $target_file = 'assets/upload/car/' . $fotoMobil;
+    unlink($target_file);
   }
 
 }
