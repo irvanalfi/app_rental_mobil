@@ -6,34 +6,18 @@ class Transaksi extends CI_Controller
   public function __construct()
   {
     parent::__construct();
-
-    if (empty($this->session->userdata('username'))) {
-      $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Anda belum login!</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>');
-      redirect('auth/login');
-    } elseif ($this->session->userdata('role') != '1') {
-      $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Anda tidak punya akses ke halaman ini!</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>');
-      redirect('customer/dashboard');
-    }
+    check_not_login(); /*pengecekan status login */
+    check_admin(); /*pengecekan status level admin atau bukan */
+    // load semua model yang dibutuhkan
+    $this->load->model('Transaksi_model');
   }
 
   public function index()
   {
-    $data['transaksi'] = $this->db->query("SELECT * FROM transaksi tr, mobil mb, customer cs WHERE tr.id_mobil=mb.id_mobil AND tr.id_customer=cs.id_customer")->result();
-    $this->load->view('templates_admin/header');
-    $this->load->view('templates_admin/sidebar');
-    $this->load->view('admin/data_transaksi', $data);
-    $this->load->view('templates_admin/footer');
+    $data['transaksi'] = $this->Transaksi_model->get_all_transaksi();
+    $this->template->load('templateAdmin', 'admin/data_transaksi', $data);
   }
+
 
   public function pembayaran($id)
   {
@@ -79,16 +63,16 @@ class Transaksi extends CI_Controller
 
   public function transaksi_selesai_aksi()
   {
-    $id                  = $this->input->post('id_rental');
-    $id_mobil            = $this->input->post('id_mobil');
-    $tgl_pengembalian    = $this->input->post('tgl_pengembalian');
-    $tgl_kembali         = $this->input->post('tgl_kembali');
-    $denda               = $this->input->post('denda');
+    $id                 = $this->input->post('id_rental');
+    $id_mobil           = $this->input->post('id_mobil');
+    $tgl_pengembalian   = $this->input->post('tgl_pengembalian');
+    $tgl_kembali        = $this->input->post('tgl_kembali');
+    $denda              = $this->input->post('denda');
 
-    $x = strtotime($tgl_pengembalian);
-    $y = strtotime($tgl_kembali);
-    $selisih = abs($x - $y) / (60 * 60 * 24);
-    $total_denda = $selisih * $denda;
+    $x                  = strtotime($tgl_pengembalian);
+    $y                  = strtotime($tgl_kembali);
+    $selisih            = abs($x - $y) / (60 * 60 * 24);
+    $total_denda        = $selisih * $denda;
 
     $data = array(
       'tgl_pengembalian'    => $tgl_pengembalian,

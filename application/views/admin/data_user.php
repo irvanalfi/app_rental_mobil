@@ -6,7 +6,7 @@
         <div class="breadcrumb-item text-capitalize"><?= $this->uri->segment(1) ?></div>
         <div class="breadcrumb-item text-capitalize"><?= $this->uri->segment(2) ?></div>
         <?php if ($this->uri->segment(3) != '') : ?>
-          <div class="breadcrumb-item text-capitalize">$this->uri->segment(3)</div>
+          <div class="breadcrumb-item text-capitalize"><?= $this->uri->segment(3) ?></div>
         <?php endif; ?>
       </div>
     </div>

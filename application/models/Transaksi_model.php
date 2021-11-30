@@ -8,17 +8,19 @@ class Transaksi_model extends CI_Model
     //menampilkan semua transaksi
     public function get_all_transaksi()
     {
-        $this->db->select('*');
+        $this->db->select('*, transaksi.created as transaksi_created');
         $this->db->from('transaksi');
         $this->db->join('mobil', 'mobil.id_mobil = transaksi.id_mobil');
         $this->db->join('user', 'user.id_user = transaksi.id_user');
+        $this->db->join('tipe', 'tipe.id_tipe = mobil.id_tipe');
+        $this->db->join('fitur', 'fitur.id_mobil = mobil.id_mobil');
         $query = $this->db->get();
         return $query->result_array();
     }
     //menampilkan beberapa transaksi berdasarkan id_user
     public function get_transaksi_by_id_user($id_user)
     {
-        $this->db->select('*');
+        $this->db->select('*, transaksi.created as transaksi_created');
         $this->db->from('transaksi');
         $this->db->join('mobil', 'mobil.id_mobil = transaksi.id_mobil');
         $this->db->join('user', 'user.id_user = transaksi.id_user');
@@ -32,7 +34,7 @@ class Transaksi_model extends CI_Model
     //menampilkan beberapa transaksi berdasarkan id_transaksi
     public function get_transaksi_by_id($id_transaksi)
     {
-        $this->db->select('*');
+        $this->db->select('*, transaksi.created as transaksi_created');
         $this->db->from('transaksi');
         $this->db->join('mobil', 'mobil.id_mobil = transaksi.id_mobil');
         $this->db->join('user', 'user.id_user = transaksi.id_user');
@@ -46,7 +48,7 @@ class Transaksi_model extends CI_Model
     //menampilkan beberapa transaksi berdasarkan id_user
     public function get_transaksi_by_id_mobil($id_user, $id_mobil)
     {
-        $this->db->select('*');
+        $this->db->select('*, transaksi.created as transaksi_created');
         $this->db->from('transaksi');
         $this->db->join('mobil', 'mobil.id_mobil = transaksi.id_mobil');
         $this->db->join('user', 'user.id_user = transaksi.id_user');
@@ -61,7 +63,7 @@ class Transaksi_model extends CI_Model
     //menampilkan beberapa transaksi berdasarkan id_mobil
     public function get_transaksi_by_id_mobil_saja($id_mobil)
     {
-        $this->db->select('*');
+        $this->db->select('*, transaksi.created as transaksi_created');
         $this->db->from('transaksi');
         $this->db->join('mobil', 'mobil.id_mobil = transaksi.id_mobil');
         $this->db->join('user', 'user.id_user = transaksi.id_user');
@@ -152,7 +154,8 @@ class Transaksi_model extends CI_Model
     }
 
     // update untuk transaksi yang gagal dibayar oleh customer
-    public function update_transaksi_gagal($data, $id_transaksi){
+    public function update_transaksi_gagal($data, $id_transaksi)
+    {
         $data = [
             //function itungan total denda todal akhir
             "status_pengembalian"   => "Kembali",

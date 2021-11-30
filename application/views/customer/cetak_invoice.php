@@ -163,18 +163,6 @@
     .invoice>div:not(.invoice-footer) {
       margin-bottom: 20px
     }
-
-    .btn.btn-white,
-    .btn.btn-white.disabled,
-    .btn.btn-white.disabled:focus,
-    .btn.btn-white.disabled:hover,
-    .btn.btn-white[disabled],
-    .btn.btn-white[disabled]:focus,
-    .btn.btn-white[disabled]:hover {
-      color: #2d353c;
-      background: #fff;
-      border-color: #d9dfe3;
-    }
   </style>
 </head>
 
@@ -218,7 +206,7 @@
           </div>
           <div class="invoice-date">
             <small>Tanggal Transaksi</small>
-            <div class="date text-inverse m-t-5"><?= $transaksi['created'] ?></div>
+            <div class="date text-inverse m-t-5"><?= $transaksi['transaksi_created'] ?></div>
             <div class="invoice-detail">
               ID Transaksi : <?= $transaksi['id_transaksi'] ?><br>
               Status Pembayaran : <?= $transaksi['status_pembayaran'] == 0 ? '<b style="color: red">Belum Lunas</b>' : '<b>Lunas</b>'; ?>

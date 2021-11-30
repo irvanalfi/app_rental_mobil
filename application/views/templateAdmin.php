@@ -34,33 +34,33 @@
                     </ul>
                 </form>
                 <ul class="navbar-nav navbar-right">
-                    <?php $jumlahUnreadContact = getJumlahUnreadContact()?>
+                    <?php $jumlahUnreadContact = getJumlahUnreadContact() ?>
                     <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle <?php echo $jumlahUnreadContact != 0 ? 'beep' : '' ?>"><i class="far fa-envelope"></i></a>
                         <div class="dropdown-menu dropdown-list dropdown-menu-right">
                             <div class="dropdown-header">Contact Masuk</div>
                             <div class="dropdown-list-content dropdown-list-message">
-                                <?php if($jumlahUnreadContact == 0) :  ?>
+                                <?php if ($jumlahUnreadContact == 0) :  ?>
                                     <a href="#" class="dropdown-item dropdown-item-unread disabled">
                                         <div class="pesan text-center">
                                             <p>Tidak ada pesan masuk</p>
                                         </div>
                                     </a>
                                 <?php else : ?>
-                                    <?php $contact = getUnreadContact()?>
-                                    <?php foreach ($contact as $c): ?>
-                                    <a href="#" class="dropdown-item dropdown-item-unread disabled">
-                                        <div class="dropdown-item-avatar">
-                                            <img alt="image" src="<?= base_url('assets/upload/user/avatar/') . $c['avatar']?>" class="rounded-circle">
+                                    <?php $contact = getUnreadContact() ?>
+                                    <?php foreach ($contact as $c) : ?>
+                                        <a href="#" class="dropdown-item dropdown-item-unread disabled">
+                                            <div class="dropdown-item-avatar">
+                                                <img alt="image" src="<?= base_url('assets/upload/user/avatar/') . $c['avatar'] ?>" class="rounded-circle">
 
-                                        </div>
-                                        <div class="dropdown-item-desc">
-                                            <b><?php echo $c['nama']?></b>
-                                            <p><?php echo $c['pesan']?></p>
-                                            <div class="time"><?php echo  date('d F Y, H:i', strtotime($c['contact_created']))?></div>
-                                        </div>
-                                    </a>
-                                    <?php endforeach?>
-                                <?php endif?>
+                                            </div>
+                                            <div class="dropdown-item-desc">
+                                                <b><?php echo $c['nama'] ?></b>
+                                                <p><?php echo $c['pesan'] ?></p>
+                                                <div class="time"><?php echo  date('d F Y, H:i', strtotime($c['contact_created'])) ?></div>
+                                            </div>
+                                        </a>
+                                    <?php endforeach ?>
+                                <?php endif ?>
                             </div>
                             <div class="dropdown-footer text-center">
                                 <a href="<?= site_url('admin/contact'); ?>">Lihat Semua Pesan <i class="fas fa-chevron-right"></i></a>
@@ -261,6 +261,81 @@
                 var review = $(this).data('review');
                 $('#bintang').text(bintang);
                 $('#review').text(review);
+            })
+        })
+
+        // tampil detail transaksi 
+        $(document).ready(function() {
+            $(document).on('click', '#dtl_trs', function() {
+                var id = $(this).data('id');
+                var avatar = $(this).data('avatar');
+                var nama = $(this).data('nama');
+                var alamat = $(this).data('alamat');
+                var noktp = $(this).data('noktp');
+                var email = $(this).data('email');
+                var notelepon = $(this).data('notelepon');
+                var merek = $(this).data('merek');
+                var namatipe = $(this).data('namatipe');
+                var warna = $(this).data('warna');
+                var tahun = $(this).data('tahun');
+                var transmisi = $(this).data('transmisi');
+                var bbm = $(this).data('bbm');
+                var jmlhkursi = $(this).data('jmlhkursi');
+                var noplat = $(this).data('noplat');
+                var tglrental = $(this).data('tglrental');
+                var tglkembali = $(this).data('tglkembali');
+                var tgltransaksi = $(this).data('tgltransaksi');
+                var tglpengembalian = $(this).data('tglpengembalian');
+                var alamatpenjemputan = $(this).data('alamatpenjemputan');
+                var waktupenjemputan = $(this).data('waktupenjemputan');
+                var hargamobil = $(this).data('hargamobil');
+                var hrgsupir = $(this).data('hrgsupir');
+                var denda = $(this).data('denda');
+                var totalharga = $(this).data('totalharga');
+                var totalhargasupir = $(this).data('totalhargasupir');
+                var totaldenda = $(this).data('totaldenda');
+                var pajak = $(this).data('pajak');
+                var totalakhir = $(this).data('totalakhir');
+                var statusrental = $(this).data('statusrental');
+                var statuspengembalian = $(this).data('statuspengembalian');
+                var statuspembayaran = $(this).data('statuspembayaran');
+                var subtotal = $(this).data('subtotal');
+                var selisih = $(this).data('selisih');
+
+                $('#hari').text(selisih)
+                $('#hari2').text(selisih)
+                $('#id').text(id);
+                $('#nama').text(nama);
+                $('#noKTP').text(noktp);
+                $('#email').text(email);
+                $('#noTelepon').text(notelepon);
+                $('#alamat').text(alamat);
+                $('#merek').text(merek);
+                $('#namaTipe').text(namatipe);
+                $('#warna').text(warna);
+                $('#tahun').text(tahun);
+                $('#transmisi').text(transmisi);
+                $('#bbm').text(bbm);
+                $('#jmlhKursi').text(jmlhkursi);
+                $('#tglRental').text(tglrental);
+                $('#tglKembali').text(tglkembali);
+                $('#tglTransaksi').text(tgltransaksi);
+                $('#tglPengembalian').text(tglpengembalian);
+                $('#alamatPenjemputan').text(alamatpenjemputan);
+                $('#waktuPenjemputan').text(waktupenjemputan);
+                $('#hargaMobil').text(hargamobil);
+                $('#hrgSupir').text(hrgsupir);
+                $('#denda').text(denda);
+                $('#totalHarga').text(totalharga);
+                $('#totalHargaSupir').text(totalhargasupir);
+                $('#totalDenda').text(totaldenda);
+                $('#pajak').text(pajak);
+                $('#pajakP').text(pajak);
+                $('#subtotal').text(subtotal);
+                $('#totalAkhir').text(totalakhir);
+                $('#statusRental').text(statusrental);
+                $('#statusPengembalian').text(statuspengembalian);
+                $('#statusPembayaran').text(statuspembayaran);
             })
         })
 
