@@ -60,7 +60,7 @@
                     <th>Total Akhir</th>
                     <th>Cek Pembayaran</th>
                     <th>Detail</th>
-                    <th>Action</th>
+                    <th style="padding-left: 45px; padding-right: 45px;">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -87,13 +87,14 @@
                         $tanggal_kembali      = strtotime($tr['tgl_kembali']);
                         $selisih              = abs($tanggal_rental - $tanggal_kembali) / (60 * 60 * 24) + 1;
                         ?>
-                        <a href="#" class="btn btn-sm btn-success" id="dtl_trs" data-toggle="modal" data-target="#transaksi-detail" data-avatar="<?= $tr['avatar'] ?>" data-id="<?= $tr['id_transaksi'] ?>" data-nama="<?= $tr['nama'] ?>" data-alamat="<?= $tr['alamat'] ?>" data-noKTP="<?= $tr['no_ktp'] ?>" data-email="<?= $tr['email'] ?>" data-noTelepon="<?= $tr['no_telepon'] ?>" data-merek="<?= $tr['merek'] ?>" data-namaTipe="<?= $tr['nama_tipe'] ?>" data-warna="<?= $tr['warna'] ?>" data-tahun="<?= $tr['tahun'] ?>" data-transmisi="<?= $tr['transmisi'] ?>" data-bbm="<?= $tr['bbm'] ?>" data-jmlhKursi="<?= $tr['jmlh_kursi'] ?>" data-noPlat="<?= $tr['no_plat'] ?>" data-tglRental="<?= indo_date($tr['tgl_rental']) ?>" data-selisih="<?= $selisih ?>" data-tglKembali="<?= indo_date($tr['tgl_kembali']) ?>" data-tglTransaksi="<?= indo_date($tr['transaksi_created']) ?>" data-tglPengembalian="<?= $tr['tgl_pengembalian'] == NULL ? '-' : indo_date($tr['tgl_pengembalian']) ?>" data-alamatPenjemputan="<?= $tr['alamat_penjemputan'] ?>" data-waktuPenjemputan="<?= $tr['waktu_penjemputan'] ?>" data-hargaMobil="<?= indo_currency($tr['harga']) ?>" data-hrgSupir="<?= indo_currency($tr['hrg_supir']) ?>" data-denda="<?= indo_currency($tr['denda']) ?>" data-totalHarga="<?= indo_currency($tr['total_harga']) ?>" data-totalHargaSupir="<?= $tr['total_harga_supir'] > 0 ? indo_currency($tr['total_harga_supir']) : 'Lepas Kunci' ?>" data-totalDenda="<?= indo_currency($tr['total_denda']) ?>" data-pajak="<?= indo_currency($tr['pajak']) ?>" data-totalAkhir="<?= indo_currency($tr['total_akhir']) ?>" data-subtotal="<?= indo_currency($tr['total_harga'] + $tr['total_harga_supir']) ?>" data-statusRental="<?= $tr['status_rental'] ?>" data-statusPengembalian="<?= $tr['status_pengembalian'] ?>" data-statusPembayaran="<?= $tr['status_pembayaran'] == 0 ? 'Belum Lunas' : 'Lunas'; ?>" title="Lihat Review">
+                        <a href="#" class="btn btn-sm btn-success" id="dtl_trs" data-toggle="modal" data-target="#transaksi-detail" data-avatar="<?= $tr['avatar'] ?>" data-id="<?= $tr['id_transaksi'] ?>" data-nama="<?= $tr['nama'] ?>" data-alamat="<?= $tr['alamat'] ?>" data-noKTP="<?= $tr['no_ktp'] ?>" data-email="<?= $tr['email'] ?>" data-noTelepon="<?= $tr['no_telepon'] ?>" data-merek="<?= $tr['merek'] ?>" data-namaTipe="<?= $tr['nama_tipe'] ?>" data-warna="<?= $tr['warna'] ?>" data-tahun="<?= $tr['tahun'] ?>" data-transmisi="<?= $tr['transmisi'] ?>" data-bbm="<?= $tr['bbm'] ?>" data-jmlhKursi="<?= $tr['jmlh_kursi'] ?>" data-noPlat="<?= $tr['no_plat'] ?>" data-tglRental="<?= indo_date($tr['tgl_rental']) ?>" data-selisih="<?= $selisih ?>" data-tglKembali="<?= indo_date($tr['tgl_kembali']) ?>" data-tglTransaksi="<?= indo_date($tr['transaksi_created']) ?>" data-tglPengembalian="<?= $tr['tgl_pengembalian'] == NULL ? '-' : indo_date($tr['tgl_pengembalian']) ?>" data-alamatPenjemputan="<?= $tr['alamat_penjemputan'] ?>" data-waktuPenjemputan="<?= $tr['waktu_penjemputan'] ?>" data-hargaMobil="<?= indo_currency($tr['harga']) ?>" data-hrgSupir="<?= indo_currency($tr['hrg_supir']) ?>" data-denda="<?= indo_currency($tr['denda']) ?>" data-totalHarga="<?= indo_currency($tr['total_harga']) ?>" data-totalHargaSupir="<?= $tr['total_harga_supir'] > 0 ? indo_currency($tr['total_harga_supir']) : 'Lepas Kunci' ?>" data-totalDenda="<?= indo_currency($tr['total_denda']) ?>" data-pajak="<?= indo_currency($tr['pajak']) ?>" data-totalAkhir="<?= indo_currency($tr['total_akhir']) ?>" data-subtotal="<?= indo_currency($tr['total_harga'] + $tr['total_harga_supir'] + $tr['total_denda']) ?>" data-statusRental="<?= $tr['status_rental'] ?>" data-statusPengembalian="<?= $tr['status_pengembalian'] ?>" data-statusPembayaran="<?= $tr['status_pembayaran'] == 0 ? 'Belum Lunas' : 'Lunas'; ?>" title="Lihat Review">
                           <i class="fa fa-eye"></i>
                         </a>
                       </td>
-                      <td class="align-middle">
-                        <a href="<?= base_url('admin/user/updateUser/') . $tr['id_user'] ?>" class="btn btn-sm btn-primary" title="Update Data"><i class="fas fa-edit"></i></a>
-                        <a href="<?= base_url('admin/user/delete_user/') . $tr['id_user'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus Data"><i class="fas fa-trash"></i></a>
+                      <td>
+                        <a href="<?= base_url('admin/transaksi/cetakStruk/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-secondary" target="_blank" title="Print Transaksi"><i class="fas fa-print"></i></a>
+                        <a href="<?= base_url('admin/transaksi/updateTransaksi/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-primary" title="Edit Transaksi"><i class="fas fa-edit"></i></a>
+                        <a href="<?= base_url('admin/transaksi/transaksiSelesai/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-warning" onclick="return confirm('Anda ingin menyelesaikan ini?')" title="Selesaikan Transaksi"><i class="fas fa-clipboard-check"></i></a>
                       </td>
                     </tr>
                   <?php endforeach ?>
@@ -205,30 +206,30 @@
         <!-- begin invoice-header -->
         <div class="invoice-header">
           <div class="invoice-to">
-            <address class="m-t-5 m-b-5">
-              <strong class="text-inverse">Nama : <span id="nama"></span></strong><br>
-              Alamat : <span id="alamat"></span><br>
-              KTP &nbsp; &nbsp; &nbsp;: <span id="noKTP"></span><br>
-              Phone &nbsp;: <span id="noTelepon"></span><br>
-              Email &nbsp; &nbsp;: <span id="email"></span><br>
+            <address class="m-t-5 m-b-5">Nama : <br><b><span id="nama"></span></b><br>
+              Alamat : <br><b><span id="alamat"></span></b><br>
+              KTP &nbsp; &nbsp; &nbsp;: <br><b><span id="noKTP"></span></b><br>
+              Phone &nbsp;: <br><b><span id="noTelepon"></span></b><br>
+              Email &nbsp; &nbsp;: <br><b><span id="email"></span></b><br>
             </address>
           </div>
           <div class="invoice-to">
             <address class="m-t-5 m-b-5">
               <strong class="text-inverse">Alamat Penjemputan : </strong><br>
-              <span id="alamatPenjemputan"></span><br>
-              Waktu Penjemputan : <span id="waktuPenjemputan"></span><br>
-              Tgl. Rental : <span id="tglRental"></span><br>
-              Tgl. Kembali : <span id="tglKembali"></span><br>
+              <b><span id="alamatPenjemputan"></span></b><br>
+              Waktu Penjemputan : <br><b><span id="waktuPenjemputan"></span></b><br>
+              Tgl. Rental : <br><b><span id="tglRental"></span></b><br>
+              Tgl. Kembali : <br><b><span id="tglKembali"></span></b><br>
             </address>
           </div>
           <div class="invoice-date">
             <div class="date text-inverse m-t-5">ID Transaksi : <span id="id"></span></div>
             <div class="invoice-detail">
-              Tgl. Transaksi : <span id="tglTransaksi"></span><br>
+              Tgl. Transaksi : <b><span id="tglTransaksi"></span></b><br>
               Status Pembayaran :<br><span id="statusPembayaran" style="font-weight: bold;"></span><br>
               Status Pengembalian :<br><span id="statusPengembalian" style="font-weight: bold;"></span><br>
-              Tgl. Pengembalian : <br><span id="tglPengembalian" style="font-weight: bold;"></span>
+              Tgl. Pengembalian : <br><span id="tglPengembalian" style="font-weight: bold;"></span><br>
+              Status Rental :<br><span id="statusRental" style="font-weight: bold;"></span>
             </div>
           </div>
         </div>
@@ -282,6 +283,21 @@
                   </td>
                   <td class="text-right">
                     <span id="totalHargaSupir"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="text-inverse"><b>Denda</b></span><br>
+                    <small>Biaya jika telat mengembalikan mobil melebihi tanggal kembali</small>
+                  </td>
+                  <td class="text-center">
+                    <span id="denda"></span>
+                  </td>
+                  <td class="text-center">
+                    <span id="hariTelat"></span>
+                  </td>
+                  <td class="text-right">
+                    <span id="totalDenda"></span>
                   </td>
                 </tr>
                 <tr>

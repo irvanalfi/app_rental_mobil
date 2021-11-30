@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2021 at 02:43 AM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.3
+-- Generation Time: Nov 30, 2021 at 03:21 PM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 7.4.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -230,8 +229,8 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`id_transaksi`, `id_user`, `id_mobil`, `tgl_rental`, `waktu_penjemputan`, `tgl_kembali`, `alamat_penjemputan`, `total_harga`, `pajak`, `total_harga_supir`, `total_denda`, `total_akhir`, `tgl_pengembalian`, `status_pengembalian`, `status_rental`, `bukti_pembayaran`, `status_pembayaran`, `confirm_by`, `tgl_cancel`, `status_refund`, `bukti_refund`, `total_refund`, `created`, `updated`, `created_by`, `updated_by`) VALUES
-(33, 4, 9, '2021/12/1', '7:00am', '2021/12/3', 'Kencono, Sragi, Songgon, Banyuwangi', 1350000, 27000, 0, 0, 1377000, NULL, 'Belum Kembali', 'Belum Selesai', NULL, 0, NULL, NULL, 'Belum Selesai', NULL, 0, '2021-11-29 11:43:56', NULL, '4', NULL),
-(34, 4, 18, '2021/12/2', '1:00am', '2021/12/3', 'Kencono, Sragi, Songgon, Banyuwangi', 600000, 12000, 600000, 0, 1212000, '2021-12-03', 'Kembali', 'Selesai', 'Struk-291121-e3d305a825.jpg', 1, '11', NULL, 'Belum Selesai', NULL, 0, '2021-11-29 11:49:56', NULL, '4', NULL);
+(0, 4, 9, '2021/12/1', '7:00am', '2021/12/3', 'Kencono, Sragi, Songgon, Banyuwangi', 1350000, 27000, 0, 0, 1377000, NULL, 'Belum Diambil', 'Belum Selesai', 'Struk-301121-8fc012926a.jpg', 1, 'M. Irvan Alfi Hidayat', NULL, 'Belum Selesai', NULL, 0, '2021-11-29 11:49:56', NULL, '4', NULL),
+(34, 4, 18, '2021/12/2', '1:00am', '2021/12/3', 'Kencono, Sragi, Songgon, Banyuwangi', 600000, 12000, 600000, 0, 1212000, '2021-12-03', 'Kembali', 'Selesai', 'Struk-291121-e3d305a825.jpg', 1, 'M. Irvan Alfi Hidayat', NULL, 'Belum Selesai', NULL, 0, '2021-11-29 11:49:56', NULL, '4', NULL);
 
 -- --------------------------------------------------------
 
@@ -266,20 +265,6 @@ INSERT INTO `user` (`id_user`, `nama`, `username`, `email`, `alamat`, `gender`, 
 (4, 'Joko Santosi', 'jokos', 'oktaviano.andy.suryadi@gmail.com', 'Jl. Satu Pekanbaru', 'L', '6285707745485', '215654532767', '827ccb0eea8a706c4c34a16891f84e7b', 'avatar-301121-4549314299.jpg', 'ktp-301121-82fbfaeccf.jpg', 2, '2021-09-30 19:23:12', '2021-11-30 07:59:38', '4', '4'),
 (7, 'Arif', 'admin', 'arif@gmail.com', 'Pekanbaru', 'L', '6282244922833', '1764578345', '21232f297a57a5a743894a0e4a801fc3', 'default.jpg', 'ktp-221121-0f58150553.jpg', 1, '2021-09-30 19:23:12', '2021-11-29 00:06:56', '0', '7'),
 (11, 'M. Irvan Alfi Hidayat', 'irvan', 'irvanhidayat0623@gmail.com', 'Kencono, Sragi, Songgon, Banyuwangi', 'L', '082244922833', '351019230698', '2467d3744600858cc9026d5ac6005305', 'avatar-291121-bf07d96d01.jpg', 'ktp-231121-a97489eabb.jpeg', 1, '2021-11-29 11:27:18', NULL, '11', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_token`
---
-
-CREATE TABLE `user_token` (
-  `id_token` int(11) NOT NULL,
-  `token` text NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `created` varchar(30) NOT NULL,
-  `created_by` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -336,13 +321,6 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- Indexes for table `user_token`
---
-ALTER TABLE `user_token`
-  ADD PRIMARY KEY (`id_token`),
-  ADD KEY `id_user` (`id_user`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -389,12 +367,6 @@ ALTER TABLE `user`
   MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `user_token`
---
-ALTER TABLE `user_token`
-  MODIFY `id_token` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- Constraints for dumped tables
 --
 
@@ -430,12 +402,6 @@ ALTER TABLE `review`
 ALTER TABLE `transaksi`
   ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_mobil`) REFERENCES `mobil` (`id_mobil`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `user_token`
---
-ALTER TABLE `user_token`
-  ADD CONSTRAINT `user_token_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

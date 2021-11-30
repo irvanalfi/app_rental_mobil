@@ -183,37 +183,31 @@
         <!-- end invoice-company -->
         <!-- begin invoice-header -->
         <div class="invoice-header">
-          <div class="invoice-from">
-            <small>dari</small>
-            <address class="m-t-5 m-b-5">
-              <strong class="text-inverse">Halim Rental Car</strong><br>
-              Alamat : <br>
-              Pringsejuta, Genteng, Banyuwangi.<br>
-              Phone/WA : +62 82244922833<br>
-              Email : halim@gmail.com
+          <div class="invoice-to">
+            <address class="m-t-5 m-b-5">Nama : <br><b><?= $transaksi['nama'] ?></b><br>
+              Alamat : <br><b><?= $transaksi['alamat'] ?></b><br>
+              KTP &nbsp; &nbsp; &nbsp;: <br><b><?= $transaksi['no_ktp'] ?></b><br>
+              Phone &nbsp;: <br><b><?= $transaksi['no_telepon'] ?></b><br>
+              Email &nbsp; &nbsp;: <br><b><?= $transaksi['email'] ?></b><br>
             </address>
           </div>
           <div class="invoice-to">
-            <small>kepada</small>
             <address class="m-t-5 m-b-5">
-              <strong class="text-inverse"><?= $transaksi['nama'] ?></strong><br>
-              Alamat :<br>
-              <?= $transaksi['alamat'] ?><br>
-              KTP : <?= $transaksi['no_ktp'] ?><br>
-              Phone : +<?= $transaksi['no_telepon'] ?><br>
-              Email : <?= $transaksi['email'] ?><br>
+              <strong class="text-inverse">Alamat Penjemputan : </strong><br>
+              <b><?= $transaksi['alamat_penjemputan'] ?></b><br>
+              Waktu Penjemputan : <br><b><?= $transaksi['waktu_penjemputan'] ?></b><br>
+              Tgl. Rental : <br><b><?= indo_date($transaksi['tgl_rental']) ?></b><br>
+              Tgl. Kembali : <br><b><?= indo_date($transaksi['tgl_kembali']) ?></b><br>
             </address>
           </div>
           <div class="invoice-date">
-            <small>Tanggal Transaksi</small>
-            <div class="date text-inverse m-t-5"><?= $transaksi['transaksi_created'] ?></div>
+            <div class="date text-inverse m-t-5">ID Transaksi : <?= $transaksi['id_transaksi'] ?></div>
             <div class="invoice-detail">
-              ID Transaksi : <?= $transaksi['id_transaksi'] ?><br>
-              Alamat Penjemputan : <?= $transaksi['alamat_penjemputan'] ?><br>
-              Waktu Penjemputan : <?= $transaksi['waktu_penjemputan'] ?><br>
-              Tgl. Rental : <?= $transaksi['tgl_rental'] ?><br>
-              Tgl. Kembali : <?= $transaksi['tgl_kembali'] ?><br>
-              Status Pembayaran : <?= $transaksi['status_pembayaran'] == 0 ? '<b style="color: red">Belum Lunas</b>' : '<b>Lunas</b>'; ?>
+              Tgl. Transaksi : <b><?= indo_date($transaksi['transaksi_created']) ?></b><br>
+              Status Pembayaran :<br><b><?= $transaksi['status_pembayaran'] == 0 ? '<b style="color: red">Belum Lunas</b>' : '<b>Lunas</b>'; ?></b></span><br>
+              Status Pengembalian :<br><b><?= $transaksi['status_pengembalian'] ?></b><br>
+              Tgl. Pengembalian : <br><b><?= $transaksi['tgl_pengembalian'] == NULL ? '-' : indo_date($transaksi['tgl_pengembalian']) ?></b><br>
+              Status Rental :<br><b><?= $transaksi['status_rental'] ?></b>
             </div>
           </div>
         </div>
@@ -266,6 +260,15 @@
                 </tr>
                 <tr>
                   <td>
+                    <span class="text-inverse"><b>Denda</b></span><br>
+                    <small>Biaya jika telat mengembalikan mobil melebihi tanggal kembali</small>
+                  </td>
+                  <td class="text-center"><?= indo_currency($transaksi['denda']) ?></td>
+                  <td class="text-center"></span></td>
+                  <td class="text-right"><?= indo_currency($transaksi['total_denda']) ?></span></td>
+                </tr>
+                <tr>
+                  <td>
                     <span class="text-inverse"><b>Pajak Penghasilan</b></span><br>
                     <small>Pajak yang dikenakan untuk setiap transaksi adalah 2% dari total harga rental mobil</small>
                   </td>
@@ -283,7 +286,7 @@
               <div class="invoice-price-row">
                 <div class="sub-price">
                   <small>SUBTOTAL</small>
-                  <span class="text-inverse"><?= indo_currency($transaksi['total_harga'] + $transaksi['total_harga_supir']) ?></span>
+                  <span class="text-inverse"><?= indo_currency($transaksi['total_harga'] + $transaksi['total_harga_supir'] + $transaksi['total_denda']) ?></span>
                 </div>
                 <div class="sub-price">
                   <i class="fa fa-plus text-muted"></i>

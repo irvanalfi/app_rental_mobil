@@ -186,7 +186,7 @@ class Customer extends CI_Controller
             "total_refund"          => 0,
             "total_akhir"           => $total_akhir,
             "tgl_pengembalian"      => null,
-            "status_pengembalian"   => "Belum diambil",
+            "status_pengembalian"   => "Belum Diambil",
             "status_rental"         => "Belum Selesai",
             "tgl_cancel"            => null,
             "status_refund"         => "Belum Selesai",

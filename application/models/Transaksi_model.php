@@ -69,7 +69,7 @@ class Transaksi_model extends CI_Model
         $this->db->join('user', 'user.id_user = transaksi.id_user');
         $this->db->join('tipe', 'tipe.id_tipe = mobil.id_tipe');
         $this->db->where('transaksi.id_mobil', $id_mobil);
-        $this->db->where('transaksi.status_pengembalian', "Belum Kembali");
+        $this->db->where('transaksi.status_pengembalian', "Belum diambil");
         $this->db->order_by('tgl_rental', 'asc');
         $query = $this->db->get();
         return $query->result_array();
@@ -116,6 +116,12 @@ class Transaksi_model extends CI_Model
         $this->db->update('transaksi', $data);
     }
 
+    public function update_status_pembayaran($data, $id_transaksi)
+    {
+        $this->db->where('id_transaksi', $id_transaksi);
+        $this->db->update('transaksi', $data);
+    }
+
     public function update_bukti_pembayaran($struk, $id)
     {
         $data = [
@@ -123,17 +129,6 @@ class Transaksi_model extends CI_Model
         ];
 
         $this->db->where('id_transaksi', $id);
-        $this->db->update('transaksi', $data);
-    }
-
-    public function update_status_pembayaran()
-    {
-        $data = [
-            "status_pembayaran"      => $this->input->post('status_pembayaran', true),
-            "confirm_by"             => $this->session->userdata('nama')
-        ];
-
-        $this->db->where('id_transaksi', $this->input->post('id_transaksi'));
         $this->db->update('transaksi', $data);
     }
 
@@ -166,13 +161,6 @@ class Transaksi_model extends CI_Model
 
         $this->db->where('id_transaksi', $id_transaksi);
         $this->db->update('transaksi', $data);
-    }
-
-    //mengahpus data transaksi
-    public function delete_transaksi($id_transaksi)
-    {
-        $this->db->where('id_transaksi', $id_transaksi);
-        $this->db->delete('transaksi');
     }
 }
     

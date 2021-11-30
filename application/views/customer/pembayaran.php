@@ -109,7 +109,7 @@
 								<button class="btn my-1 btn-success"><span class="icon-check"></span> Pembayaran Berhasil</button>
 							<?php endif; ?>
 
-							<a href="<?= base_url('customer/cetakStruk/' . $bayar['id_transaksi']) ?>" class="btn my-1 btn-success"><span class="icon-print"></span> Cetak Struk<span id="demo"></span></a>
+							<a href="<?= base_url('customer/cetakStruk/' . $bayar['id_transaksi']) ?>" class="btn my-1 btn-success" target="_blank"><span class="icon-print"></span> Cetak Struk<span id="demo"></span></a>
 						</div>
 
 					</div>
