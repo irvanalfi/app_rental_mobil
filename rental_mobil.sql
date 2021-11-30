@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2021 at 09:58 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 7.4.24
+-- Generation Time: Nov 30, 2021 at 02:43 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -129,7 +130,7 @@ INSERT INTO `mobil` (`id_mobil`, `id_tipe`, `merek`, `no_plat`, `warna`, `transm
 (13, 15, 'Toyota Avanza', 'B 2245 DAM', 'Hitam', 'Manual', '7 Dewasa', '4 Ransel', 'Pertamax', 2015, 25640, 1, 350000, 350000, 'avanza-hitam.jpg', 'Harga mobil perhari merupakan harga penyewaan mobil dalam satu hari, sedangkan untuk denda mobil perhari merupakan harga denda perhari yang dibebankan kepada pihak penyewa mobil jika telat mengembalikan mobil sesuai tanggal jatuh tempo pengembalian mobil. Harga mobil akan dikalikan dengan total hari penyewaan mobil, begitu juga dengan denda mobil akan dikalikan dengan total hari telat pengembalian mobil. <br> Sedangakan untuk harga supir perhari merupakan harga yang dibayar untuk supir perharinya yang nantinya akan dikalikan sesuai berapa hari penyewaan supir. Untuk Mobil yang tidak memiiliki Fitur lepas kunci maka wajib menggunakan supir, sedangkan untuk mobil yang memiliki fitur lepas kunci maka bisa memilih menggunakan jasa supir atau tidak.', '2021-09-30 19:20:55', NULL, '0', '0'),
 (14, 15, 'Toyota Avanza', 'B 1123 DUD', 'Putih', 'Matic', '7 Dewasa', '4 Ransel', 'Pertalite', 2016, 40020, 0, 350000, 350000, 'avanza-putih.jpg', 'Harga mobil perhari merupakan harga penyewaan mobil dalam satu hari, sedangkan untuk denda mobil perhari merupakan harga denda perhari yang dibebankan kepada pihak penyewa mobil jika telat mengembalikan mobil sesuai tanggal jatuh tempo pengembalian mobil. Harga mobil akan dikalikan dengan total hari penyewaan mobil, begitu juga dengan denda mobil akan dikalikan dengan total hari telat pengembalian mobil. <br> Sedangakan untuk harga supir perhari merupakan harga yang dibayar untuk supir perharinya yang nantinya akan dikalikan sesuai berapa hari penyewaan supir. Untuk Mobil yang tidak memiiliki Fitur lepas kunci maka wajib menggunakan supir, sedangkan untuk mobil yang memiliki fitur lepas kunci maka bisa memilih menggunakan jasa supir atau tidak.', '2021-09-30 19:20:55', '2021-11-03 10:45:39', '0', 'Joko Santos'),
 (15, 18, 'Toyota Hiace', 'P 1234 UI', 'Silver', 'Manual', '10 Dewasa', '8 Koper', 'Solar', 2015, 19762, 1, 700000, 700000, 'car-300921-b3bd9ca18c.jpg', 'Harga mobil perhari merupakan harga penyewaan mobil dalam satu hari, sedangkan untuk denda mobil perhari merupakan harga denda perhari yang dibebankan kepada pihak penyewa mobil jika telat mengembalikan mobil sesuai tanggal jatuh tempo pengembalian mobil. Harga mobil akan dikalikan dengan total hari penyewaan mobil, begitu juga dengan denda mobil akan dikalikan dengan total hari telat pengembalian mobil. <br> Sedangakan untuk harga supir perhari merupakan harga yang dibayar untuk supir perharinya yang nantinya akan dikalikan sesuai berapa hari penyewaan supir. Untuk Mobil yang tidak memiiliki Fitur lepas kunci maka wajib menggunakan supir, sedangkan untuk mobil yang memiliki fitur lepas kunci maka bisa memilih menggunakan jasa supir atau tidak.', '2021-09-30 21:44:05', NULL, '0', '0'),
-(17, 18, 'Tayo Ijo', 'N 8888 KJK', 'Hitam', 'Manual', '7 Dewasa', '4 Bagasi', 'Solar', 2021, 1200, 1, 300000, 300000, 'car-291121-f79012eddc.jpg', 'Hei Tayoo', '2021-11-29 00:24:18', NULL, '7', NULL),
+(17, 18, 'Tayo Ijo', 'N 8888 KJK', 'Hitam', 'Manual', '7 Dewasa', '4 Bagasi', 'Solar', 2021, 1200, 1, 300000, 300000, 'car-291121-301d6a888d.jpg', 'Hei Tayoo', '2021-11-29 00:24:18', NULL, '7', NULL),
 (18, 13, 'Balap Racing', 'B 9998 NMD', 'Merah', 'Manual', '2 Kursi', '2 Bagasi', 'Solar', 2021, 1200, 1, 300000, 300000, 'car-291121-74a695f2e7.jpg', 'Mobil balap asiq', '2021-11-29 00:25:51', NULL, '7', NULL);
 
 -- --------------------------------------------------------
@@ -151,6 +152,13 @@ CREATE TABLE `review` (
   `created_by` varchar(11) DEFAULT NULL,
   `updated_by` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `review`
+--
+
+INSERT INTO `review` (`id_review`, `id_user`, `id_mobil`, `id_transaksi`, `review`, `star`, `status`, `created`, `updated`, `created_by`, `updated_by`) VALUES
+(4, 4, 18, 34, 'mobilnya kenceng banget, supirnya asik', 5, '1', '2021-11-29 16:32:31', '2021-11-29 16:36:09', '4', '7');
 
 -- --------------------------------------------------------
 
@@ -255,9 +263,23 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `nama`, `username`, `email`, `alamat`, `gender`, `no_telepon`, `no_ktp`, `password`, `avatar`, `foto_ktp`, `role`, `created`, `updated`, `created_by`, `updated_by`) VALUES
-(4, 'Joko Santoso', 'joko', 'joko@gmail.com', 'Jl. Satu Pekanbaru', 'L', '6285707745485', '215654532767', '81dc9bdb52d04dc20036dbd8313ed055', 'avatar-221121-e6a0d6635c.jpg', 'ktp-221121-c8db65f709.png', 2, '2021-09-30 19:23:12', NULL, '0', '0'),
+(4, 'Joko Santosi', 'jokos', 'oktaviano.andy.suryadi@gmail.com', 'Jl. Satu Pekanbaru', 'L', '6285707745485', '215654532767', '827ccb0eea8a706c4c34a16891f84e7b', 'avatar-301121-4549314299.jpg', 'ktp-301121-82fbfaeccf.jpg', 2, '2021-09-30 19:23:12', '2021-11-30 07:59:38', '4', '4'),
 (7, 'Arif', 'admin', 'arif@gmail.com', 'Pekanbaru', 'L', '6282244922833', '1764578345', '21232f297a57a5a743894a0e4a801fc3', 'default.jpg', 'ktp-221121-0f58150553.jpg', 1, '2021-09-30 19:23:12', '2021-11-29 00:06:56', '0', '7'),
 (11, 'M. Irvan Alfi Hidayat', 'irvan', 'irvanhidayat0623@gmail.com', 'Kencono, Sragi, Songgon, Banyuwangi', 'L', '082244922833', '351019230698', '2467d3744600858cc9026d5ac6005305', 'avatar-291121-bf07d96d01.jpg', 'ktp-231121-a97489eabb.jpeg', 1, '2021-11-29 11:27:18', NULL, '11', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_token`
+--
+
+CREATE TABLE `user_token` (
+  `id_token` int(11) NOT NULL,
+  `token` text NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `created` varchar(30) NOT NULL,
+  `created_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -314,6 +336,13 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`);
 
 --
+-- Indexes for table `user_token`
+--
+ALTER TABLE `user_token`
+  ADD PRIMARY KEY (`id_token`),
+  ADD KEY `id_user` (`id_user`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -339,7 +368,7 @@ ALTER TABLE `mobil`
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `id_review` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_review` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tipe`
@@ -358,6 +387,12 @@ ALTER TABLE `transaksi`
 --
 ALTER TABLE `user`
   MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `user_token`
+--
+ALTER TABLE `user_token`
+  MODIFY `id_token` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
@@ -395,6 +430,12 @@ ALTER TABLE `review`
 ALTER TABLE `transaksi`
   ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_mobil`) REFERENCES `mobil` (`id_mobil`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user_token`
+--
+ALTER TABLE `user_token`
+  ADD CONSTRAINT `user_token_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
