@@ -56,8 +56,10 @@ $route['translate_uri_dashes']  = FALSE;
 $route['beranda']               = 'Customer/beranda';
 $route['contact']               = 'Customer/contact';
 $route['mobil']                 = 'Customer/mobil';
-$route['mobil/detailmobil/(:num)'] = 'Customer/detailmobil/$1';
-$route['mobil/addrental/(:num)'] = 'Customer/addRental/$1';
+$route['mobil/detailmobil/(:num)']  = 'Customer/detailmobil/$1';
+$route['mobil/addrental/(:num)']    = 'Customer/addRental/$1';
+$route['mobil/search']          = 'Customer/search';
+$route['profil']                = 'Customer/profil';
 
 $route['transaksi']                     = 'Customer/halamanTransaksi';
 $route['transaksi/pembayaran/(:num)']   = 'Customer/halamanPembayaran/$1';
@@ -65,6 +67,13 @@ $route['transaksi/prosesPembayaran']    = 'Customer/prosesPembayaran';
 $route['transaksi/review/(:num)']       = 'Customer/halamanReview/$1';
 
 $route['admin/password']    = 'admin/user/ubah_password';
+
+$route['password/lupa']     = 'auth/lupa_password';
+$route['password/reset']    = 'auth/check_token';
+$route['password/ubah']     = 'auth/ubah_password';
+
+
+
 
 // $route['customer/add'] = 'pelanggan/add';
 // $route['customer/process'] = 'pelanggan/process';

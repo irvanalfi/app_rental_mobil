@@ -29,9 +29,16 @@ class Mobil_model extends CI_Model
     }
 
     public function get_mobil_by_keyword($keyword)
-    {
-        $this->db->nama('merk', $keyword);
-        return $this->db->get('mobil')->result_array();
+    {   $this->db->select('*');
+        $this->db->from('mobil');
+        $this->db->join('tipe', 'tipe.id_tipe = mobil.id_tipe');
+        $this->db->like('mobil.merek', $keyword);
+        $this->db->or_like('mobil.bbm', $keyword);
+        $this->db->or_like('mobil.transmisi', $keyword);
+        $this->db->or_like('mobil.tahun', $keyword);
+        $this->db->or_like('tipe.kode_tipe', $keyword);
+        $this->db->or_like('tipe.nama_tipe', $keyword);
+        return $this->db->get()->result_array();
     }
 
     // menampilkan jumlah seluruh mobil

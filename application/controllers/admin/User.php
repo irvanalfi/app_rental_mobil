@@ -52,10 +52,11 @@ class User extends CI_Controller
     $this->form_validation->set_rules(
       'email',
       'Email',
-      'required|is_unique[user.email]',
+      'required|is_unique[user.email]|valid_email',
       array(
         'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
-        'is_unique'   => '<p class="text-danger">  * %s ini telah digunakan!</p>'
+        'is_unique'   => '<p class="text-danger">  * %s ini telah digunakan!</p>',
+        'valid_email' => '<p class="text-danger">  * %s tidak sesuai!</p>',
       )
     );
     $this->form_validation->set_rules(
@@ -253,6 +254,7 @@ class User extends CI_Controller
         'min_length'  => '<p class="text-danger">  * %s harus lebih dari 5 karakter!</p>'
       )
     );
+
     $this->form_validation->set_rules(
       'alamat',
       'Alamat',
@@ -261,15 +263,18 @@ class User extends CI_Controller
         'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
       )
     );
+
     $this->form_validation->set_rules(
       'email',
       'Email',
-      'required' . $is_unique_email,
+      'required|valid_email' . $is_unique_email,
       array(
-        'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
-        'is_unique'   => '<p class="text-danger">  * %s ini telah digunakan!</p>'
+        'required'      => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+        'valid_email'   => '<p class="text-danger"> * %s tidak sesuai!</p>',
+        'is_unique'     => '<p class="text-danger">  * %s ini telah digunakan!</p>'
       )
     );
+
     $this->form_validation->set_rules(
       'no_telepon',
       'No. Telepon',
@@ -278,6 +283,7 @@ class User extends CI_Controller
         'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
       )
     );
+
     $this->form_validation->set_rules(
       'no_ktp',
       'Nao. KTP',
@@ -318,6 +324,7 @@ class User extends CI_Controller
         'required' => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
       )
     );
+
     $this->form_validation->set_rules(
       'role',
       'Level',
@@ -351,6 +358,7 @@ class User extends CI_Controller
     }
 
     $user = $this->User_model->get_user_by_id($id);
+    
     if ($this->input->post('password') == NULL) {
       $password = $user['password'];
     } else {

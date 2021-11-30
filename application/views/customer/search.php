@@ -6,8 +6,9 @@
 		<div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
 			<div class="col-md-9 ftco-animate pb-2">
 				<p class="breadcrumbs"><span><?= $this->uri->segment(1); ?> <i
-							class="ion-ios-arrow-forward"></i><span><?= $this->uri->segment(2); ?></span></p>
-				<h1 class="mb-3 bread" style="font-size: 30px !important;">Pilih Mobil Anda</h1>
+							class="ion-ios-arrow-forward"></i> <span><?= $this->uri->segment(2); ?></span></p>
+				<h1 class="mb-3 bread" style="font-size: 30px !important;"> Hasil Pencarian <b><?php echo $keyword?></b>
+				</h1>
 			</div>
 		</div>
 	</div>
@@ -19,10 +20,10 @@
 			<div class="col-lg-12">
 				<form action="<?= base_url('mobil/search')?>" method="GET">
 					<div class="input-group input-group-lg">
-						<input type="text" class="form-control input-lg mr-2 rounded" id="keyword" name="keyword"
+						<input type="text" class="form-control input-lg mr-2 rounded" name="keyword"
 							placeholder="Cari mobil ... ">
 						<span class="input-group-btn">
-							<button type="submit" class="btn btn-primary mb-2 rounded px-5" style="height: 52px; ">
+							<button type="submit" class="btn btn-primary mb-2 rounded px-5" style="height: 52px;">
 								<span class="icon-search" aria-hidden="true"></span> </button>
 						</span>
 					</div>
@@ -31,6 +32,7 @@
 		</div>
 
 		<div class="row mt-5">
+			<?php if($mobil != null) : ?>
 			<?php foreach ($mobil as $mb) : ?>
 			<div class="col-md-4">
 				<div class="car-wrap rounded ftco-animate">
@@ -56,6 +58,11 @@
 				</div>
 			</div>
 			<?php endforeach; ?>
+			<?php else : ?>
+			<div class="col-md-12 text-center mt-5">
+				<h3>Pencarian tidak ditemukan</h3>
+			</div>
+			<?php endif?>
 		</div>
 	</div>
 </section>

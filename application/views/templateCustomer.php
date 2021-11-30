@@ -35,7 +35,7 @@
 	<!-- Nav Start  -->
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" href="index.html">H<span>RC</span></a>
+			<a class="navbar-brand" href="<?php base_url('beranda')?>">H<span>RC</span></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="oi oi-menu"></span> Menu
 			</button>
@@ -46,14 +46,17 @@
 					</li>
 					<li class="nav-item <?= $this->uri->segment(1) == 'mobil' ? 'active' : ''; ?>"><a href="<?= site_url('mobil'); ?>" class="nav-link">Mobil</a></li>
 					<!-- <li class="nav-item"><a href="#" class="nav-link">Blog</a></li> -->
-					<li class="nav-item <?= $this->uri->segment(1) == 'contact' ? 'active' : ''; ?>"><a href="<?= site_url('contact'); ?>" class="nav-link">Contact</a></li>
 					<?php if ($this->session->userdata('nama')) { ?>
+						<li class="nav-item <?= $this->uri->segment(1) == 'contact' ? 'active' : ''; ?>"><a href="<?= site_url('contact'); ?>" class="nav-link">Contact</a></li>
 						<li class="nav-item <?= $this->uri->segment(1) == 'transaksi' ? 'active' : ''; ?>"><a href="<?= site_url('transaksi'); ?>" class="nav-link">Transaction</a></li>
 					<?php } ?>
 					<div class="ml-5"></div>
 					<?php if ($this->session->userdata('nama')) { ?>
+						<li class="nav-item <?= $this->uri->segment(1) == 'profil' ? 'active' : ''; ?>">
+							<a href="<?= site_url('profil'); ?>" class="nav-link"><?= $this->session->userdata('nama'); ?></a>
+						</li>
 						<li class="nav-item">
-							<a href="<?= site_url('auth/logout'); ?>" class="nav-link"><?= $this->session->userdata('nama'); ?> | Logout</a>
+							<a href="<?= site_url('auth/logout'); ?>" class="nav-link">Logout</a>
 						</li>
 					<?php } else { ?>
 						<li class="nav-item">

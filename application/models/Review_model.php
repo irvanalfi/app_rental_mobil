@@ -71,15 +71,14 @@ class Review_model extends CI_Model
         return $query;
     }
 
-    //mengupdate data review
-    public function update_review($id_review)
+    public function add_review($data)
     {
-        $data = [
-            "status"        => 1,
-            "updated"       => date('Y-m-d H:i:s'),
-            "updated_by"    => $this->session->userdata('id_user')
-        ];
+        $this->db->insert('review', $data);
+    }
 
+    //mengupdate data review
+    public function update_review($data, $id_review)
+    {
         $this->db->where('id_review', $id_review);
         $this->db->update('review', $data);
     }

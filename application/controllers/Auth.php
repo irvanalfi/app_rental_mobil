@@ -8,6 +8,7 @@ class Auth extends CI_Controller
   {
     parent::__construct();
     $this->load->model('User_model'); //load User Model
+    $this->load->model('Token_model');
   }
 
   public function login()
@@ -49,6 +50,7 @@ class Auth extends CI_Controller
         'id_user'   => $cek->id_user,
         'username'  => $cek->username,
         'nama'      => $cek->nama,
+        'email'     => $cek->email,
         'role'      => $cek->role,
         'avatar'    => $cek->avatar,
       );
@@ -104,10 +106,11 @@ class Auth extends CI_Controller
     $this->form_validation->set_rules(
       'email',
       'Email',
-      'required|is_unique[user.email]',
+      'required|is_unique[user.email]|valid_email',
       array(
         'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
-        'is_unique'   => '<p class="text-danger">  * %s ini telah digunakan!</p>'
+        'is_unique'   => '<p class="text-danger">  * %s ini telah digunakan!</p>',
+        'valid_email' => '<p class="text-danger">  * %s email tidak sesuai!</p>',
       )
     );
     $this->form_validation->set_rules(
@@ -249,44 +252,168 @@ class Auth extends CI_Controller
     }
   }
 
-  public function ganti_password()
-  {
-    
-  }
-
-  public function ganti_password_aksi()
-  {
-    $pass_baru = $this->input->post('pass_baru');
-    $ulang_pass = $this->input->post('ulang_pass');
-
-    $this->form_validation->set_rules('pass_baru', 'Password Baru', 'required|matches[ulang_pass]');
-    $this->form_validation->set_rules('ulang_pass', 'Password Baru', 'required');
-
-    if ($this->form_validation->run() == FALSE) {
-      $this->load->view('templates_admin/header');
-      $this->load->view('ganti_password');
-      $this->load->view('templates_admin/footer');
-    } else {
-      $data = array('password' => md5($pass_baru));
-      $id = array('id_user' => $this->session->userdata('id_user'));
-
-      $this->rental_model->update_password($id, $data, 'user');
-      $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-      Password berhasil diupdate, silahkan login.
-      <button type="button" class="close" data-dismiss="alert" aria-label="close">
-      <span aria-hidden="true">&times;</span>
-      </button></div>');
-      redirect('auth/login');
-    }
-  }
-
   public function termcondition()
   {
     $this->load->view('termcondition');
+  }
+
+  public function lupa_password()
+  {
+    $this->form_validation->set_rules(
+      'email',
+      'Email',
+      'required|valid_email',
+      array(
+        'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+        'valid_email' => '<p class="text-danger">  * %s tidak sesuai!</p>',
+      )
+    );
+    
+    if ($this->form_validation->run() == FALSE) {
+      $this->load->view('lupa_password.php');
+    } else {
+      $this->kirim_link_reset_password();
+    }
+
+  }
+
+  public function kirim_link_reset_password()
+  {
+    $email    = $this->input->post('email');
+    $user     = $this->User_model->get_user_by_email($email);
+    $id_user  = $user['id_user'];
+    
+    if ($user != null) {
+      
+      $token = base64_encode(random_bytes(32));
+      
+      $data  = [
+        "token"       => $token,
+        "id_user"     => $id_user,
+        "created"     => date('Y-m-d H:i:s'),
+        "created_by"  => $id_user
+      ];
+
+      $this->Token_model->add_token($data);
+
+      $this->_kirimEmail($email, $token, "reset_password");
+      $this->session->set_flashdata('success', '<b>Email berhasil dikirim!</b> <br> Silahkan cek email Anda di kotak masuk/spam');
+      redirect('password/lupa');
+
+    }else{
+      $this->session->set_flashdata('failed', '<b>Email gagal dikirim!</b> <br> Email yang dimasukkan tidak terdaftar.');
+      redirect('password/lupa');
+    }
   }
 
   public function backOne()
   {
     redirect($_SERVER['HTTP_REFERER']);
   }
+
+  private function _kirimEmail($email, $token, $aksi)
+  {
+    $config = [
+      'protocol'  => 'smtp',
+      'smtp_host' => 'ssl://smtp.googlemail.com',
+      'smtp_user' => '1841720002@student.polinema.ac.id',
+      'smtp_pass' => 'polisi86',
+      'smtp_port' => 465,
+      'mailtype'  => 'html',
+      'charset'   => 'utf-8',
+      'newline'   => "\r\n"
+    ];
+
+    $this->load->library('email', $config);
+
+    if ($aksi == "reset_password") {
+      $this->email->from('1841720002@student.polinema.ac.id', 'Administrator Halim Rental Car');
+      $this->email->to($email);
+
+      $this->email->subject('Permintaan Reset Password');
+      $this->email->message('Klik disini untuk mereset password akun anda : <a href="'. base_url('password/reset?token=') . urlencode($token) . '"> Reset Password </a>');
+    }
+    
+    if ($this->email->send()){
+      return true;
+    } else{
+      echo $this->email->print_debugger();
+    }
+
+  }
+
+  // pengecekan token
+  public function check_token()
+  {
+    $token = $this->input->get('token');
+    $user_token = $this->Token_model->get_token_by_token($token);
+
+    if ($user_token) {
+      $this->session->set_userdata('id', $user_token['id_user']);
+      $this->ubah_password();
+    }else{
+      $this->session->set_flashdata('failed', '<b>Eror!</b> Token yang digunakan tidak tersedia.');
+      redirect('auth/login');
+    }
+    
+  }
+
+  public function ubah_password()
+  {
+    if (!$this->session->userdata('id')) {
+      redirect('auth/login');
+    }
+
+    $this->form_validation->set_rules(
+      'password',
+      'Password',
+      'required|min_length[5]',
+      array(
+        'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+        'min_length'  => '<p class="text-danger">  * %s harus lebih dari 5 karakter!</p>'
+      )
+    );
+    
+    $this->form_validation->set_rules(
+      'cpassword',
+      'Konfirmasi Password',
+      'required|min_length[5]|matches[password]',
+      array(
+        'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+        'min_length'  => '<p class="text-danger">  * %s harus lebih dari 5 karakter!</p>',
+        'matches'     => '<p class="text-danger">  * %s tidak sama dengan password!</p>'
+      )
+    );
+    
+    if ($this->form_validation->run() == FALSE) {
+      $this->load->view('ubah_password.php');    
+    } else {
+      $this->ubah_password_aksi();
+    }
+    
+  }
+
+  private function ubah_password_aksi()
+  {
+    $id_user = $this->session->userdata('id');
+
+    $data = [
+      "password"    => md5($this->input->post('password')),
+      "updated"     => date('Y-m-d H:i:s'),
+      "updated_by"  => $id_user
+    ];
+
+    $this->User_model->update_user($data, $id_user);
+    $this->Token_model->delete_token_by_id_user($id_user);
+    
+    if ($this->db->affected_rows() > 0) {
+      $this->session->set_flashdata('success', '<b>Password berhasil diubah!</b> Silahkan login.');
+      $this->session->unset_userdata('id');
+      redirect('auth/login');
+    } else {
+      $this->session->set_flashdata('failed', '<b>Password berhasil diubah</b> Silahkan lakukan lagi.');
+      redirect('password/ubah');
+    }
+  }
+
 }

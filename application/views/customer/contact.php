@@ -71,10 +71,10 @@
             <div class="col-md-8 block-9 mb-md-5">
                 <form action="<?= base_url('customer/contact')?>" class="bg-light p-5 contact-form" method="POST">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Nama" value="<?= $user['nama']?>" readonly>
+                        <input type="text" class="form-control" placeholder="Nama" value="<?= $this->session->userdata('nama');?>" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Email" value="<?= $user['email']?>" readonly>
+                        <input type="text" class="form-control" placeholder="Email" value="<?= $this->session->userdata('email');?>" readonly>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Subject" name="subject">

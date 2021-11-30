@@ -18,7 +18,7 @@
 		<div class="row d-flex mb-5 contact-info">
 			<div class="col-md-12 block-9 mb-md-5">
 				<form action="<?= base_url('transaksi/review/') . $transaksi['id_transaksi'] ?>"
-					class="bg-light p-5 contact-form" method="POST">
+					class="bg-light p-5 contact-form" method="get">
 					<center>
 						<h5 class="mb-5">Bagaimana pengalaman Anda menggunakan jasa kami?</h5>
 						
@@ -57,7 +57,7 @@
 						}
 
 						.rating>label:before {
-							margin: 7.5px;
+							margin: 6.5px;
 							font-size: 1.3em;
 							font-family: FontAwesome;
 							display: inline-block;
@@ -125,22 +125,24 @@
 
 					<div class="container mt-4">
 						<div class="row">
-							<div class="col-md-4 mb-2">
+							<div class="col-md-4 mb-4">
 								<div class="card">
 									<div class="card-body text-center mt-3"><span class="myratings">5</span>
 										<h6 class="mt-1">Nilai kami</h6>
-										<fieldset class="rating d-flex justify-content-center">
-											<input type="radio" id="star5" name="star" value="5" checked />
-											<label class="full" for="star5" title="Awesome - 5 stars"></label>
-											<input type="radio" id="star4" name="star" value="4" />
-											<label class="full" for="star4" title="Pretty good - 4 stars"></label>
-											<input type="radio" id="star3" name="star" value="3" />
-											<label class="full" for="star3" title="Meh - 3 stars"></label>
-											<input type="radio" id="star2" name="star" value="2" />
-											<label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-											<input type="radio" id="star1" name="star" value="1" />
-											<label class="full" for="star1" title="Sucks big time - 1 star"></label>
-										</fieldset>
+										<div class="d-flex justify-content-center">	
+											<fieldset class="rating">
+												<input type="radio" id="star5" name="star" value="5" checked />
+												<label class="full" for="star5" title="Awesome - 5 stars"></label>
+												<input type="radio" id="star4" name="star" value="4" />
+												<label class="full" for="star4" title="Pretty good - 4 stars"></label>
+												<input type="radio" id="star3" name="star" value="3" />
+												<label class="full" for="star3" title="Meh - 3 stars"></label>
+												<input type="radio" id="star2" name="star" value="2" />
+												<label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+												<input type="radio" id="star1" name="star" value="1" />
+												<label class="full" for="star1" title="Sucks big time - 1 star"></label>
+											</fieldset>
+										</div>
 									</div>
 								</div>
 							</div>

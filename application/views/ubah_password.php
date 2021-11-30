@@ -27,10 +27,8 @@
 						class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
 
 						<div class="card card-primary mt-5">
-							<a href="<?= base_url('customer/beranda'); ?>" class="btn btn-success mt-3 ml-3"
-								style="width: 100px;"><i class="fa fa-undo"></i> Kembali</a>
 							<div class="card-header" style="align-items: center !important;">
-								<h4>Silahkan Login</h4>
+								<h4>Buat Password Baru</h4> <br>
 							</div>
 							<div class="card-body">
 								<?php if ($this->session->flashdata('success') != null) : ?>
@@ -49,36 +47,48 @@
 									</button>
 								</div>
 								<?php endif ?>
-								<span class="mb-4"><?= $this->session->flashdata('pesan'); ?></span>
-								<form method="POST" action="<?= base_url('auth/login'); ?>">
+
+								<form method="POST" action="<?= base_url('password/ubah'); ?>">
 									<div class="form-group">
-										<label for="username">Username</label>
-										<input id="username" type="text" class="form-control" name="username"
-											tabindex="1" autofocus>
-										<?= form_error('username', '<div class="text-small text-danger">', '</div>'); ?>
+										<small for="password">Password : </small>
+										<input type="password" name="password" id="password" class="form-control"
+											value="<?= set_value('') ?>" placeholder="Password">
+										<span class="eye" onclick="tampilPassword()">
+											<div id="tpassword" style="display: none;">
+												<i class="fas fa-eye mt-2"></i><span style="font-size: 12px;">
+													Sembunyikan Password</span>
+											</div>
+											<div id="tpassword1">
+												<i class="fas fa-eye-slash mt-2"></i><small style="font-size: 12px;">
+													Tampilkan Password</small>
+											</div>
+										</span>
+										<?= form_error('password', '<div class="text-small text-danger">', '</div>') ?>
 									</div>
 
 									<div class="form-group">
-										<div class="d-block">
-											<label for="password" class="control-label">Password</label>
-										</div>
-										<input id="password" type="password" class="form-control" name="password"
-											tabindex="2">
-										<?= form_error('password', '<div class="text-small text-danger">', '</div>'); ?>
+										<small for="cpassword">Konfirmasi Password : </small>
+										<input type="password" name="cpassword" id="cpassword" class="form-control"
+											value="<?= set_value('') ?>" placeholder="Konfirmasi Password">
+										<span class="eye" onclick="tampilCPassword()">
+											<div id="tcpassword" style="display: none;">
+												<i class="fas fa-eye mt-2"></i><span style="font-size: 12px;">
+													Sembunyikan Password</span>
+											</div>
+											<div id="tcpassword1">
+												<i class="fas fa-eye-slash mt-2"></i><span style="font-size: 12px;">
+													Tampilkan Password</span>
+											</div>
+										</span>
+										<?= form_error('cpassword', '<div class="text-small text-danger">', '</div>') ?>
 									</div>
 
 									<div class="form-group">
 										<button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-											Login
+											Ubah Password
 										</button>
 									</div>
 								</form>
-								<div class="text-muted text-center">
-									Lupa Password? <a href="<?= site_url('password/lupa'); ?>"> Reset Password</a>
-								</div>
-								<div class="text-muted text-center">
-									Belum punya akun? <a href="<?= site_url('auth/register'); ?>"> Register</a>
-								</div>
 							</div>
 						</div>
 						<div class="simple-footer fixed-bottom">
@@ -118,8 +128,77 @@
 	<script>
 		// auto close alert
 		$("#alert1").fadeTo(2000, 500).slideUp(500, function () {
-			$("#alert1").slideUp(500);
+			$("#alert1").slideUp(1000);
 		});
+
+	</script>
+
+	<script>
+		// upload foto profile
+		function previewPhoto() {
+			const photo = document.querySelector('#avatar');
+			const photoLabel = document.querySelector('.cfl');
+			const imgPreview = document.querySelector('.ip');
+
+			photoLabel.textContent = photo.files[0].name;
+
+			const filePhoto = new FileReader();
+			filePhoto.readAsDataURL(photo.files[0]);
+
+			filePhoto.onload = function (e) {
+				imgPreview.src = e.target.result;
+			}
+		}
+
+		// upload gambar ktp
+		function previewPhoto1() {
+			const photo = document.querySelector('#ktp');
+			const photoLabel = document.querySelector('.cfl1');
+			const imgPreview = document.querySelector('.ip1');
+
+			photoLabel.textContent = photo.files[0].name;
+
+			const filePhoto = new FileReader();
+			filePhoto.readAsDataURL(photo.files[0]);
+
+			filePhoto.onload = function (e) {
+				imgPreview.src = e.target.result;
+			}
+		}
+
+		// tampil password 
+		function tampilPassword() {
+			var x = document.getElementById("password");
+			var y = document.getElementById("tpassword");
+			var z = document.getElementById("tpassword1");
+
+			if (x.type === 'password') {
+				x.type = "text";
+				y.style.display = "block";
+				z.style.display = "none";
+			} else {
+				x.type = "password";
+				y.style.display = "none";
+				z.style.display = "block";
+			}
+		}
+
+		// tampil password confirm 
+		function tampilCPassword() {
+			var x = document.getElementById("cpassword");
+			var y = document.getElementById("tcpassword");
+			var z = document.getElementById("tcpassword1");
+
+			if (x.type === 'password') {
+				x.type = "text";
+				y.style.display = "block";
+				z.style.display = "none";
+			} else {
+				x.type = "password";
+				y.style.display = "none";
+				z.style.display = "block";
+			}
+		}
 
 	</script>
 

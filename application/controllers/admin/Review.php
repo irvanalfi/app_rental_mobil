@@ -21,14 +21,20 @@ class Review extends CI_Controller
   // update status review 
   public function update_review_status($id_review)
   {
-    $this->Review_model->update_review($id_review);
+    $data = [
+      "status"        => 1,
+      "updated"       => date('Y-m-d H:i:s'),
+      "updated_by"    => $this->session->userdata('id_user')
+    ];
+
+    $this->Review_model->update_review($data, $id_review);
 
     if ($this->db->affected_rows() > 0) {
       $this->session->set_flashdata('success', '<b>Data berhasil diupdate!</b> Silahkan cek kembali data Anda.');
-      redirect('admin/data_review');
+      redirect('admin/review');
     } else {
       $this->session->set_flashdata('failed', '<b>Data gagal diupdate!</b> Silahkan cek kembali data Anda.');
-      redirect('admin/data_review');
+      redirect('admin/review');
     }
   }
 
@@ -36,6 +42,6 @@ class Review extends CI_Controller
   {
     $this->Review_model->delete_review($id);
     $this->session->set_flashdata('success', '<b>Data berhasil dihapus!</b> Silahkan cek kembali data Anda.');
-    redirect('admin/data_review');
+    redirect('admin/review');
   }
 }

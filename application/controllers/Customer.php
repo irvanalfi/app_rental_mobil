@@ -46,9 +46,7 @@ class Customer extends CI_Controller
     // tampilan halaman kontak
     public function contact()
     {
-        $id_user = $this->session->userdata('id_user');
-        $data['user'] = $this->User_model->get_user_by_id($id_user);
-
+        check_not_login();
         $this->form_validation->set_rules(
             'subject',
             'Subject',
@@ -69,7 +67,7 @@ class Customer extends CI_Controller
 
 
         if ($this->form_validation->run() ==  FALSE) {
-            $this->template->load('templateCustomer', 'customer/contact', $data);
+            $this->template->load('templateCustomer', 'customer/contact');
         } else {
             $this->addContact();
         }
@@ -458,7 +456,7 @@ class Customer extends CI_Controller
 
         if ($this->db->affected_rows() > 0) {
             // alert pemberitahuan berhasil melakukan penginputan 
-            $this->session->set_flashdata('success', '<b>Review terkirim!</b> Terimakasih atas review.');
+            $this->session->set_flashdata('success', '<b>Review terkirim!</b> Terimakasih atas review anda.');
             redirect('transaksi');
         } else {
             $this->session->set_flashdata('failed', '<b>Review gagal terkirim!</b> Silahkan lakukan review kembali.');
@@ -471,5 +469,246 @@ class Customer extends CI_Controller
     {
         $data['transaksi'] = $this->Transaksi_model->get_transaksi_by_id($id);
         $this->load->view('customer/cetak_invoice', $data);
+    }
+
+    // pencarian mobil
+    public function search()
+    {
+        $keyword = $this->input->get('keyword');
+        $data['mobil'] = $this->Mobil_model->get_mobil_by_keyword($keyword);
+        $data['keyword'] = $keyword;
+        $this->template->load('templateCustomer', 'customer/search', $data);
+    }
+
+    public function profil()
+    {
+        check_not_login();
+        $id_user        = $this->session->userdata('id_user');
+        $data['user']   = $this->User_model->get_user_by_id($id_user);
+
+        $username_old   = $this->input->post('username_old');
+        $email_old      = $this->input->post('email_old');
+        $no_ktp_old     = $this->input->post('no_ktp_old');
+
+        $username_new   = $this->input->post('username');
+        $email_new      = $this->input->post('email');
+        $no_ktp_new     = $this->input->post('no_ktp');
+
+        $username_is_unique = '|is_unique[user.username]';
+        $email_is_unique    = '|is_unique[user.email]';
+        $no_ktp_is_unique   = '|is_unique[user.no_ktp]';
+
+        if ($username_old == $username_new) {
+            $username_is_unique = '';
+        }
+
+        if ($email_old == $email_new) {
+            $email_is_unique = '';
+        }
+
+        if ($no_ktp_old == $no_ktp_new) {
+            $no_ktp_is_unique = '';
+        }
+
+        $this->form_validation->set_rules(
+            'nama',
+            'Nama',
+            'required',
+            array(
+              'required'    => '<p class="text-danger">  * Kamu belum mengisi %s !</p>'
+            )
+        );
+
+        $this->form_validation->set_rules(
+        'username',
+        'Username',
+        'required|min_length[5]' . $username_is_unique,
+        array(
+            'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+            'is_unique'   => '<p class="text-danger">  * %s ini telah digunakan!</p>',
+            'min_length'  => '<p class="text-danger">  * %s harus lebih dari 5 karakter!</p>'
+        )
+        );
+    
+        $this->form_validation->set_rules(
+        'alamat',
+        'Alamat',
+        'required',
+        array(
+            'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
+        )
+        );
+    
+        $this->form_validation->set_rules(
+        'email',
+        'Email',
+        'required|valid_email' . $email_is_unique,
+        array(
+            'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+            'valid_email' => '<p class="text-danger"> * %s tidak sesuai !</p>',
+            'is_unique'   => '<p class="text-danger">  * %s ini telah digunakan!</p>'
+        )
+        );
+    
+        $this->form_validation->set_rules(
+        'no_telepon',
+        'No. Telepon',
+        'required',
+        array(
+            'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
+        )
+        );
+    
+        $this->form_validation->set_rules(
+        'no_ktp',
+        'No. KTP',
+        'required' . $no_ktp_is_unique,
+        array(
+            'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+            'is_unique'   => '<p class="text-danger">  * %s ini telah digunakan!</p>'
+        )
+        );
+    
+        // pengecekan apakah passwor di perbarui atau tidak
+        if ($this->input->post('password')) {
+            $this->form_validation->set_rules(
+                'password',
+                'Password',
+                'required|min_length[5]',
+                array(
+                'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+                'min_length'  => '<p class="text-danger">  * %s harus lebih dari 5 karakter!</p>'
+                )
+            );
+            $this->form_validation->set_rules(
+                'cpassword',
+                'Konfirmasi Password',
+                'required|matches[password]',
+                array(
+                'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+                'matches'     => '<p class="text-danger">  * %s tidak sama dengan password!</p>'
+                )
+            );
+        }
+
+        
+        if ($this->form_validation->run() ==  FALSE) {
+            $this->template->load('templateCustomer', 'customer/profile', $data);
+        } else {
+            $this->update_data_diri($id_user);
+        }
+
+    }
+
+    public function update_data_diri($id_user)
+    {
+        $user = $this->User_model->get_user_by_id($id_user);
+    
+        if ($this->input->post('password') == NULL) {
+            $password = $user['password'];
+        } else {
+            $password = md5($this->input->post('password'));
+        }
+
+        $data = [
+            "nama"        => $this->input->post('nama'),
+            "username"    => $this->input->post('username'),
+            "alamat"      => $this->input->post('alamat'),
+            "email"       => $this->input->post('email'),
+            "password"    => $password,
+            "no_telepon"  => $this->input->post('no_telepon'),
+            "no_ktp"      => $this->input->post('no_ktp'),
+            "gender"      => $this->input->post('gender'),
+            "updated"     => date('Y-m-d H:i:s'),
+            "updated_by"  => $id_user
+        ];
+
+        $this->User_model->update_user($data, $id_user);
+
+        if ($this->db->affected_rows() > 0) {
+            $this->session->set_flashdata('success', '<b>Data Berhasil Diubah!</b> Silahkan cek data Anda.');
+            redirect('profil');
+        } else {
+            $this->session->set_flashdata('failed', '<b>Data Gagal Diubah</b> Silahkan lakukan lagi.');
+            redirect('profil');
+        }
+    }
+
+    public function update_foto()
+    {
+        $id_user        = $this->session->userdata('id_user');
+        $foto_ktp_old   = $this->input->post('foto_ktp_old');
+        $avatar_old     = $this->input->post('avatar_old');
+
+        if (empty($_FILES['foto_ktp']['name'])) {
+            $foto_ktp_new = $foto_ktp_old;
+        }else{
+            $foto_ktp_new = $this->ubah_foto_ktp($id_user);
+        }
+
+        if (empty($_FILES['avatar']['name'])) {
+            $avatar_new = $avatar_old;
+        }else{
+            $avatar_new = $this->ubah_foto_avatar($id_user);
+        }
+
+        $data = [
+            "foto_ktp"      => $foto_ktp_new,
+            "avatar"        => $avatar_new,
+            "updated"       => date('Y-m-d H:i:s'),
+            "created_by"    => $this->session->userdata('id_user')
+        ];
+
+        $this->User_model->update_user($data, $id_user);
+
+        if ($this->db->affected_rows() > 0) {
+            $this->session->set_flashdata('success', '<b>Foto Berhasil Diubah!</b> Silahkan cek data Anda.');
+            redirect('profil');
+        } else {
+            $this->session->set_flashdata('failed', '<b>Foto Gagal Diubah</b> Silahkan lakukan lagi.');
+            redirect('profil');
+        }
+
+    }
+
+    private function ubah_foto_ktp($id){
+        $user = $this->User_model->get_user_by_id($id);
+        $config['upload_path']    = './assets/upload/user/ktp/';
+        $config['allowed_types']  = 'jpg|jpeg|png';
+        $config['detect_mime']    = TRUE;
+        $config['max_size']       = 5120;
+        $config['file_name']      = 'ktp-' . date('dmy') . '-' . substr(md5(rand()), 0, 10);
+
+        $this->upload->initialize($config);
+        $uploadKTP    = $this->upload->do_upload('foto_ktp');
+        $namaKTP      = $this->upload->data('file_name');
+
+        if ($uploadKTP) {
+        unlink('./assets/upload/user/ktp/' . $user['foto_ktp']);
+        return $namaKTP;
+        } elseif (!$uploadKTP) {
+        $this->session->set_flashdata('failed', "<b>Eror !</b> Gagal upload foto KTP, silahkan pilih gambar yang lain.");
+        redirect('profil');
+        }
+    }
+
+    private function ubah_foto_avatar($id){
+        $user = $this->User_model->get_user_by_id($id);
+        $config['upload_path']    = './assets/upload/user/avatar/';
+        $config['allowed_types']  = 'jpg|jpeg|png';
+        $config['detect_mime']    = TRUE;
+        $config['max_size']       = 5120;
+        $config['file_name']      = 'avatar-' . date('dmy') . '-' . substr(md5(rand()), 0, 10);
+
+        $this->upload->initialize($config);
+        $uploadAvatar = $this->upload->do_upload('avatar');
+        $namaAvatar   = $this->upload->data('file_name');
+        if (!$uploadAvatar) {
+        $this->session->set_flashdata('failed', "<b>Eror !</b> Gagal upload foto avatar, silahkan pilih gambar yang lain.");
+        redirect('profil');
+        } elseif ($uploadAvatar) {
+        unlink('./assets/upload/user/avatar/' . $user['avatar']);
+        return $namaAvatar;
+        }
     }
 }
