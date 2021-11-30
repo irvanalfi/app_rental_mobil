@@ -186,7 +186,7 @@ class Customer extends CI_Controller
             "total_refund"          => 0,
             "total_akhir"           => $total_akhir,
             "tgl_pengembalian"      => null,
-            "status_pengembalian"   => "Belum Kembali",
+            "status_pengembalian"   => "Belum diambil",
             "status_rental"         => "Belum Selesai",
             "tgl_cancel"            => null,
             "status_refund"         => "Belum Selesai",
@@ -515,60 +515,60 @@ class Customer extends CI_Controller
             'Nama',
             'required',
             array(
-              'required'    => '<p class="text-danger">  * Kamu belum mengisi %s !</p>'
+                'required'    => '<p class="text-danger">  * Kamu belum mengisi %s !</p>'
             )
         );
 
         $this->form_validation->set_rules(
-        'username',
-        'Username',
-        'required|min_length[5]' . $username_is_unique,
-        array(
-            'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
-            'is_unique'   => '<p class="text-danger">  * %s ini telah digunakan!</p>',
-            'min_length'  => '<p class="text-danger">  * %s harus lebih dari 5 karakter!</p>'
-        )
+            'username',
+            'Username',
+            'required|min_length[5]' . $username_is_unique,
+            array(
+                'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+                'is_unique'   => '<p class="text-danger">  * %s ini telah digunakan!</p>',
+                'min_length'  => '<p class="text-danger">  * %s harus lebih dari 5 karakter!</p>'
+            )
         );
-    
+
         $this->form_validation->set_rules(
-        'alamat',
-        'Alamat',
-        'required',
-        array(
-            'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
-        )
+            'alamat',
+            'Alamat',
+            'required',
+            array(
+                'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
+            )
         );
-    
+
         $this->form_validation->set_rules(
-        'email',
-        'Email',
-        'required|valid_email' . $email_is_unique,
-        array(
-            'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
-            'valid_email' => '<p class="text-danger"> * %s tidak sesuai !</p>',
-            'is_unique'   => '<p class="text-danger">  * %s ini telah digunakan!</p>'
-        )
+            'email',
+            'Email',
+            'required|valid_email' . $email_is_unique,
+            array(
+                'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+                'valid_email' => '<p class="text-danger"> * %s tidak sesuai !</p>',
+                'is_unique'   => '<p class="text-danger">  * %s ini telah digunakan!</p>'
+            )
         );
-    
+
         $this->form_validation->set_rules(
-        'no_telepon',
-        'No. Telepon',
-        'required',
-        array(
-            'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
-        )
+            'no_telepon',
+            'No. Telepon',
+            'required',
+            array(
+                'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
+            )
         );
-    
+
         $this->form_validation->set_rules(
-        'no_ktp',
-        'No. KTP',
-        'required' . $no_ktp_is_unique,
-        array(
-            'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
-            'is_unique'   => '<p class="text-danger">  * %s ini telah digunakan!</p>'
-        )
+            'no_ktp',
+            'No. KTP',
+            'required' . $no_ktp_is_unique,
+            array(
+                'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+                'is_unique'   => '<p class="text-danger">  * %s ini telah digunakan!</p>'
+            )
         );
-    
+
         // pengecekan apakah passwor di perbarui atau tidak
         if ($this->input->post('password')) {
             $this->form_validation->set_rules(
@@ -576,8 +576,8 @@ class Customer extends CI_Controller
                 'Password',
                 'required|min_length[5]',
                 array(
-                'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
-                'min_length'  => '<p class="text-danger">  * %s harus lebih dari 5 karakter!</p>'
+                    'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+                    'min_length'  => '<p class="text-danger">  * %s harus lebih dari 5 karakter!</p>'
                 )
             );
             $this->form_validation->set_rules(
@@ -585,25 +585,24 @@ class Customer extends CI_Controller
                 'Konfirmasi Password',
                 'required|matches[password]',
                 array(
-                'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
-                'matches'     => '<p class="text-danger">  * %s tidak sama dengan password!</p>'
+                    'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
+                    'matches'     => '<p class="text-danger">  * %s tidak sama dengan password!</p>'
                 )
             );
         }
 
-        
+
         if ($this->form_validation->run() ==  FALSE) {
             $this->template->load('templateCustomer', 'customer/profile', $data);
         } else {
             $this->update_data_diri($id_user);
         }
-
     }
 
     public function update_data_diri($id_user)
     {
         $user = $this->User_model->get_user_by_id($id_user);
-    
+
         if ($this->input->post('password') == NULL) {
             $password = $user['password'];
         } else {
@@ -642,13 +641,13 @@ class Customer extends CI_Controller
 
         if (empty($_FILES['foto_ktp']['name'])) {
             $foto_ktp_new = $foto_ktp_old;
-        }else{
+        } else {
             $foto_ktp_new = $this->ubah_foto_ktp($id_user);
         }
 
         if (empty($_FILES['avatar']['name'])) {
             $avatar_new = $avatar_old;
-        }else{
+        } else {
             $avatar_new = $this->ubah_foto_avatar($id_user);
         }
 
@@ -668,10 +667,10 @@ class Customer extends CI_Controller
             $this->session->set_flashdata('failed', '<b>Foto Gagal Diubah</b> Silahkan lakukan lagi.');
             redirect('profil');
         }
-
     }
 
-    private function ubah_foto_ktp($id){
+    private function ubah_foto_ktp($id)
+    {
         $user = $this->User_model->get_user_by_id($id);
         $config['upload_path']    = './assets/upload/user/ktp/';
         $config['allowed_types']  = 'jpg|jpeg|png';
@@ -684,15 +683,16 @@ class Customer extends CI_Controller
         $namaKTP      = $this->upload->data('file_name');
 
         if ($uploadKTP) {
-        unlink('./assets/upload/user/ktp/' . $user['foto_ktp']);
-        return $namaKTP;
+            unlink('./assets/upload/user/ktp/' . $user['foto_ktp']);
+            return $namaKTP;
         } elseif (!$uploadKTP) {
-        $this->session->set_flashdata('failed', "<b>Eror !</b> Gagal upload foto KTP, silahkan pilih gambar yang lain.");
-        redirect('profil');
+            $this->session->set_flashdata('failed', "<b>Eror !</b> Gagal upload foto KTP, silahkan pilih gambar yang lain.");
+            redirect('profil');
         }
     }
 
-    private function ubah_foto_avatar($id){
+    private function ubah_foto_avatar($id)
+    {
         $user = $this->User_model->get_user_by_id($id);
         $config['upload_path']    = './assets/upload/user/avatar/';
         $config['allowed_types']  = 'jpg|jpeg|png';
@@ -704,11 +704,11 @@ class Customer extends CI_Controller
         $uploadAvatar = $this->upload->do_upload('avatar');
         $namaAvatar   = $this->upload->data('file_name');
         if (!$uploadAvatar) {
-        $this->session->set_flashdata('failed', "<b>Eror !</b> Gagal upload foto avatar, silahkan pilih gambar yang lain.");
-        redirect('profil');
+            $this->session->set_flashdata('failed', "<b>Eror !</b> Gagal upload foto avatar, silahkan pilih gambar yang lain.");
+            redirect('profil');
         } elseif ($uploadAvatar) {
-        unlink('./assets/upload/user/avatar/' . $user['avatar']);
-        return $namaAvatar;
+            unlink('./assets/upload/user/avatar/' . $user['avatar']);
+            return $namaAvatar;
         }
     }
 }
