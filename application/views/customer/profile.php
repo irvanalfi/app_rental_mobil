@@ -74,7 +74,7 @@
 							<div class="icon mr-3">
 								<span class="icon-envelope-o"></span>
 							</div>
-							<p><span>Email:</span> <?php echo $user['email']?></p>
+							<p><span>Email:</span> <?php echo substr($user['email'],0, 20). '...';?></p>
 						</div>
 					</div>
 					<div class="col-md-12">
@@ -82,7 +82,9 @@
 							<div class="icon mr-3">
 								<span class="icon-map"></span>
 							</div>
-							<p><span>Alamat:</span> <?php echo $user['alamat']?></p>
+							<div class="col-md-12">
+								<p><span>Alamat:</span> <?php echo substr($user['alamat'],0, 20). '...';?></p>
+							</div>
 						</div>
 					</div>
 				</div>

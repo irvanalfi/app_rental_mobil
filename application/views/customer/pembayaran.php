@@ -179,7 +179,7 @@ $id_transaksi = $bayar['id_transaksi'];
 
 
 <!-- apabila customer belum mengirimkan bukti transfer maka timer akan berjalan -->
-<?php if ($bayar['bukti_pembayaran'] == null) : ?>
+<?php if ($bayar['bukti_pembayaran'] == null && $bayar['status_rental'] != "Gagal") : ?>
 
 	<script>
 		// Mengatur waktu akhir perhitungan mundur
