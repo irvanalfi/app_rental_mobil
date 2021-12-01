@@ -14,6 +14,22 @@ class Transaksi_model extends CI_Model
         $this->db->join('user', 'user.id_user = transaksi.id_user');
         $this->db->join('tipe', 'tipe.id_tipe = mobil.id_tipe');
         $this->db->join('fitur', 'fitur.id_mobil = mobil.id_mobil');
+        $this->db->order_by('id_transaksi', 'asc');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    //menampilkan semua transaksi
+    public function get_all_laporan_transaksi($dari, $sampai)
+    {
+        $this->db->select('*, transaksi.created as transaksi_created');
+        $this->db->from('transaksi');
+        $this->db->join('mobil', 'mobil.id_mobil = transaksi.id_mobil');
+        $this->db->join('user', 'user.id_user = transaksi.id_user');
+        $this->db->join('tipe', 'tipe.id_tipe = mobil.id_tipe');
+        $this->db->join('fitur', 'fitur.id_mobil = mobil.id_mobil');
+        $this->db->where('transaksi.created >=', $dari);
+        $this->db->where('transaksi.created <=', $sampai);
+        $this->db->order_by('transaksi_created', 'desc');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -45,7 +61,7 @@ class Transaksi_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-    //menampilkan beberapa transaksi berdasarkan id_user
+    //menampilkan beberapa transaksi berdasarkan id_user dan id_mobil
     public function get_transaksi_by_id_mobil($id_user, $id_mobil)
     {
         $this->db->select('*, transaksi.created as transaksi_created');
@@ -132,10 +148,10 @@ class Transaksi_model extends CI_Model
         $this->db->update('transaksi', $data);
     }
 
+    // update data ketika transaksi di slesaikan
     public function update_selesai_transaksi()
     {
         $data = [
-            //function itungan total denda todal akhir
             "total_denda"           => $this->input->post('status_pembayaran', true),
             "total_akhir"           => $this->input->post('status_pembayaran', true),
             "tgl_pengembalian"      => $this->input->post('tgl_pengembalian', true),
@@ -152,7 +168,6 @@ class Transaksi_model extends CI_Model
     public function update_transaksi_gagal($data, $id_transaksi)
     {
         $data = [
-            //function itungan total denda todal akhir
             "status_pengembalian"   => "Kembali",
             "status_rental"         => "Gagal",
             "updated"               => date('Y-m-d H:i:s'),

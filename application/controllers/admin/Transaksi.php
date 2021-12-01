@@ -1,4 +1,6 @@
 <?php
+// programmer : M. Irvan Alfi Hidayat, Oktaviano andi suryadi, Sadewa Mukti Witjaksono
+// terakhir update syntax : -
 
 class Transaksi extends CI_Controller
 {

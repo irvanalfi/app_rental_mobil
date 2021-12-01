@@ -1,4 +1,6 @@
 <?php
+// programmer : M. Irvan Alfi Hidayat, Oktaviano andi suryadi, Sadewa Mukti Witjaksono
+// terakhir update syntax : -
 
 class Laporan extends CI_Controller
 {
@@ -6,47 +8,38 @@ class Laporan extends CI_Controller
   public function __construct()
   {
     parent::__construct();
-
-    if (empty($this->session->userdata('username'))) {
-      $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Anda belum login!</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>');
-      redirect('auth/login');
-    } elseif ($this->session->userdata('role') != '1') {
-      $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Anda tidak punya akses ke halaman ini!</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>');
-      redirect('customer/dashboard');
-    }
+    check_not_login(); /*pengecekan status login */
+    check_admin(); /*pengecekan status level admin atau bukan */
+    // load semua model yang dibutuhkan
+    $this->load->model('Transaksi_model');
   }
 
   public function index()
   {
+    $this->form_validation->set_rules(
+      'dari',
+      'Kolom Dari Mulai',
+      'required',
+      array(
+        'required' => '<p class="text-danger"> * Kamu belum memilih %s !</p>'
+      )
+    );
+    $this->form_validation->set_rules(
+      'sampai',
+      'Kolom Hingga Sampai',
+      'required',
+      array(
+        'required' => '<p class="text-danger"> * Kamu belum memilih %s !</p>'
+      )
+    );
     $dari   = $this->input->post('dari');
     $sampai = $this->input->post('sampai');
-    // var_dump($dari);
-    // die;
-    $this->_rules();
 
     if ($this->form_validation->run() == FALSE) {
-      $this->load->view('templates_admin/header');
-      $this->load->view('templates_admin/sidebar');
-      $this->load->view('admin/filter_laporan');
-      $this->load->view('templates_admin/footer');
+      $this->template->load('templateAdmin', 'admin/filter_laporan');
     } else {
-      $data['laporan'] = $this->db->query("SELECT * FROM transaksi tr, mobil mb, customer cs WHERE tr.id_mobil=mb.id_mobil AND tr.id_customer=cs.id_customer AND date(tgl_rental) >= '$dari' AND date(tgl_rental) <= '$sampai'")->result();
-      // var_dump($data);
-      // die;
-      $this->load->view('templates_admin/header');
-      $this->load->view('templates_admin/sidebar');
-      $this->load->view('admin/tampilkan_laporan', $data);
-      $this->load->view('templates_admin/footer');
+      $data['laporan'] = $this->Transaksi_model->get_all_laporan_transaksi($dari, $sampai);
+      $this->template->load('templateAdmin', 'admin/tampilkan_laporan', $data);
     }
   }
 
@@ -54,8 +47,6 @@ class Laporan extends CI_Controller
   {
     $dari   = $this->input->get('dari');
     $sampai = $this->input->get('sampai');
-    // var_dump($dari);
-    // die;
 
     $data['title'] = "Print Laporan Transaksi";
     $data['laporan'] = $this->db->query("SELECT * FROM transaksi tr, mobil mb, customer cs WHERE tr.id_mobil=mb.id_mobil AND tr.id_customer=cs.id_customer AND date(tgl_rental) >= '$dari' AND date(tgl_rental) <= '$sampai'")->result();

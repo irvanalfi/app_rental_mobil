@@ -23,6 +23,7 @@ class Contact_model extends CI_Model
         $this->db->from('contact');
         $this->db->join('user', 'user.id_user = contact.id_user');
         $this->db->where('status', 0);
+        $this->db->order_by('contact_created', 'desc');
         $this->db->limit(3);
         $query = $this->db->get();
         return $query->result_array();

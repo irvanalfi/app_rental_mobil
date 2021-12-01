@@ -1,7 +1,6 @@
 <?php
-// berisi semua function yang berhubungan dengan tampilan customer
 // programmer : M. Irvan Alfi Hidayat, Oktaviano andi suryadi, Sadewa Mukti Witjaksono
-// terakhir update syntax : 2 November 2021
+// terakhir update syntax : -
 
 class Customer extends CI_Controller
 {

@@ -1,4 +1,6 @@
 <?php
+// programmer : M. Irvan Alfi Hidayat, Oktaviano andi suryadi, Sadewa Mukti Witjaksono
+// terakhir update syntax : -
 
 class User extends CI_Controller
 {
@@ -358,7 +360,7 @@ class User extends CI_Controller
     }
 
     $user = $this->User_model->get_user_by_id($id);
-    
+
     if ($this->input->post('password') == NULL) {
       $password = $user['password'];
     } else {

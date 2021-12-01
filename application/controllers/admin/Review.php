@@ -1,4 +1,6 @@
 <?php
+// programmer : M. Irvan Alfi Hidayat, Oktaviano andi suryadi, Sadewa Mukti Witjaksono
+// terakhir update syntax : -
 
 class Review extends CI_Controller
 {
@@ -14,8 +16,6 @@ class Review extends CI_Controller
   public function index()
   {
     $data['review'] = $this->Review_model->get_all_review();
-    // var_dump(json_encode($data));
-    // die();
     $this->template->load('templateAdmin', 'admin/data_review', $data);
   }
   // update status review 

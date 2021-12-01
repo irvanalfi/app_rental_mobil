@@ -1,8 +1,9 @@
 <?php
+// programmer : M. Irvan Alfi Hidayat, Oktaviano andi suryadi, Sadewa Mukti Witjaksono
+// terakhir update syntax : -
 
 class Tipe extends CI_Controller
 {
-
 
   public function __construct()
   {
@@ -12,7 +13,6 @@ class Tipe extends CI_Controller
     // load semua model yang dibutuhkan
     $this->load->model('Tipe_model');
   }
-
 
   public function index()
   {

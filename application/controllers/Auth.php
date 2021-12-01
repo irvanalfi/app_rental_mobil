@@ -1,4 +1,7 @@
 <?php
+// programmer : M. Irvan Alfi Hidayat, Oktaviano andi suryadi, Sadewa Mukti Witjaksono
+// terakhir update syntax : -
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Auth extends CI_Controller
@@ -268,13 +271,12 @@ class Auth extends CI_Controller
         'valid_email' => '<p class="text-danger">  * %s tidak sesuai!</p>',
       )
     );
-    
+
     if ($this->form_validation->run() == FALSE) {
       $this->load->view('lupa_password.php');
     } else {
       $this->kirim_link_reset_password();
     }
-
   }
 
   public function kirim_link_reset_password()
@@ -282,11 +284,11 @@ class Auth extends CI_Controller
     $email    = $this->input->post('email');
     $user     = $this->User_model->get_user_by_email($email);
     $id_user  = $user['id_user'];
-    
+
     if ($user != null) {
-      
+
       $token = base64_encode(random_bytes(32));
-      
+
       $data  = [
         "token"       => $token,
         "id_user"     => $id_user,
@@ -299,8 +301,7 @@ class Auth extends CI_Controller
       $this->_kirimEmail($email, $token, "reset_password");
       $this->session->set_flashdata('success', '<b>Email berhasil dikirim!</b> <br> Silahkan cek email Anda di kotak masuk/spam');
       redirect('password/lupa');
-
-    }else{
+    } else {
       $this->session->set_flashdata('failed', '<b>Email gagal dikirim!</b> <br> Email yang dimasukkan tidak terdaftar.');
       redirect('password/lupa');
     }
@@ -331,15 +332,14 @@ class Auth extends CI_Controller
       $this->email->to($email);
 
       $this->email->subject('Permintaan Reset Password');
-      $this->email->message('Klik disini untuk mereset password akun anda : <a href="'. base_url('password/reset?token=') . urlencode($token) . '"> Reset Password </a>');
-    }
-    
-    if ($this->email->send()){
-      return true;
-    } else{
-      echo $this->email->print_debugger();
+      $this->email->message('Klik disini untuk mereset password akun anda : <a href="' . base_url('password/reset?token=') . urlencode($token) . '"> Reset Password </a>');
     }
 
+    if ($this->email->send()) {
+      return true;
+    } else {
+      echo $this->email->print_debugger();
+    }
   }
 
   // pengecekan token
@@ -351,11 +351,10 @@ class Auth extends CI_Controller
     if ($user_token) {
       $this->session->set_userdata('id', $user_token['id_user']);
       $this->ubah_password();
-    }else{
+    } else {
       $this->session->set_flashdata('failed', '<b>Eror!</b> Token yang digunakan tidak tersedia.');
       redirect('auth/login');
     }
-    
   }
 
   public function ubah_password()
@@ -373,7 +372,7 @@ class Auth extends CI_Controller
         'min_length'  => '<p class="text-danger">  * %s harus lebih dari 5 karakter!</p>'
       )
     );
-    
+
     $this->form_validation->set_rules(
       'cpassword',
       'Konfirmasi Password',
@@ -384,13 +383,12 @@ class Auth extends CI_Controller
         'matches'     => '<p class="text-danger">  * %s tidak sama dengan password!</p>'
       )
     );
-    
+
     if ($this->form_validation->run() == FALSE) {
-      $this->load->view('ubah_password.php');    
+      $this->load->view('ubah_password.php');
     } else {
       $this->ubah_password_aksi();
     }
-    
   }
 
   private function ubah_password_aksi()
@@ -405,7 +403,7 @@ class Auth extends CI_Controller
 
     $this->User_model->update_user($data, $id_user);
     $this->Token_model->delete_token_by_id_user($id_user);
-    
+
     if ($this->db->affected_rows() > 0) {
       $this->session->set_flashdata('success', '<b>Password berhasil diubah!</b> Silahkan login.');
       $this->session->unset_userdata('id');
@@ -415,5 +413,4 @@ class Auth extends CI_Controller
       redirect('password/ubah');
     }
   }
-
 }

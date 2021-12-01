@@ -1,4 +1,6 @@
 <?php
+// programmer : M. Irvan Alfi Hidayat, Oktaviano andi suryadi, Sadewa Mukti Witjaksono
+// terakhir update syntax : -
 
 class Mobil extends CI_Controller
 {
@@ -23,7 +25,7 @@ class Mobil extends CI_Controller
   public function tambah_mobil()
   {
     $data['tipe'] = $this->Tipe_model->get_all_tipe();
-    
+
     if (empty($_FILES['gambar']['name'])) {
       $this->form_validation->set_rules(
         'gambar',
@@ -286,7 +288,6 @@ class Mobil extends CI_Controller
     } else {
       $this->tambah_mobil_aksi();
     }
-    
   }
 
   public function tambah_mobil_aksi()
@@ -295,7 +296,7 @@ class Mobil extends CI_Controller
     $mobil = $this->Mobil_model->get_latest_id_mobil();
 
     $new_id_mobil = $mobil['id_mobil'] + 1;
-    
+
     $data_mobil = [
       "id_mobil"      => $new_id_mobil,
       "id_tipe"       => $this->input->post('id_tipe', true),
@@ -346,25 +347,24 @@ class Mobil extends CI_Controller
       $this->session->set_flashdata('failed', '<b>Data Mobil gagal diinput!</b> Silahkan cek kembali data Anda.');
       redirect('admin/mobil');
     }
-
   }
 
   public function update_mobil($id)
   {
-    
+
     $data['mobil'] = $this->Mobil_model->get_mobil_by_id($id);
     $data['tipe'] = $this->Tipe_model->get_all_tipe();
-    $data['bbm'] = array("Solar","Bensin","Pertalite", "Pertamax");
-    $data['transmisi'] = array("Manual","Matic");
-    
+    $data['bbm'] = array("Solar", "Bensin", "Pertalite", "Pertamax");
+    $data['transmisi'] = array("Manual", "Matic");
+
     $is_unique_plat = '|is_unique[mobil.no_plat]';
     $no_plat_lama = $this->input->post('no_plat_lama');
     $no_plat = $this->input->post('no_plat');
-    
+
     if ($no_plat == $no_plat_lama) {
       $is_unique_plat = '';
     }
-    
+
     $this->form_validation->set_rules(
       'merek',
       'Merek',
@@ -378,7 +378,7 @@ class Mobil extends CI_Controller
     $this->form_validation->set_rules(
       'no_plat',
       'Nomor Plat',
-      'required|min_length[5]'.$is_unique_plat,
+      'required|min_length[5]' . $is_unique_plat,
       array(
         'required'    => '<p class="text-danger"> * Kamu belum mengisi %s !</p>',
         'min_length'  => '<p class="text-danger">  * %s harus lebih dari 5 karakter!</p>',
@@ -466,13 +466,12 @@ class Mobil extends CI_Controller
         'required' => '<p class="text-danger"> * Kamu belum mengisi %s !</p>'
       )
     );
-    
+
     if ($this->form_validation->run() == FALSE) {
       $this->template->load('templateAdmin', 'admin/form_update_mobil', $data);
     } else {
       $this->update_mobil_aksi();
     }
-    
   }
 
   public function update_mobil_aksi()
@@ -523,7 +522,7 @@ class Mobil extends CI_Controller
 
     $this->Mobil_model->update_mobil($data_mobil, $id_mobil);
     $this->Fitur_model->update_fitur($data_fitur_mobil, $id_fitur);
-    
+
     if ($this->db->affected_rows() > 0) {
       $this->session->set_flashdata('success', '<b>Data Mobil berhasil diupdate!</b> Silahkan cek kembali data Anda.');
       redirect('admin/mobil');
@@ -531,7 +530,6 @@ class Mobil extends CI_Controller
       $this->session->set_flashdata('failed', '<b>Data Mobil gagal diupdate!</b> Silahkan cek kembali data Anda.');
       redirect('admin/mobil');
     }
-    
   }
 
   public function detail_mobil($id)
@@ -547,14 +545,15 @@ class Mobil extends CI_Controller
     if ($this->db->affected_rows() > 0) {
       $this->session->set_flashdata('success', '<b>Data User berhasil dihapus!</b> Silahkan cek kembali data Anda.');
       redirect('admin/mobil');
-    }else{
+    } else {
       $this->session->set_flashdata('failed', '<b>Data User gagal dihapus!</b> Silahkan lakukan kembali.');
       redirect('admin/mobil');
     }
   }
 
   // function untuk mengupload foto
-  private function upload_gambar_mobil(){
+  private function upload_gambar_mobil()
+  {
     $config['upload_path']    = './assets/upload/car/';
     $config['allowed_types']  = 'jpg|jpeg|png';
     $config1['detect_mime']   = TRUE;
@@ -574,7 +573,8 @@ class Mobil extends CI_Controller
   }
 
   //funtcion untuk mengubah foto ketika update
-  private function ubah_gambar_mobil($id){
+  private function ubah_gambar_mobil($id)
+  {
     if (empty($_FILES['gambar']['name'])) {
       $gambar = $this->input->post('gambar_lama');
     } else {
@@ -584,13 +584,13 @@ class Mobil extends CI_Controller
     return $gambar;
   }
 
-//funtcion untuk menghapus foto
-  private function hapus_gambar_mobil($id){
+  //funtcion untuk menghapus foto
+  private function hapus_gambar_mobil($id)
+  {
     $mobil = $this->Mobil_model->get_mobil_by_id($id);
     $fotoMobil = $mobil['gambar'];
-    
+
     $target_file = 'assets/upload/car/' . $fotoMobil;
     unlink($target_file);
   }
-
 }
