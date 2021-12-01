@@ -49,7 +49,7 @@
 						<div class="border w-100 p-4 rounded mb-2 text-center">
 							<div class="img-user">
 								<img alt="image" src="<?= base_url('assets/upload/user/avatar/') . $user['avatar']; ?>"
-									class="rounded-circle w-50">
+									class="rounded-circle w-50 h-50">
 								<hr>
 							</div>
 							<p><?php echo $user['nama']?></p>
