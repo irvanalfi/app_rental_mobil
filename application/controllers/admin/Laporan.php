@@ -32,32 +32,30 @@ class Laporan extends CI_Controller
         'required' => '<p class="text-danger"> * Kamu belum memilih %s !</p>'
       )
     );
-    $dari   = $this->input->post('dari');
-    $sampai = $this->input->post('sampai');
+    $dari   = $this->input->post('dari') . ' 00:00:00';
+    $sampai = $this->input->post('sampai') . ' 23:59:59';
 
     if ($this->form_validation->run() == FALSE) {
       $this->template->load('templateAdmin', 'admin/filter_laporan');
     } else {
       $data['laporan'] = $this->Transaksi_model->get_all_laporan_transaksi($dari, $sampai);
+      $data['tanggal'] = [
+        'dari'    => $dari,
+        'sampai'  => $sampai
+      ];
       $this->template->load('templateAdmin', 'admin/tampilkan_laporan', $data);
     }
   }
 
   public function print_laporan()
   {
-    $dari   = $this->input->get('dari');
-    $sampai = $this->input->get('sampai');
-
-    $data['title'] = "Print Laporan Transaksi";
-    $data['laporan'] = $this->db->query("SELECT * FROM transaksi tr, mobil mb, customer cs WHERE tr.id_mobil=mb.id_mobil AND tr.id_customer=cs.id_customer AND date(tgl_rental) >= '$dari' AND date(tgl_rental) <= '$sampai'")->result();
-
-    $this->load->view('templates_admin/header', $data);
+    $dari   = $this->input->post('dari');
+    $sampai = $this->input->post('sampai');
+    $data['tanggal'] = [
+      'dari'    => $dari,
+      'sampai'  => $sampai
+    ];
+    $data['laporan'] = $this->Transaksi_model->get_all_laporan_transaksi($dari, $sampai);
     $this->load->view('admin/print_laporan', $data);
-  }
-
-  public function _rules()
-  {
-    $this->form_validation->set_rules('dari', 'Dari tanggal', 'required');
-    $this->form_validation->set_rules('sampai', 'Sampai tanggal', 'required');
   }
 }

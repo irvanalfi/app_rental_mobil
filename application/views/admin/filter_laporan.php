@@ -2,6 +2,13 @@
   <section class="section">
     <div class="section-header">
       <h1>Filter Laporan Transaksi</h1>
+      <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item text-capitalize"><?= $this->uri->segment(1) ?></div>
+        <div class="breadcrumb-item text-capitalize"><?= $this->uri->segment(2) ?></div>
+        <?php if ($this->uri->segment(3) != '') : ?>
+          <div class="breadcrumb-item text-capitalize"><?= $this->uri->segment(3) ?></div>
+        <?php endif; ?>
+      </div>
     </div>
     <div class="row">
       <div class="col-12">

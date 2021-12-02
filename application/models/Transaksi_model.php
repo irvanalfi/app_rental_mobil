@@ -18,7 +18,7 @@ class Transaksi_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
-    //menampilkan semua transaksi
+    //menampilkan semua transaksi untuk laporan
     public function get_all_laporan_transaksi($dari, $sampai)
     {
         $this->db->select('*, transaksi.created as transaksi_created');

@@ -75,6 +75,7 @@ $route['password/ubah']     = 'auth/ubah_password';
 
 
 
+
 // $route['customer/add'] = 'pelanggan/add';
 // $route['customer/process'] = 'pelanggan/process';
 // $route['customer/edit/(:num)'] = 'pelanggan/edit/$1';

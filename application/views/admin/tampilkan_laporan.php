@@ -1,84 +1,85 @@
 <div class="main-content">
   <section class="section">
     <div class="section-header">
-      <h1>Laporan Transaksi</h1>
+      <h1>Laporan Hasil Filter Transaksi</h1>
+      <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item text-capitalize"><?= $this->uri->segment(1) ?></div>
+        <div class="breadcrumb-item text-capitalize"><?= $this->uri->segment(2) ?></div>
+        <?php if ($this->uri->segment(3) != '') : ?>
+          <div class="breadcrumb-item text-capitalize"><?= $this->uri->segment(3) ?></div>
+        <?php endif; ?>
+      </div>
     </div>
 
-    <form action="<?= base_url('admin/laporan') ?>" method="post">
-      <div class="form-group">
-        <label for="">Dari Tanggal</label>
-        <input type="date" name="dari" class="form-control">
-        <?= form_error('dari', '<div class="text-small text-danger">', '</div>') ?>
-      </div>
-      <div class="form-group">
-        <label for="">Sampai Tanggal</label>
-        <input type="date" name="sampai" class="form-control">
-        <?= form_error('sampai', '<div class="text-small text-danger">', '</div>') ?>
-      </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
 
-      <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i> Tampilkan Data</button>
-    </form>
-    <hr>
+            <div class="row">
+              <div class="col-6 d-flex justify-content-start">
+                <a href="<?= base_url('admin/laporan/'); ?>" class="btn btn-primary mb-3"><i class="fa fa-undo"></i> Kembali</a>
+              </div>
+              <div class="col-6 d-flex justify-content-end">
+                <form action="<?= base_url('admin/laporan/print_laporan') ?>" method="post" target="_blank">
+                  <input type="hidden" name="dari" value="<?= $tanggal['dari'] ?>">
+                  <input type="hidden" name="sampai" value="<?= $tanggal['sampai'] ?>">
+                  <button type="submit" class="btn btn-success"><i class="fas fa-file-export"></i> Export</button>
+                </form>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-striped" id="table-1" style="font-size: 10px;">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Nama<br>Customer</th>
+                    <th>Merek<br>Mobil</th>
+                    <th>Total<br>Hari<br>Rental</th>
+                    <th>Harga<br>Mobil</th>
+                    <th>Harga<br>Supir</th>
+                    <th>Total<br>Pajak</th>
+                    <th>Total<br>Denda</th>
+                    <th>Total<br>Akhir</th>
+                    <th>Status<br>Pengembalian</th>
+                    <th>Status<br>Rental</th>
+                    <th>Tanggal<br>Transaksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $no = 1;
+                  foreach ($laporan as $tr) : ?>
+                    <?php
+                    $tanggal_rental       = strtotime($tr['tgl_rental']);
+                    $tanggal_kembali      = strtotime($tr['tgl_kembali']);
+                    $selisih              = abs($tanggal_rental - $tanggal_kembali) / (60 * 60 * 24) + 1;
+                    ?>
+                    <tr>
+                      <td><?= $no++; ?></td>
+                      <td><?= $tr['nama']; ?></td>
+                      <td><?= $tr['merek']; ?></td>
+                      <td><?= $selisih ?> Hari</td>
+                      <td><?= indo_currency($tr['harga']) ?>/hari <br>Total <?= indo_currency($tr['total_harga']) ?></td>
+                      <td><?= indo_currency($tr['hrg_supir']) ?>/hari <br>Total <?= indo_currency($tr['total_harga_supir']) ?></td>
+                      <td><?= indo_currency($tr['pajak']) ?></td>
+                      <td><?= indo_currency($tr['total_denda']) ?></td>
+                      <td><?= indo_currency($tr['total_akhir']) ?></td>
+                      <td><?= $tr['status_pengembalian'] ?> <br><?= $tr['tgl_pengembalian'] == null ? '-' : indo_date($tr['tgl_pengembalian']) ?></td>
+                      <td><?= $tr['status_rental'] ?></td>
+                      <td><?= indo_date($tr['transaksi_created']) ?></td>
+                    </tr>
 
-    <div class="btn-group">
-      <a href="<?= base_url() . 'admin/laporan/print_laporan/?dari=' . set_value('dari') . '&sampai=' . set_value('sampai'); ?>" class="btn btn-sm btn-success" target="_blank"><i class="fas fa-print"></i> Print</a>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <table class="table table-responsive table-bordered table-striped mt-3">
-      <tr>
-        <th>No</th>
-        <th>Customer</th>
-        <th>Mobil</th>
-        <th>Tgl. Rental</th>
-        <th>Tgl. Kembali</th>
-        <th>Harga/Hari</th>
-        <th>Denda/Hari</th>
-        <th>Total Denda</th>
-        <th>Tgl. Dikembalikan</th>
-        <th>Status Pengembalian</th>
-        <th>Status Rental</th>
-      </tr>
 
-      <?php
-      $no = 1;
-      foreach ($laporan as $tr) : ?>
-        <tr>
-          <td><?= $no++; ?></td>
-          <td><?= $tr['nama']; ?></td>
-          <td><?= $tr['merek']; ?></td>
-          <td><?= date('d/m/Y', strtotime($tr['tgl_rental'])); ?></td>
-          <td><?= date('d/m/Y', strtotime($tr['tgl_kembali'])); ?></td>
-          <td><?= indo_currency($tr['harga']) ?>,-</td>
-          <td><?= indo_currency($tr['denda']) ?>,-</td>
-          <td><?= indo_currency($tr['total_denda']) ?>,-</td>
-          <td>
-            <?php if ($tr['tgl_pengembalian'] == "0000-00-00") {
-              echo "-";
-            } else {
-              echo date('d/m/Y', strtotime($tr['tgl_pengembalian']));
-            } ?>
-          </td>
-
-          <td>
-            <?php if ($tr['status_pembayaran'] == "1") {
-              echo "Kembali";
-            } else {
-              echo "Belum Kembali";
-            } ?>
-          </td>
-
-
-          <td>
-            <?php if ($tr['status_pembayaran'] == "1") {
-              echo "Selesai";
-            } else {
-              echo "Belum Selesai";
-            } ?>
-          </td>
-        </tr>
-
-      <?php endforeach; ?>
-    </table>
 
   </section>
 </div>
