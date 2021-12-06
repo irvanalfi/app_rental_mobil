@@ -184,6 +184,16 @@ class Transaksi_model extends CI_Model
         $this->db->where('id_transaksi', $id_transaksi);
         $this->db->delete('transaksi');
     }
+
+    public function get_total_transaksi_bulan()
+    {
+        $this->db->select('transaksi.id_transaksi, MONTH(transaksi.created) as bulan, SUM(transaksi.total_akhir) as total');
+        $this->db->from('transaksi');
+        $this->db->group_by('bulan');
+        $this->db->order_by('bulan', 'asc');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }
     
     /* End of file ModelName.php */

@@ -118,7 +118,9 @@ class Transaksi extends CI_Controller
     );
 
     $mobil = [
-      'status'              => 1
+      'status'              => 1,
+      "updated"             => date('Y-m-d H:i:s'),
+      'updated_by'          => $this->session->userdata('id_user')
     ];
 
     $this->Transaksi_model->update_transaksi($data, $id_transaksi);
@@ -132,24 +134,142 @@ class Transaksi extends CI_Controller
     }
   }
 
-  public function batal_transaksi($id)
+  public function batalTransaksi($id_transaksi)
   {
-    $where = array('id_rental' => $id);
+    $transaksi                  = $this->Transaksi_model->get_transaksi_by_id($id_transaksi);
+    $id_mobil                   = $transaksi['id_mobil'];
+    $tgl_cancel                 = date('Y/m/d');
+    $tgl_kembali                = $transaksi['tgl_kembali'];
+    $harga_mobil                = $transaksi['harga'];
+    $total_harga_mobil          = $transaksi['total_harga'];
+    $harga_supir                = $transaksi['hrg_supir'];
+    $total_harga_supir          = $transaksi['total_harga_supir'];
+    $total_akhir                = $transaksi['total_akhir'];
+    $pajak_per_hari             = $harga_mobil * 0.02;
+    $total_pajak                = $transaksi['pajak'];
 
-    $data = $this->rental_model->get_where($where, 'transaksi')->row();
 
-    $where2 = array('id_mobil' => $data->id_mobil);
-    // var_dump($where2);
-    // die;
-    $data2 = array('status' => '1');
+    $y                          = strtotime(date('Y/m/d'));
+    $x                          = strtotime($transaksi['tgl_kembali']);
+    $selisih                    = abs($x - $y) / (60 * 60 * 24);
 
-    $this->rental_model->update_data('mobil', $data2, $where2);
-    $this->rental_model->delete_data($where, 'transaksi');
-    $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-    Transaksi berhasil dibatalkan
-    <button type="button" class="close" data-dismiss="alert" aria-label="close">
-      <span aria-hidden="true">&times;</span>
-    </button></div>');
-    redirect('admin/transaksi');
+    $ganti_total_harga_supir    = $total_harga_supir - ($harga_supir  * $selisih);
+    $ganti_total_harga_pajak    = $total_pajak - ($pajak_per_hari * $selisih);
+    $ganti_total_harga_mobil    = $total_harga_mobil - ($harga_mobil * 0.5 * $selisih);
+
+    // yang di tambah hasil perhitungan (pajak perhari di kali selisih) + (hargamobil * 0.5 * selisih ) = total refund
+    // update total akhir adalah total akhir lama - total refund
+    $total_refund               = ($harga_supir * $selisih) + ($pajak_per_hari * $selisih) + ($harga_mobil * 0.5 * $selisih);
+    $update_total_akhir         = $total_akhir - $total_refund;
+    $data = [
+      'status_rental'         => 'Batal',
+      'status_pengembalian'   => 'Kembali',
+      'tgl_pengembalian'      => $tgl_cancel,
+      'tgl_cancel'            => $tgl_cancel,
+      'total_harga'           => $ganti_total_harga_mobil,
+      'total_harga_supir'     => $ganti_total_harga_supir,
+      'pajak'                 => $ganti_total_harga_pajak,
+      'total_refund'          => $total_refund,
+      'total_akhir'           => $update_total_akhir,
+      "updated"               => date('Y-m-d H:i:s'),
+      'updated_by'            => $this->session->userdata('id_user')
+    ];
+
+
+    $mobil = [
+      'status'              => 1,
+      'updated'             => date('Y-m-d H:i:s'),
+      'updated_by'          => $this->session->userdata('id_user')
+    ];
+
+    $this->Transaksi_model->update_transaksi($data, $id_transaksi);
+    $this->Mobil_model->update_mobil($mobil, $id_mobil);
+
+    if ($this->db->affected_rows() > 0) {
+      $this->session->set_flashdata('success', '<b>Transaksi telah diselesaikan!</b> Silahkan cek kembali data Anda.');
+      redirect('admin/transaksi');
+    } else {
+      $this->session->set_flashdata('failed', '<b>Transaksi gagal di selesaikan!</b> Silahkan cek kembali data Anda.');
+      redirect('admin/transaksi');
+    }
+  }
+
+  public function updateStatusPengembalian($id_transaksi)
+  {
+    $transaksi = $this->Transaksi_model->get_transaksi_by_id($id_transaksi);
+    $id_mobil = $transaksi['id_mobil'];
+
+    $data = [
+      "status_pengembalian" => 'Belum Kembali',
+      "updated"             => date('Y-m-d H:i:s'),
+      "updated_by"          => $this->session->userdata('id_user')
+    ];
+
+    $mobil = [
+      'status'              => 0,
+      "updated"             => date('Y-m-d H:i:s'),
+      'updated_by'          => $this->session->userdata('id_user')
+    ];
+
+    $this->Transaksi_model->update_transaksi($data, $id_transaksi);
+    $this->Mobil_model->update_mobil($mobil, $id_mobil);
+
+    if ($this->db->affected_rows() > 0) {
+      $this->session->set_flashdata('success', '<b>Transaksi telah diselesaikan!</b> Silahkan cek kembali data Anda.');
+      redirect('admin/transaksi');
+    } else {
+      $this->session->set_flashdata('failed', '<b>Transaksi gagal di selesaikan!</b> Silahkan cek kembali data Anda.');
+      redirect('admin/transaksi');
+    }
+  }
+
+  // proses upload bukti refund 
+  public function uploadRefund($id_transaksi)
+  {
+    $data['transaksi'] = $this->Transaksi_model->get_transaksi_by_id($id_transaksi);
+    $transaksi = $this->Transaksi_model->get_transaksi_by_id($id_transaksi);
+    $data['user'] = $this->User_model->get_user_by_id($transaksi['updated_by']);
+    $this->template->load('templateAdmin', 'admin/upload_refund', $data);
+  }
+
+  public function uploadRefundProses($id_transaksi)
+  {
+    $bukti_refrund = $_FILES['bukti_refund']['name'];
+    if ($bukti_refrund = '') {
+    } else {
+      $config['upload_path']    = './assets/upload/refund/';
+      $config['allowed_types']  = 'jpg|jpeg|png';
+      $config['detect_mime']    = TRUE;
+      $config['max_size']       = 5120;
+      $config['file_name']      = 'Refund-' . date('dmy') . '-' . substr(md5(rand()), 0, 10);
+
+      $this->upload->initialize($config);
+      $upload   = $this->upload->do_upload('bukti_refund');
+      $refund   = $this->upload->data('file_name');
+      if (!$upload) {
+        $this->session->set_flashdata('failed', '<b>Proses upload bukti pembayarn gagal!</b> Silahkan upload kembali');
+        redirect('admin/transaksi/uploadRefund/' . $id_transaksi);
+      }
+    }
+
+    $data = [
+      "bukti_refund"        => $refund,
+      "status_refund"       => 'Selesai',
+      "updated"             => date('Y-m-d H:i:s'),
+      "updated_by"          => $this->session->userdata('id_user')
+    ];
+
+    $this->Transaksi_model->update_transaksi($data, $id_transaksi);
+
+    if ($this->db->affected_rows() > 0) {
+      $this->session->set_flashdata('success', '<b>Proses upload bukti pembayarn berhasil!</b> Silahkan mengunggu konfirmasi admin.');
+      redirect('admin/transaksi');
+    }
+  }
+
+  public function downloadBuktiRefund($image)
+  {
+    $file = 'assets/upload/refund/' . $image;
+    force_download($file, NULL);
   }
 }

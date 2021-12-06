@@ -87,20 +87,21 @@
                         $tanggal_kembali      = strtotime($tr['tgl_kembali']);
                         $selisih              = abs($tanggal_rental - $tanggal_kembali) / (60 * 60 * 24) + 1;
                         ?>
-                        <a href="#" class="btn btn-sm btn-success" id="dtl_trs" data-toggle="modal" data-target="#transaksi-detail" data-avatar="<?= $tr['avatar'] ?>" data-id="<?= $tr['id_transaksi'] ?>" data-nama="<?= $tr['nama'] ?>" data-alamat="<?= $tr['alamat'] ?>" data-noKTP="<?= $tr['no_ktp'] ?>" data-email="<?= $tr['email'] ?>" data-noTelepon="<?= $tr['no_telepon'] ?>" data-merek="<?= $tr['merek'] ?>" data-namaTipe="<?= $tr['nama_tipe'] ?>" data-warna="<?= $tr['warna'] ?>" data-tahun="<?= $tr['tahun'] ?>" data-transmisi="<?= $tr['transmisi'] ?>" data-bbm="<?= $tr['bbm'] ?>" data-jmlhKursi="<?= $tr['jmlh_kursi'] ?>" data-noPlat="<?= $tr['no_plat'] ?>" data-tglRental="<?= indo_date($tr['tgl_rental']) ?>" data-selisih="<?= $selisih ?>" data-tglKembali="<?= indo_date($tr['tgl_kembali']) ?>" data-tglTransaksi="<?= indo_date($tr['transaksi_created']) ?>" data-tglPengembalian="<?= $tr['tgl_pengembalian'] == NULL ? '-' : indo_date($tr['tgl_pengembalian']) ?>" data-alamatPenjemputan="<?= $tr['alamat_penjemputan'] ?>" data-waktuPenjemputan="<?= $tr['waktu_penjemputan'] ?>" data-hargaMobil="<?= indo_currency($tr['harga']) ?>" data-hrgSupir="<?= indo_currency($tr['hrg_supir']) ?>" data-denda="<?= indo_currency($tr['denda']) ?>" data-totalHarga="<?= indo_currency($tr['total_harga']) ?>" data-totalHargaSupir="<?= $tr['total_harga_supir'] > 0 ? indo_currency($tr['total_harga_supir']) : 'Lepas Kunci' ?>" data-totalDenda="<?= indo_currency($tr['total_denda']) ?>" data-pajak="<?= indo_currency($tr['pajak']) ?>" data-totalAkhir="<?= indo_currency($tr['total_akhir']) ?>" data-subtotal="<?= indo_currency($tr['total_harga'] + $tr['total_harga_supir'] + $tr['total_denda']) ?>" data-statusRental="<?= $tr['status_rental'] ?>" data-statusPengembalian="<?= $tr['status_pengembalian'] ?>" data-statusPembayaran="<?= $tr['status_pembayaran'] == 0 ? 'Belum Lunas' : 'Lunas'; ?>" title="Lihat Review">
+                        <a href="#" class="btn btn-sm btn-success" id="dtl_trs" data-toggle="modal" data-target="#transaksi-detail" data-avatar="<?= $tr['avatar'] ?>" data-id="<?= $tr['id_transaksi'] ?>" data-nama="<?= $tr['nama'] ?>" data-alamat="<?= $tr['alamat'] ?>" data-noKTP="<?= $tr['no_ktp'] ?>" data-email="<?= $tr['email'] ?>" data-noTelepon="<?= $tr['no_telepon'] ?>" data-merek="<?= $tr['merek'] ?>" data-namaTipe="<?= $tr['nama_tipe'] ?>" data-warna="<?= $tr['warna'] ?>" data-tahun="<?= $tr['tahun'] ?>" data-transmisi="<?= $tr['transmisi'] ?>" data-bbm="<?= $tr['bbm'] ?>" data-jmlhKursi="<?= $tr['jmlh_kursi'] ?>" data-noPlat="<?= $tr['no_plat'] ?>" data-tglRental="<?= indo_date($tr['tgl_rental']) ?>" data-selisih="<?= $selisih ?>" data-tglKembali="<?= indo_date($tr['tgl_kembali']) ?>" data-tglTransaksi="<?= indo_date($tr['transaksi_created']) ?>" data-tglPengembalian="<?= $tr['tgl_pengembalian'] == NULL ? '-' : indo_date($tr['tgl_pengembalian']) ?>" data-alamatPenjemputan="<?= $tr['alamat_penjemputan'] ?>" data-waktuPenjemputan="<?= $tr['waktu_penjemputan'] ?>" data-hargaMobil="<?= indo_currency($tr['harga']) ?>" data-hrgSupir="<?= indo_currency($tr['hrg_supir']) ?>" data-denda="<?= indo_currency($tr['denda']) ?>" data-totalHarga="<?= indo_currency($tr['total_harga']) ?>" data-totalRefund="<?= indo_currency($tr['total_refund']) ?>" data-totalHargaSupir="<?= $tr['total_harga_supir'] > 0 ? indo_currency($tr['total_harga_supir']) : 'Lepas Kunci' ?>" data-totalDenda="<?= indo_currency($tr['total_denda']) ?>" data-pajak="<?= indo_currency($tr['pajak']) ?>" data-totalAkhir="<?= indo_currency($tr['total_akhir']) ?>" data-subtotal="<?= indo_currency($tr['total_harga'] + $tr['total_harga_supir'] + $tr['total_denda']) ?>" data-statusRental="<?= $tr['status_rental'] ?>" data-statusPengembalian="<?= $tr['status_pengembalian'] ?>" data-statusPembayaran="<?= $tr['status_pembayaran'] == 0 ? 'Belum Lunas' : 'Lunas'; ?>" title="Lihat Review">
                           <i class="fa fa-eye"></i>
                         </a>
                       </td>
                       <td>
-                        <a href="<?= base_url('admin/transaksi/cetakStruk/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-secondary" target="_blank" title="Print Transaksi"><i class="fas fa-print"></i></a>
-
                         <?php if ($tr['status_rental'] == "Belum Selesai") : ?>
-                          <a href="<?= base_url('admin/transaksi/cetakStruk/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-danger" target="_blank" title="Batalkan Transaksi" onclick="return confirm('Anda ingin membatalkan ini?')"><i class="fas fa-times-circle"></i></a>
+                          <a href="<?= base_url('admin/transaksi/batalTransaksi/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-danger" title="Batalkan Transaksi" onclick="return confirm('Anda ingin membatalkan transaksi ini?')"><i class="fas fa-times-circle"></i></a>
+                        <?php elseif ($tr['status_rental'] == "Batal" && $tr['bukti_refund'] == Null) : ?>
+                          <a href="<?= base_url('admin/transaksi/uploadRefund/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-success" title="Upload bukti refund"><i class="fas fa-upload"></i></a>
+                        <?php elseif ($tr['status_rental'] == "Batal" && $tr['bukti_refund'] != Null) : ?>
+                          <a href="<?= base_url('admin/transaksi/uploadRefund/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-success" title="Upload bukti refund"><i class="fas fa-upload"></i></a>
                         <?php else : ?>
-                          <a href="<?= base_url('admin/transaksi/cetakStruk/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-danger disabled" target="_blank" title="Batalkan Transaksi"><i class="fas fa-times-circle"></i></a>
+                          <a href="<?= base_url('admin/transaksi/cetakStruk/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-danger disabled" title="Batalkan Transaksi"><i class="fas fa-times-circle"></i></a>
                         <?php endif ?>
-
-                        <a href="<?= base_url('admin/transaksi/updateTransaksi/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-primary" title="Edit Transaksi"><i class="fas fa-edit"></i></a>
+                        <a href="<?= base_url('admin/transaksi/updateStatusPengembalian/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-primary" onclick="return confirm('Anda ingin mengubah status mobil menjadi Belum Kembali?')" title="Update Status Pengembalian Mobil"><i class="fas fa-edit"></i></a>
                         <a href="<?= base_url('admin/transaksi/transaksiSelesai/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-warning" onclick="return confirm('Anda ingin menyelesaikan ini?')" title="Selesaikan Transaksi"><i class="fas fa-clipboard-check"></i></a>
                       </td>
                     </tr>
@@ -115,6 +116,31 @@
   </section>
 </div>
 
+<!-- Modal untuk upload pembayarn -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Bukti Pembayaran</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="<?= base_url('customer/prosesPembayaran') ?>" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="">Upload bukti transfer</label>
+            <input type="hidden" name="id_transaksi" value="<?= $bayar['id_transaksi'] ?>">
+            <input type="file" name="bukti_pembayaran" class="form-control" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-sm btn-success">Kirim</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 <!-- Modal untuk detail transaksi -->
 <div class="modal fade bd-example-modal-lg" id="transaksi-detail">
@@ -122,6 +148,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Detail Transaksi</h5>
+        <a href="" class="btn btn-sm btn-success ml-3" target="_blank" title="Print Transaksi" id="btnPrint"><i class="fas fa-print"></i> Print</a>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -212,6 +239,8 @@
 
         <!-- begin invoice-header -->
         <div class="invoice-header">
+
+
           <div class="invoice-to">
             <address class="m-t-5 m-b-5">Nama : <br><b><span id="nama"></span></b><br>
               Alamat : <br><b><span id="alamat"></span></b><br>
@@ -350,6 +379,27 @@
             </div>
           </div>
           <!-- end invoice-price -->
+          <!-- begin table-responsive -->
+          <div class="table-responsive mt-3">
+            <table class="table table-invoice">
+              <thead>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <span class="text-inverse"><b>Total Refund</b></span><br>
+                    <small>Total biaya yang dikembalikan oleh HRC ketika ada pembatalan transaksi pada hari H atau lebih</small>
+                  </td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-right">
+                    <span id="refund"></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- end table-responsive -->
         </div>
         <!-- end invoice-content -->
       </div>

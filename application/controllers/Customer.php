@@ -391,37 +391,6 @@ class Customer extends CI_Controller
         redirect('transaksi');
     }
 
-    //update transaksi ketika pembatalan di hari h tanggal rental
-    public function batal_hari_h($id_transaksi)
-    {
-        $transaksi    = $this->Transaksi_model->get_transaksi_by_id($id_transaksi);
-
-        $harga_mobil  = $transaksi['harga'];
-        $total_akhir  = $transaksi['total_akhir'];
-
-        $total_refund = $total_akhir - ($harga_mobil / 2);
-        $stengahHarga = $harga_mobil / 2;
-        $pajak        = $stengahHarga * 0.02;
-        $total_akhir  = $stengahHarga + $pajak;
-
-        $data = [
-            "tgl_cancel"            => date('Y/m/d'),
-            "status_rental"         => "Batal",
-            "total_refund"          => $total_refund,
-            "pajak"                 => $pajak,
-            "total_akhir"           => $total_akhir,
-            "updated"               => date('Y-m-d H:i:s'),
-            "updated_by"            => $this->session->userdata('id_user'),
-        ];
-
-        $this->Transaksi_model->update_transaksi($data, $id_transaksi);
-
-        $this->session->set_flashdata('success', '<b>Transaksi berhasil dibatalkan!</b> Biaya refund akan segera diproses oleh admin. Silahkan cek pembayaran.');
-
-        redirect('transaksi');
-    }
-
-
     // download bukti refund
     public function download_bukti_refund($id_transaksi)
     {
@@ -435,8 +404,8 @@ class Customer extends CI_Controller
     {
         check_not_login();
         $data['transaksi'] = $this->Transaksi_model->get_transaksi_by_id($id_transaksi);
-        $data['review'] = $this->Review_model->get_review_by_id_transaksi($id_transaksi); 
-        
+        $data['review'] = $this->Review_model->get_review_by_id_transaksi($id_transaksi);
+
         $this->form_validation->set_rules(
             'review',
             'Review',

@@ -105,6 +105,26 @@ class Review_model extends CI_Model
         $this->db->where('id_review', $id);
         $this->db->delete('review');
     }
+
+    public function get_total_review_jelek()
+    {
+        $this->db->select('mobil.no_plat, SUM(review.status = 0) as jelek');
+        $this->db->from('review');
+        $this->db->join('mobil', 'review.id_mobil = mobil.id_mobil', 'right');
+        $this->db->group_by('mobil.no_plat');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function get_total_review_baik()
+    {
+        $this->db->select('mobil.no_plat, SUM(review.status = 1) as baik');
+        $this->db->from('review');
+        $this->db->join('mobil', 'review.id_mobil = mobil.id_mobil', 'right');
+        $this->db->group_by('mobil.no_plat');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }
     
     /* End of file ModelName.php */

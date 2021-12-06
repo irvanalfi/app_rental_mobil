@@ -235,6 +235,7 @@
                 var totalharga = $(this).data('totalharga');
                 var totalhargasupir = $(this).data('totalhargasupir');
                 var totaldenda = $(this).data('totaldenda');
+                var totalrefund = $(this).data('totalrefund');
                 var pajak = $(this).data('pajak');
                 var totalakhir = $(this).data('totalakhir');
                 var statusrental = $(this).data('statusrental');
@@ -270,6 +271,7 @@
                 $('#totalHarga').text(totalharga);
                 $('#totalHargaSupir').text(totalhargasupir);
                 $('#totalDenda').text(totaldenda);
+                $('#refund').text(totalrefund);
                 $('#pajak').text(pajak);
                 $('#pajakP').text(pajak);
                 $('#subtotal').text(subtotal);
@@ -277,6 +279,7 @@
                 $('#statusRental').text(statusrental);
                 $('#statusPengembalian').text(statuspengembalian);
                 $('#statusPembayaran').text(statuspembayaran);
+                $('#btnPrint').attr("href", "admin/transaksi/cetakStruk/" + id);
             })
         })
 

@@ -112,16 +112,9 @@
 												<?php if ($tr['status_pembayaran'] == '1') : ?>
 													<?php if ($tanggal_hari_ini < $tanggal_rental) : ?>
 														<!-- ketika status pembayaran telah dibayar dan di cancel kurang dari tanggal rental maka uang dikembalikan seluruhnya -->
-														<a href="<?= base_url('customer/transaksi_full_refund/' . $tr['id_transaksi']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin membatalkan transaksi?')">
+														<a href="<?= base_url('customer/transaksi_full_refund/' . $tr['id_transaksi']) ?>" class="btn btn-sm btn-danger">
 															<span class="icon-trash"></span> <span>Batal Rental</span>
 														</a>
-
-													<?php elseif ($tanggal_hari_ini == $tanggal_rental) : ?>
-														<!-- ketika status pembayaran telah dibayar dan di cancel sama dengan tanggal rental maka uang total uang yang dikembalikan adalah total harga - (harga mobil / 2) + total harga supir -->
-														<a href="<?= base_url('customer/batal_hari_h/' . $tr['id_transaksi']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin membatalkan transaksi?')">
-															<span class="icon-trash"></span> <span>Batal Rental</span>
-														</a>
-
 													<?php else : ?>
 														<!-- ketika status pembayaran telah dibayar dan di cancel lebih dari tanggal rental maka, tombol cancel disable dan status rental selesai. -->
 														<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal">

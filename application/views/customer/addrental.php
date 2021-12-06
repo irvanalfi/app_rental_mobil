@@ -301,38 +301,38 @@
 													</div>
 
 													<div class="tab-pane fade" id="pills-review1" role="tabpanel" aria-labelledby="pills-review-tab">
-													<div class="row">
-														<div class="col-md-12">
-															<h3 class="head"><?php echo $jumlahReview?> Reviews</h3>
-															<?php if($jumlahReview != 0 ) : ?>
-																<?php foreach($review as $r) : ?>
-																	<div class="review d-flex">
-																		<div class="user-img" style="background-image: url(<?= base_url() ?>assets/upload/user/avatar/<?php echo $r['avatar']?>)"></div>
-																		<div class="desc">
-																			<h4>
-																				<span class="text-left"><?php echo $r['nama']?></span>
-																				<span class="text-right"><?php echo  date('d F Y, H:i', strtotime($r['review_created'])) ?></span>
-																			</h4>
-																			<p class="star">
-																				<span>
-																					<?php $star = 0?>
-																					<?php while ($star < $r['star']) : ?>
-																						<i class="ion-ios-star"></i>
-																						<?php $star++?>
-																					<?php endwhile?>
-																				</span>
-																			</p>
-																			<p><?php echo $r['review']?></p>
+														<div class="row">
+															<div class="col-md-12">
+																<h3 class="head"><?php echo $jumlahReview ?> Reviews</h3>
+																<?php if ($jumlahReview != 0) : ?>
+																	<?php foreach ($review as $r) : ?>
+																		<div class="review d-flex">
+																			<div class="user-img" style="background-image: url(<?= base_url() ?>assets/upload/user/avatar/<?php echo $r['avatar'] ?>)"></div>
+																			<div class="desc">
+																				<h4>
+																					<span class="text-left"><?php echo $r['nama'] ?></span>
+																					<span class="text-right"><?php echo  date('d F Y, H:i', strtotime($r['review_created'])) ?></span>
+																				</h4>
+																				<p class="star">
+																					<span>
+																						<?php $star = 0 ?>
+																						<?php while ($star < $r['star']) : ?>
+																							<i class="ion-ios-star"></i>
+																							<?php $star++ ?>
+																						<?php endwhile ?>
+																					</span>
+																				</p>
+																				<p><?php echo $r['review'] ?></p>
+																			</div>
 																		</div>
+																	<?php endforeach ?>
+																<?php else : ?>
+																	<div class="review d-flex justify-content-center">
+																		<p>Masih belum ada review</p>
 																	</div>
-																<?php endforeach?>
-															<?php else : ?>
-																<div class="review d-flex justify-content-center">
-																	<p>Masih belum ada review</p>
-																</div>
-															<?php endif?>
+																<?php endif ?>
+															</div>
 														</div>
-													</div>
 													</div>
 												</div>
 											</div>
