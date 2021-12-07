@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2021 at 03:21 AM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.3
+-- Generation Time: Dec 07, 2021 at 04:23 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 7.4.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -126,7 +125,7 @@ CREATE TABLE `mobil` (
 --
 
 INSERT INTO `mobil` (`id_mobil`, `id_tipe`, `merek`, `no_plat`, `warna`, `transmisi`, `jmlh_kursi`, `bagasi`, `bbm`, `tahun`, `km`, `status`, `harga`, `denda`, `gambar`, `detail`, `created`, `updated`, `created_by`, `updated_by`) VALUES
-(6, 10, 'Toyota Camry', 'B 1446 DAG', 'Hitam', 'Manual', '6 Dewasa', '3 Ransel', 'Pertalite', 2015, 21000, 0, 400000, 400000, 'toyota-camry.jpg', 'Harga mobil perhari merupakan harga penyewaan mobil dalam satu hari, sedangkan untuk denda mobil perhari merupakan harga denda perhari yang dibebankan kepada pihak penyewa mobil jika telat mengembalikan mobil sesuai tanggal jatuh tempo pengembalian mobil. Harga mobil akan dikalikan dengan total hari penyewaan mobil, begitu juga dengan denda mobil akan dikalikan dengan total hari telat pengembalian mobil. <br> Sedangakan untuk harga supir perhari merupakan harga yang dibayar untuk supir perharinya yang nantinya akan dikalikan sesuai berapa hari penyewaan supir. Untuk Mobil yang tidak memiiliki Fitur lepas kunci maka wajib menggunakan supir, sedangkan untuk mobil yang memiliki fitur lepas kunci maka bisa memilih menggunakan jasa supir atau tidak.', '2021-09-30 19:20:55', '2021-12-01 20:17:56', '0', '7'),
+(6, 10, 'Toyota Camry', 'B 1446 DAG', 'Hitam', 'Manual', '6 Dewasa', '3 Ransel', 'Pertalite', 2015, 21000, 1, 400000, 400000, 'toyota-camry.jpg', 'Harga mobil perhari merupakan harga penyewaan mobil dalam satu hari, sedangkan untuk denda mobil perhari merupakan harga denda perhari yang dibebankan kepada pihak penyewa mobil jika telat mengembalikan mobil sesuai tanggal jatuh tempo pengembalian mobil. Harga mobil akan dikalikan dengan total hari penyewaan mobil, begitu juga dengan denda mobil akan dikalikan dengan total hari telat pengembalian mobil. <br> Sedangakan untuk harga supir perhari merupakan harga yang dibayar untuk supir perharinya yang nantinya akan dikalikan sesuai berapa hari penyewaan supir. Untuk Mobil yang tidak memiiliki Fitur lepas kunci maka wajib menggunakan supir, sedangkan untuk mobil yang memiliki fitur lepas kunci maka bisa memilih menggunakan jasa supir atau tidak.', '2021-09-30 19:20:55', '2021-12-01 20:17:56', '0', '7'),
 (9, 10, 'Honda City', 'B 1456 DAG', 'Hitam', 'Manual', '7 Dewasa', '3 Ransel', 'Pertamax', 2015, 11860, 1, 450000, 450000, 'honda-city.jpg', 'Harga mobil perhari merupakan harga penyewaan mobil dalam satu hari, sedangkan untuk denda mobil perhari merupakan harga denda perhari yang dibebankan kepada pihak penyewa mobil jika telat mengembalikan mobil sesuai tanggal jatuh tempo pengembalian mobil. Harga mobil akan dikalikan dengan total hari penyewaan mobil, begitu juga dengan denda mobil akan dikalikan dengan total hari telat pengembalian mobil. <br> Sedangakan untuk harga supir perhari merupakan harga yang dibayar untuk supir perharinya yang nantinya akan dikalikan sesuai berapa hari penyewaan supir. Untuk Mobil yang tidak memiiliki Fitur lepas kunci maka wajib menggunakan supir, sedangkan untuk mobil yang memiliki fitur lepas kunci maka bisa memilih menggunakan jasa supir atau tidak.', '2021-09-30 19:20:55', '2021-11-04 22:00:47', '0', 'Joko Santos'),
 (10, 15, 'CRV', 'B 1234 csh', 'Silver', 'Matic', '7 Dewasa', '4 Ransel', 'Pertalite', 2019, 34000, 0, 400000, 400000, 'gallery_used-car-mobil123-honda-cr-v-2_4.jpg', 'Harga mobil perhari merupakan harga penyewaan mobil dalam satu hari, sedangkan untuk denda mobil perhari merupakan harga denda perhari yang dibebankan kepada pihak penyewa mobil jika telat mengembalikan mobil sesuai tanggal jatuh tempo pengembalian mobil. Harga mobil akan dikalikan dengan total hari penyewaan mobil, begitu juga dengan denda mobil akan dikalikan dengan total hari telat pengembalian mobil. <br> Sedangakan untuk harga supir perhari merupakan harga yang dibayar untuk supir perharinya yang nantinya akan dikalikan sesuai berapa hari penyewaan supir. Untuk Mobil yang tidak memiiliki Fitur lepas kunci maka wajib menggunakan supir, sedangkan untuk mobil yang memiliki fitur lepas kunci maka bisa memilih menggunakan jasa supir atau tidak.', '2021-09-30 19:20:55', '2021-11-04 22:19:14', '0', 'Joko Santos'),
 (13, 15, 'Toyota Avanza', 'B 2245 DAM', 'Hitam', 'Manual', '7 Dewasa', '4 Ransel', 'Pertamax', 2015, 25640, 1, 350000, 350000, 'avanza-hitam.jpg', 'Harga mobil perhari merupakan harga penyewaan mobil dalam satu hari, sedangkan untuk denda mobil perhari merupakan harga denda perhari yang dibebankan kepada pihak penyewa mobil jika telat mengembalikan mobil sesuai tanggal jatuh tempo pengembalian mobil. Harga mobil akan dikalikan dengan total hari penyewaan mobil, begitu juga dengan denda mobil akan dikalikan dengan total hari telat pengembalian mobil. <br> Sedangakan untuk harga supir perhari merupakan harga yang dibayar untuk supir perharinya yang nantinya akan dikalikan sesuai berapa hari penyewaan supir. Untuk Mobil yang tidak memiiliki Fitur lepas kunci maka wajib menggunakan supir, sedangkan untuk mobil yang memiliki fitur lepas kunci maka bisa memilih menggunakan jasa supir atau tidak.', '2021-09-30 19:20:55', NULL, '0', '0'),
@@ -159,7 +158,8 @@ CREATE TABLE `review` (
 --
 
 INSERT INTO `review` (`id_review`, `id_user`, `id_mobil`, `id_transaksi`, `review`, `star`, `status`, `created`, `updated`, `created_by`, `updated_by`) VALUES
-(4, 4, 18, 34, 'mobilnya kenceng banget, supirnya asik', 5, '1', '2021-11-29 16:32:31', '2021-12-01 21:28:51', '4', '7');
+(4, 4, 18, 34, 'mobilnya kenceng banget, supirnya asik', 5, '1', '2021-11-29 16:32:31', '2021-12-01 21:28:51', '4', '7'),
+(5, 13, 6, 40, 'ksdjfksjdkj', 5, '0', '2021-12-07 10:11:56', NULL, '13', NULL);
 
 -- --------------------------------------------------------
 
@@ -234,7 +234,7 @@ INSERT INTO `transaksi` (`id_transaksi`, `id_user`, `id_mobil`, `tgl_rental`, `w
 (33, 4, 9, '2021/12/1', '7:00am', '2021/12/3', 'Kencono, Sragi, Songgon, Banyuwangi', 1350000, 27000, 0, 0, 1377000, NULL, 'Kembali', 'Gagal', NULL, 0, NULL, NULL, 'Belum Selesai', NULL, 0, '2021-11-29 11:43:56', '2021-12-01 20:10:27', '4', '4'),
 (34, 4, 18, '2021/12/2', '1:00am', '2021/12/3', 'Kencono, Sragi, Songgon, Banyuwangi', 600000, 12000, 600000, 0, 1212000, '2021-12-03', 'Kembali', 'Selesai', 'Struk-291121-e3d305a825.jpg', 1, 'M. Irvan Alfi Hidayat', NULL, 'Belum Selesai', NULL, 0, '2021-11-30 11:49:56', NULL, '4', NULL),
 (39, 13, 6, '2021/12/9', '1:00am', '2021/12/13', 'Jl. Tirto Utomo Gg.8 No.2 , Kec. Dau, Malang, Jawa Timur,', 2000000, 40000, 1500000, 0, 0, NULL, 'Kembali', 'Batal', 'Struk-291121-e3d305a825.jpg', 1, 'Arif', '2021/12/05', 'Belum Selesai', NULL, 3540000, '2021-12-05 21:24:17', '2021-12-05 22:45:35', '13', '13'),
-(40, 13, 6, '2021/12/20', '1:00am', '2021/12/23', 'Jl. Tirto Utomo Gg.8 No.2 , Kec. Dau, Malang, Jawa Timur,', 1200000, 24000, 900000, 0, 2124000, NULL, 'Belum Kembali', 'Belum Selesai', NULL, 0, NULL, NULL, 'Belum Selesai', NULL, 0, '2021-12-05 22:56:01', NULL, '13', NULL),
+(40, 13, 6, '2021/12/03', '1:00am', '2021/12/06', 'Jl. Tirto Utomo Gg.8 No.2 , Kec. Dau, Malang, Jawa Timur,', 1200000, 24000, 900000, 400000, 2524000, '2021-12-07', 'Kembali', 'Selesai', 'Struk-291121-e3d305a825.jpg', 1, 'Arif', NULL, 'Belum Selesai', NULL, 0, '2021-12-05 22:56:01', '2021-12-07 10:00:42', '13', '11'),
 (41, 13, 6, '2021/12/8', '1:00am', '2021/12/10', 'Jl. Tirto Utomo Gg.8 No.2 , Kec. Dau, Malang, Jawa Timur,', 1200000, 24000, 900000, 0, 2124000, NULL, 'Belum Diambil', 'Belum Selesai', NULL, 0, NULL, NULL, 'Belum Selesai', NULL, 0, '2021-12-05 23:08:38', NULL, '13', NULL);
 
 -- --------------------------------------------------------
@@ -272,20 +272,6 @@ INSERT INTO `user` (`id_user`, `nama`, `username`, `email`, `alamat`, `gender`, 
 (11, 'M. Irvan Alfi Hidayat', 'irvan', 'irvanhidayat0623@gmail.com', 'Kencono, Sragi, Songgon, Banyuwangi', 'L', '082244922833', '351019230698', '2467d3744600858cc9026d5ac6005305', 'avatar-291121-bf07d96d01.jpg', 'ktp-231121-a97489eabb.jpeg', 1, '2021-11-29 11:27:18', NULL, '11', NULL),
 (13, 'Oktaviano Andy Suryadi', 'oktavianoandy', 'dani@gmail.com', 'Jl. Tirto Utomo Gg.8 No.2 , Kec. Dau, Malang, Jawa Timur,', 'L', '085766566560', '3508040210990002', 'e5bc62b374076985e23e4f588466ae9c', 'avatar-011221-3abe4082b7.jpg', 'ktp-011221-b90f66cc72.png', 2, '2021-12-01 20:30:02', NULL, 'oktavianoan', NULL),
 (14, 'Dany Subeni', 'danis', 'danisubeni@gmail.com', 'Jl. Tirto Utomo Gg.8 No.2 , Kec. Dau, Malang, Jawa Timur,', 'L', '085766566560', '3508040210990009', 'e5bc62b374076985e23e4f588466ae9c', 'avatar-011221-61dee89961.jpg', 'ktp-011221-67c99ca313.png', 2, '2021-12-01 21:32:07', NULL, '7', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_token`
---
-
-CREATE TABLE `user_token` (
-  `id_token` int(11) NOT NULL,
-  `token` text NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `created` varchar(30) NOT NULL,
-  `created_by` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -342,13 +328,6 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- Indexes for table `user_token`
---
-ALTER TABLE `user_token`
-  ADD PRIMARY KEY (`id_token`),
-  ADD KEY `id_user` (`id_user`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -374,7 +353,7 @@ ALTER TABLE `mobil`
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `id_review` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_review` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tipe`
@@ -393,12 +372,6 @@ ALTER TABLE `transaksi`
 --
 ALTER TABLE `user`
   MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- AUTO_INCREMENT for table `user_token`
---
-ALTER TABLE `user_token`
-  MODIFY `id_token` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -436,12 +409,6 @@ ALTER TABLE `review`
 ALTER TABLE `transaksi`
   ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_mobil`) REFERENCES `mobil` (`id_mobil`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `user_token`
---
-ALTER TABLE `user_token`
-  ADD CONSTRAINT `user_token_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

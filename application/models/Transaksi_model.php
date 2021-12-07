@@ -14,7 +14,7 @@ class Transaksi_model extends CI_Model
         $this->db->join('user', 'user.id_user = transaksi.id_user');
         $this->db->join('tipe', 'tipe.id_tipe = mobil.id_tipe');
         $this->db->join('fitur', 'fitur.id_mobil = mobil.id_mobil');
-        $this->db->order_by('id_transaksi', 'asc');
+        $this->db->order_by('id_transaksi', 'desc');
         $query = $this->db->get();
         return $query->result_array();
     }

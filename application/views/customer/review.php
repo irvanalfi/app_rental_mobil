@@ -1,12 +1,9 @@
-<section class="hero-wrap hero-wrap-2 js-fullheight"
-	style="background-image: url('<?= base_url() ?>assets/assets_customer/images/bg_3.jpg');"
-	data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('<?= base_url() ?>assets/assets_customer/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
 	<div class="overlay"></div>
 	<div class="container">
 		<div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
 			<div class="col-md-9 ftco-animate">
-				<p class="breadcrumbs"><span><?= $this->uri->segment(1); ?> <i
-							class="ion-ios-arrow-forward"></i><span><?= $this->uri->segment(2); ?></span></p>
+				<p class="breadcrumbs"><span><?= $this->uri->segment(1); ?> <i class="ion-ios-arrow-forward"></i><span><?= $this->uri->segment(2); ?></span></p>
 				<h1 class="mb-3 bread">Review</h1>
 			</div>
 		</div>
@@ -17,26 +14,22 @@
 	<div class="container">
 		<div class="row d-flex mb-5 contact-info">
 			<div class="col-md-12 block-9 mb-md-5">
-				<form action="<?= base_url('transaksi/review/') . $transaksi['id_transaksi'] ?>"
-					class="bg-light p-5 contact-form" method="get">
+				<form action="<?= base_url('transaksi/review/') . $transaksi['id_transaksi'] ?>" class="bg-light p-5 contact-form" method="post">
 					<center>
 						<h5 class="mb-5">Bagaimana pengalaman Anda menggunakan jasa kami?</h5>
-						
-                        <?php if($this->session->flashdata('failed')!= null) : ?>
-						<div class="row">
-							<div class="col-md-12 mx-0" id="flash"
-								data-flash="<?= $this->session->flashdata('failed'); ?>">
-								<div class="alert alert-danger alert-dismissible fade show" role="alert">
-									<?php echo $this->session->flashdata('failed')?>
-									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
+
+						<?php if ($this->session->flashdata('failed') != null) : ?>
+							<div class="row">
+								<div class="col-md-12 mx-0" id="flash" data-flash="<?= $this->session->flashdata('failed'); ?>">
+									<div class="alert alert-danger alert-dismissible fade show" role="alert">
+										<?php echo $this->session->flashdata('failed') ?>
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
 								</div>
 							</div>
-						</div>
-						<?php endif?>
-
-						<span class="text-danger"><?= form_error('review'); ?></span>
+						<?php endif ?>
 					</center>
 					<style>
 						@import url(https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
@@ -120,7 +113,6 @@
 						h6 {
 							margin-top: 3px
 						}
-
 					</style>
 
 					<div class="container mt-4">
@@ -129,7 +121,7 @@
 								<div class="card">
 									<div class="card-body text-center mt-3"><span class="myratings">5</span>
 										<h6 class="mt-1">Nilai kami</h6>
-										<div class="d-flex justify-content-center">	
+										<div class="d-flex justify-content-center">
 											<fieldset class="rating">
 												<input type="radio" id="star5" name="star" value="5" checked />
 												<label class="full" for="star5" title="Awesome - 5 stars"></label>
@@ -148,20 +140,17 @@
 							</div>
 							<div class="col-md-8">
 								<div class="form-group">
-									<input type="hidden" class="form-control" value="<?= $transaksi['id_mobil']?>"
-										name="id_mobil">
-									<input type="hidden" class="form-control" value="<?= $transaksi['id_transaksi']?>"
-										name="id_transaksi">
-									<textarea name="review" id="" rows="10" class="form-control"
-										placeholder="Ceritakan pengalaman Anda"></textarea>
+									<input type="hidden" class="form-control" value="<?= $transaksi['id_mobil'] ?>" name="id_mobil">
+									<input type="hidden" class="form-control" value="<?= $transaksi['id_transaksi'] ?>" name="id_transaksi">
+									<textarea name="review" id="" rows="10" class="form-control" placeholder="Ceritakan pengalaman Anda"></textarea>
+									<span class="text-danger"><?= form_error('review'); ?></span>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-12 col-sm-3 d-flex justify-content-end">
 								<div class="form-group">
-									<button type="submit" value="Kirim Review" class="btn btn-primary"
-										style="width: 205px; height: 50px;"> Kirim Review </button>
+									<button type="submit" value="Kirim Review" class="btn btn-primary" style="width: 205px; height: 50px;"> Kirim Review </button>
 								</div>
 							</div>
 						</div>
@@ -176,9 +165,9 @@
 <script src="<?= base_url() ?>assets/assets_customer/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-	$(document).ready(function () {
+	$(document).ready(function() {
 
-		$("input[type='radio']").click(function () {
+		$("input[type='radio']").click(function() {
 			var sim = $("input[type='radio']:checked").val();
 			//alert(sim);
 			if (sim < 3) {
@@ -190,5 +179,4 @@
 			}
 		});
 	});
-
 </script>

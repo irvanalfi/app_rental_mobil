@@ -37,150 +37,7 @@ class Transaksi extends CI_Controller
     $this->template->load('templateAdmin', 'admin/form_pilih_mobil', $data);
   }
 
-  // tampilan halaman form tambah rental
-  public function addRental($id)
-  {
-    check_not_login(); /*pengecekan staus login */
-    $id_user              = $this->session->userdata('id_user');
-    $data['detail']       = $this->Mobil_model->get_mobil_by_id($id);
-    $data['user']         = $this->User_model->get_user_by_id($id_user);
-    $data['transaksi']    = $this->Transaksi_model->get_transaksi_by_id_mobil_saja($id);
-    $data['review']       = $this->Review_model->get_review_by_id_mobil($id);
-    $data['jumlahReview'] = $this->Review_model->get_jumlah_review_approved_by_id_mobil($id);
-
-    // form validation 
-    $this->form_validation->set_rules(
-      'alamat_penjemputan',
-      'Alamat penjemputan',
-      'required',
-      array(
-        'required' => '* %s kamu masih kosong loh !'
-      )
-    );
-    $this->form_validation->set_rules(
-      'waktu_penjemputan',
-      'Waktu penjemputan',
-      'required',
-      array(
-        'required' => '* %s kamu masih kosong loh !'
-      )
-    );
-    $this->form_validation->set_rules(
-      'tgl_rental',
-      'Tanggal rental',
-      'required',
-      array(
-        'required' => '* %s kamu masih kosong loh !'
-      )
-    );
-    $this->form_validation->set_rules(
-      'tgl_kembali',
-      'Tanggal pengembalian',
-      'required',
-      array(
-        'required' => '* %s kamu masih kosong loh !'
-      )
-    );
-
-    if ($this->form_validation->run() == FALSE) {
-      // jika gagal menjalankan form validation 
-      $this->template->load('templateCustomer', 'customer/addrental', $data);
-    } else {
-      // jika berhasil langsung masuk ke function prosesRental untuk input data ke data base transaksi
-      $this->prosesRental();
-    }
-  }
-
-  public function prosesRental()
-  {
-    check_not_login();
-
-    $harga                = $this->input->post('hrg_hari', true);
-    $hrg_supir            = $this->input->post('hrg_supir', true);
-    $id_mobil             = $this->input->post('id_mobil', true);
-
-    // mencari selisih dari tanggal rental dan tanggal kembali 
-    $tanggal_rental       = strtotime($this->input->post('tgl_rental', true));
-    $tanggal_kembali      = strtotime($this->input->post('tgl_kembali', true));
-    $selisih              = abs($tanggal_rental - $tanggal_kembali) / (60 * 60 * 24) + 1;
-    // melakukan perhitungan untuk pajak dan total akhir
-    $total_harga          = $selisih *  $harga;
-    $pajak                = $total_harga * 0.02;
-    $total_harga_supir    = $hrg_supir * $selisih;
-    $total_akhir          = $total_harga_supir + $total_harga + $pajak;
-    // perubahan format tanggal
-    $tanggal_rental_f     = $this->input->post('tgl_rental', true);
-    $tanggal_kembali_f    = $this->input->post('tgl_kembali', true);
-
-
-    $data = [
-      "id_user"               => $this->session->userdata('id_user'),
-      "id_mobil"              => $id_mobil,
-      "tgl_rental"            => $tanggal_rental_f,
-      "tgl_kembali"           => $tanggal_kembali_f,
-      "alamat_penjemputan"    => $this->input->post('alamat_penjemputan', true),
-      "waktu_penjemputan"     => $this->input->post('waktu_penjemputan', true),
-      "total_harga"           => $total_harga,
-      "pajak"                 => $pajak,
-      "total_harga_supir"     => $total_harga_supir,
-      "total_denda"           => 0,
-      "total_refund"          => 0,
-      "total_akhir"           => $total_akhir,
-      "tgl_pengembalian"      => null,
-      "status_pengembalian"   => "Belum Diambil",
-      "status_rental"         => "Belum Selesai",
-      "tgl_cancel"            => null,
-      "status_refund"         => "Belum Selesai",
-      "total_refund"          => 0,
-      "bukti_refund"          => null,
-      "bukti_pembayaran"      => null,
-      "status_pembayaran"     => 0,
-      "confirm_by"            => null,
-      "created"               => date('Y-m-d H:i:s'),
-      "created_by"            => $this->session->userdata('id_user'),
-    ];
-
-    $status_booking = $this->cek_ketersediaan_rental($tanggal_rental_f, $tanggal_kembali_f, $id_mobil);
-
-    if ($status_booking != "terbooking") {
-      // input data ke tabel transaksi 
-      $this->Transaksi_model->add_transaksi($data);
-      if ($this->db->affected_rows() > 0) {
-        // alert pemberitahuan berhasil melakukan penginputan 
-        $id_mobil       = $this->input->post('id_mobil', true);
-        $this->session->set_flashdata('success', '<b>Proses transaksi berhasil!</b> Silahkan melakukan pembayaran dan
-                  unggah bukti pembayaran.');
-        redirect('transaksi');
-      }
-      echo "<script>window.location='" . site_url('customer/addRental/' . $id_mobil) . "'</script>";
-    }
-  }
-
-  // cek ketersediaan tanggal perentalan
-  public function cek_ketersediaan_rental($tgl_rental, $tgl_kembali, $id_mobil)
-  {
-    $status = "tidak terbooking";
-
-    $tgl_booking = array();
-    while ($tgl_rental <= $tgl_kembali) {
-      array_push($tgl_booking, $tgl_rental);
-      $tgl_rental = date('Y/m/d', strtotime('+1 days', strtotime($tgl_rental)));
-    }
-    $tgl_terbooking = $this->Transaksi_model->get_transaksi_by_id_mobil_saja($id_mobil);
-
-    foreach ($tgl_terbooking as $tt) {
-      foreach ($tgl_booking as $key => $tb) {
-        if ($tb == $tt['tgl_rental'] || $tb == $tt['tgl_kembali']) {
-          $status = "terbooking";
-          $this->session->set_flashdata('failed', 'Tanggal Sudah terbooking!');
-          redirect('customer/addRental/' . $id_mobil);
-        }
-      }
-    }
-
-    return $status;
-  }
-
+  // masuh halaman cek pembayaran
   public function cekPembayaran($id_transaksi)
   {
     $data['transaksi'] = $this->Transaksi_model->get_transaksi_by_id($id_transaksi);
@@ -199,7 +56,7 @@ class Transaksi extends CI_Controller
       $this->cekPembayaranProses($id_transaksi);
     }
   }
-
+  // proses ubah status pembayaran 
   public function cekPembayaranProses($id_transaksi)
   {
     $data = array(
@@ -231,38 +88,48 @@ class Transaksi extends CI_Controller
     $this->load->view('admin/cetak_invoice', $data);
   }
 
-  public function transaksiSelesai()
+  public function transaksiSelesai($id_transaksi)
   {
-    $id                 = $this->input->post('id_rental');
-    $id_mobil           = $this->input->post('id_mobil');
-    $tgl_pengembalian   = $this->input->post('tgl_pengembalian');
-    $tgl_kembali        = $this->input->post('tgl_kembali');
-    $denda              = $this->input->post('denda');
+    $transaksi = $this->Transaksi_model->get_transaksi_by_id($id_transaksi);
+    $id_mobil           = $transaksi['id_mobil'];
+    $tgl_pengembalian   = date('Y/m/d');
+    $tgl_kembali        = $transaksi['tgl_kembali'];
+    $denda              = $transaksi['denda'];
 
-    $x                  = strtotime($tgl_pengembalian);
-    $y                  = strtotime($tgl_kembali);
-    $selisih            = abs($x - $y) / (60 * 60 * 24);
-    $total_denda        = $selisih * $denda;
+    if ($tgl_pengembalian > $tgl_kembali) {
+      $x                  = strtotime($tgl_pengembalian);
+      $y                  = strtotime($tgl_kembali);
+      $selisih            = abs($x - $y) / (60 * 60 * 24);
+      $total_denda        = $selisih * $denda;
+    } else {
+      $total_denda        = 0;
+      $selisih            = 0;
+    }
+    $total_akhir          = $transaksi['total_akhir'] + $total_denda;
 
     $data = array(
       'tgl_pengembalian'    => $tgl_pengembalian,
       'status_rental'       => 'Selesai',
       'status_pengembalian' => 'Kembali',
-      'total_denda'         => $total_denda
+      'total_denda'         => $total_denda,
+      'total_akhir'         => $total_akhir,
+      "updated"             => date('Y-m-d H:i:s'),
+      'updated_by'          => $this->session->userdata('id_user')
     );
 
-    $data2 = array('status' => 1);
-    $where  = array('id_rental' => $id);
-    $where2 = array('id_mobil' => $id_mobil);
+    $mobil = [
+      'status'              => 1
+    ];
 
-    $this->rental_model->update_data('transaksi', $data, $where);
-    $this->rental_model->update_data('mobil', $data2, $where2);
-    $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-    Transaksi berhasil diupdate
-    <button type="button" class="close" data-dismiss="alert" aria-label="close">
-      <span aria-hidden="true">&times;</span>
-    </button></div>');
-    redirect('admin/transaksi');
+    $this->Transaksi_model->update_transaksi($data, $id_transaksi);
+    $this->Mobil_model->update_mobil($mobil, $id_mobil);
+    if ($this->db->affected_rows() > 0) {
+      $this->session->set_flashdata('success', '<b>Transaksi telah diselesaikan!</b> Silahkan cek kembali data Anda.');
+      redirect('admin/transaksi');
+    } else {
+      $this->session->set_flashdata('failed', '<b>Transaksi gagal di selesaikan!</b> Silahkan cek kembali data Anda.');
+      redirect('admin/transaksi');
+    }
   }
 
   public function batal_transaksi($id)

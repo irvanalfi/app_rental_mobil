@@ -93,13 +93,13 @@
                       </td>
                       <td>
                         <a href="<?= base_url('admin/transaksi/cetakStruk/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-secondary" target="_blank" title="Print Transaksi"><i class="fas fa-print"></i></a>
-                        
-                        <?php if($tr['status_rental'] == "Belum Selesai") :?>
+
+                        <?php if ($tr['status_rental'] == "Belum Selesai") : ?>
                           <a href="<?= base_url('admin/transaksi/cetakStruk/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-danger" target="_blank" title="Batalkan Transaksi" onclick="return confirm('Anda ingin membatalkan ini?')"><i class="fas fa-times-circle"></i></a>
-                        <?php else :?>
+                        <?php else : ?>
                           <a href="<?= base_url('admin/transaksi/cetakStruk/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-danger disabled" target="_blank" title="Batalkan Transaksi"><i class="fas fa-times-circle"></i></a>
-                        <?php endif?>
-                        
+                        <?php endif ?>
+
                         <a href="<?= base_url('admin/transaksi/updateTransaksi/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-primary" title="Edit Transaksi"><i class="fas fa-edit"></i></a>
                         <a href="<?= base_url('admin/transaksi/transaksiSelesai/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-warning" onclick="return confirm('Anda ingin menyelesaikan ini?')" title="Selesaikan Transaksi"><i class="fas fa-clipboard-check"></i></a>
                       </td>

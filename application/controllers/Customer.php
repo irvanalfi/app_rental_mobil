@@ -215,21 +215,20 @@ class Customer extends CI_Controller
                 }
                 echo "<script>window.location='" . site_url('customer/addRental/' . $id_mobil) . "'</script>";
             }
-        }else{
+        } else {
             $this->session->set_flashdata('failed', 'Tidak bisa booking hari ini, pilih tanggal lainya!');
             redirect('customer/addRental/' . $id_mobil);
         }
-        
     }
 
     // cek ketersediaan tanggal perentalan
     public function cek_ketersediaan_rental($tgl_rental, $tgl_kembali, $id_mobil)
     {
         $status = "tidak terbooking";
-        
+
         $tgl_rental     = date('Y/m/d', strtotime($tgl_rental));
         $tgl_kembali    = date('Y/m/d', strtotime($tgl_kembali));
-        
+
         echo $tgl_rental . '<br>';
         echo $tgl_kembali . '<br>';
 
@@ -238,7 +237,7 @@ class Customer extends CI_Controller
             array_push($tgl_booking, $tgl_rental);
             $tgl_rental = date('Y/m/d', strtotime('+1 days', strtotime($tgl_rental)));
         }
-        
+
 
         $tgl_terbooking = $this->Transaksi_model->get_transaksi_by_id_mobil_saja($id_mobil);
 
