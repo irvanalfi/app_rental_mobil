@@ -85,7 +85,8 @@ class Transaksi_model extends CI_Model
         $this->db->join('user', 'user.id_user = transaksi.id_user');
         $this->db->join('tipe', 'tipe.id_tipe = mobil.id_tipe');
         $this->db->where('transaksi.id_mobil', $id_mobil);
-        $this->db->where('transaksi.status_pengembalian', "Belum diambil");
+        $this->db->where('transaksi.status_pengembalian', "Belum Diambil");
+        $this->db->or_where('transaksi.status_pengembalian', "Belum Kembali");
         $this->db->order_by('tgl_rental', 'asc');
         $query = $this->db->get();
         return $query->result_array();
@@ -176,6 +177,12 @@ class Transaksi_model extends CI_Model
 
         $this->db->where('id_transaksi', $id_transaksi);
         $this->db->update('transaksi', $data);
+    }
+
+    public function delete_transaksi($id_transaksi)
+    {
+        $this->db->where('id_transaksi', $id_transaksi);
+        $this->db->delete('transaksi');
     }
 }
     

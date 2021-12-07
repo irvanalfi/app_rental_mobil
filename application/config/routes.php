@@ -67,6 +67,10 @@ $route['transaksi/prosesPembayaran']    = 'Customer/prosesPembayaran';
 $route['transaksi/review/(:num)']       = 'Customer/halamanReview/$1';
 
 $route['admin/password']    = 'admin/user/ubah_password';
+$route['admin/transaksi/customer']    = 'admin/transaksi/pilihCustomer';
+$route['admin/transaksi/mobil/(:num)']       = 'admin/transaksi/pilihMobil/$1';
+$route['admin/transaksi/tambah/(:num)/(:num)']       = 'admin/transaksi/addTransaksi/$1/$1';
+
 
 $route['password/lupa']     = 'auth/lupa_password';
 $route['password/reset']    = 'auth/check_token';

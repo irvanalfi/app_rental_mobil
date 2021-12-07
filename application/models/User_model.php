@@ -19,6 +19,12 @@ class User_model extends CI_Model
         return $this->db->get_where('user', ['id_user' => $id])->row_array();
     }
 
+    //menampilkan user customer
+    public function get_user_customer()
+    {
+        return $this->db->get_where('user', ['role' => 2])->result_array();
+    }
+
     //menampilkan user berdasarkan email
     public function get_user_by_email($email)
     {

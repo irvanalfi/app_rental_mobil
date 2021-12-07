@@ -171,7 +171,7 @@
                                                 <div class="desc">
                                                     <h4>
                                                         <span class="text-left"><?php echo $r['nama']?></span>
-                                                        <span class="text-right"><?php echo $r['created']?></span>
+                                                        <span class="text-right"><?php echo  date('d F Y, H:i', strtotime($r['review_created'])) ?></span>
                                                     </h4>
                                                     <p class="star">
                                                         <span>

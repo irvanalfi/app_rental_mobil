@@ -30,6 +30,9 @@
           <button type="submit" class="btn btn-sm btn-primary px-5">Simpan</button>
         </form>
       </center>
+      <div class="card-footer">
+        <a href="<?php echo base_url('admin/transaksi')?>" class="btn btn-secondary">Kembali</a>
+      </div>
     </div>
   </section>
 </div>

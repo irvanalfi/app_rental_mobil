@@ -308,7 +308,7 @@
         <div class="invoice-note">
           * Pastikan melunasi pembayaran sebelum tanggal rental<br>
           * Transaksi akan gagal ketika pembayaran belum dilakukan hingga taggal rental<br>
-          * Apabila mengbatalkan transaksi yang sudah dibayar setelah h+1 maka segera hubungi admin
+          * Apabila mengbatalkan transaksi yang sudah dibayar setelah sebelum atau h+1 maka segera hubungi admin
         </div>
         <!-- end invoice-note -->
         <!-- begin invoice-footer -->

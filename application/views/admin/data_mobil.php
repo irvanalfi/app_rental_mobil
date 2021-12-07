@@ -47,6 +47,7 @@
                     <th>Tipe</th>
                     <th>Tahun</th>
                     <th>No.Plat</th>
+                    <th>Status</th>
                     <th width="100px">Aksi</th>
                   </tr>
                 </thead>
@@ -60,6 +61,13 @@
                       <td><?= $mb['nama_tipe']; ?></td>
                       <td><?= $mb['tahun']; ?></td>
                       <td><?= $mb['no_plat']; ?></td>
+                      <td>
+                        <?php if ($mb['status'] == 1) : ?>
+                          <div class="badge badge-success">Tersedia</div>
+                        <?php else : ?>
+                          <div class="badge badge-danger">Tidak tersedia</div>
+                        <?php endif?>
+                      </td>
                       <td class="align-middle">
                         <a href="<?= base_url('admin/mobil/detail_mobil/') . $mb['id_mobil']; ?>" class="btn btn-sm btn-success" title="Lihat Mobil"><i class="fas fa-eye"></i></a>
                         <a href="<?= base_url('admin/mobil/update_mobil/') . $mb['id_mobil']; ?>" class="btn btn-sm btn-primary" title="Edit Mobil"><i class="fas fa-edit"></i></a>

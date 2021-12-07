@@ -48,7 +48,7 @@ class Review_model extends CI_Model
     //menampilkan review berdasarkan id_mobil
     public function get_review_by_id_mobil($id)
     {
-        $this->db->select('*');
+        $this->db->select('*, review.created as review_created');
         $this->db->from('review');
         $this->db->join('mobil', 'mobil.id_mobil = review.id_mobil');
         $this->db->join('user', 'user.id_user = review.id_user');

@@ -157,6 +157,8 @@ class Customer extends CI_Controller
         $hrg_supir            = $this->input->post('hrg_supir', true);
         $id_mobil             = $this->input->post('id_mobil', true);
 
+        $tanggal_hari_ini     = strtotime(date('Y/n/j'));
+
         // mencari selisih dari tanggal rental dan tanggal kembali 
         $tanggal_rental       = strtotime($this->input->post('tgl_rental', true));
         $tanggal_kembali      = strtotime($this->input->post('tgl_kembali', true));
@@ -200,35 +202,51 @@ class Customer extends CI_Controller
 
         $status_booking = $this->cek_ketersediaan_rental($tanggal_rental_f, $tanggal_kembali_f, $id_mobil);
 
-        if ($status_booking != "terbooking") {
-            // input data ke tabel transaksi 
-            $this->Transaksi_model->add_transaksi($data);
-            if ($this->db->affected_rows() > 0) {
-                // alert pemberitahuan berhasil melakukan penginputan 
-                $id_mobil       = $this->input->post('id_mobil', true);
-                $this->session->set_flashdata('success', '<b>Proses transaksi berhasil!</b> Silahkan melakukan pembayaran dan
-                unggah bukti pembayaran.');
-                redirect('transaksi');
+        if ($tanggal_hari_ini != $tanggal_rental) {
+            if ($status_booking != "terbooking") {
+                // input data ke tabel transaksi 
+                $this->Transaksi_model->add_transaksi($data);
+                if ($this->db->affected_rows() > 0) {
+                    // alert pemberitahuan berhasil melakukan penginputan 
+                    $id_mobil       = $this->input->post('id_mobil', true);
+                    $this->session->set_flashdata('success', '<b>Proses transaksi berhasil!</b> Silahkan melakukan pembayaran dan
+                    unggah bukti pembayaran.');
+                    redirect('transaksi');
+                }
+                echo "<script>window.location='" . site_url('customer/addRental/' . $id_mobil) . "'</script>";
             }
-            echo "<script>window.location='" . site_url('customer/addRental/' . $id_mobil) . "'</script>";
+        }else{
+            $this->session->set_flashdata('failed', 'Tidak bisa booking hari ini, pilih tanggal lainya!');
+            redirect('customer/addRental/' . $id_mobil);
         }
+        
     }
 
     // cek ketersediaan tanggal perentalan
     public function cek_ketersediaan_rental($tgl_rental, $tgl_kembali, $id_mobil)
     {
         $status = "tidak terbooking";
+        
+        $tgl_rental     = date('Y/m/d', strtotime($tgl_rental));
+        $tgl_kembali    = date('Y/m/d', strtotime($tgl_kembali));
+        
+        echo $tgl_rental . '<br>';
+        echo $tgl_kembali . '<br>';
 
         $tgl_booking = array();
         while ($tgl_rental <= $tgl_kembali) {
             array_push($tgl_booking, $tgl_rental);
             $tgl_rental = date('Y/m/d', strtotime('+1 days', strtotime($tgl_rental)));
         }
+        
+
         $tgl_terbooking = $this->Transaksi_model->get_transaksi_by_id_mobil_saja($id_mobil);
 
         foreach ($tgl_terbooking as $tt) {
+            $tgl_rental_terbooking = date('Y/m/d', strtotime($tt['tgl_rental']));
+            $tgl_kembali_terbooking = date('Y/m/d', strtotime($tt['tgl_kembali']));
             foreach ($tgl_booking as $key => $tb) {
-                if ($tb == $tt['tgl_rental'] || $tb == $tt['tgl_kembali']) {
+                if ($tb == $tgl_rental_terbooking || $tb == $tgl_kembali_terbooking) {
                     $status = "terbooking";
                     $this->session->set_flashdata('failed', 'Tanggal Sudah terbooking!');
                     redirect('customer/addRental/' . $id_mobil);
@@ -300,7 +318,7 @@ class Customer extends CI_Controller
     // pembatalan transaksi 
     public function delete_transaksi($id_transaksi)
     {
-        $delete = $this->Transaksi_model->delete_transaksi($id_transaksi);
+        $this->Transaksi_model->delete_transaksi($id_transaksi);
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('success', '<b>Transaksi berhasil dihapus!</b> Terimakasih :)');
             redirect('transaksi');

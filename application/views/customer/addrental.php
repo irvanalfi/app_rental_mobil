@@ -28,7 +28,7 @@
 							<?php if ($this->session->flashdata('failed') != null) : ?>
 								<div class="row">
 									<div class="col-md-12 mx-0" id="flash" data-flash="<?= $this->session->flashdata('failed'); ?>">
-										<div class="alert alert-danger alert-dismissible fade show" role="alert">
+										<div class="alert alert-danger alert-dismissible fade show" role="alert" id="alert1">
 											<strong>Transaksi Gagal</strong> <?php echo $this->session->flashdata('failed') ?>
 											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 												<span aria-hidden="true">&times;</span>
@@ -311,7 +311,7 @@
 																		<div class="desc">
 																			<h4>
 																				<span class="text-left"><?php echo $r['nama']?></span>
-																				<span class="text-right"><?php echo $r['created']?></span>
+																				<span class="text-right"><?php echo  date('d F Y, H:i', strtotime($r['review_created'])) ?></span>
 																			</h4>
 																			<p class="star">
 																				<span>

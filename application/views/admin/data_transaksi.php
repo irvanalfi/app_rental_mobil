@@ -10,7 +10,7 @@
         <?php endif; ?>
       </div>
     </div>
-    <a href="<?= base_url('admin/user/adduser'); ?>" class="btn btn-primary mb-3">Tambah Data</a>
+    <!-- <a href="<?= base_url('admin/transaksi/customer'); ?>" class="btn btn-primary mb-3">Tambah Data</a> -->
 
     <?php if ($this->session->flashdata('success') != null) : ?>
       <div class="row">
@@ -79,7 +79,7 @@
                       <td><?= indo_currency($tr['total_denda']) ?></td>
                       <td><?= indo_currency($tr['pajak']) ?></td>
                       <td><?= indo_currency($tr['total_akhir']) ?></td>
-                      <td><a href="<?= base_url('admin/Transaksi/cekPembayaran/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-primary" title="Update Status">Cek
+                      <td class="d-flex justify-content-center"><a href="<?= base_url('admin/Transaksi/cekPembayaran/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-primary" title="Update Status"><i class="fas fa-eye"></i></a>
                       </td>
                       <td>
                         <?php
@@ -93,6 +93,13 @@
                       </td>
                       <td>
                         <a href="<?= base_url('admin/transaksi/cetakStruk/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-secondary" target="_blank" title="Print Transaksi"><i class="fas fa-print"></i></a>
+                        
+                        <?php if($tr['status_rental'] == "Belum Selesai") :?>
+                          <a href="<?= base_url('admin/transaksi/cetakStruk/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-danger" target="_blank" title="Batalkan Transaksi" onclick="return confirm('Anda ingin membatalkan ini?')"><i class="fas fa-times-circle"></i></a>
+                        <?php else :?>
+                          <a href="<?= base_url('admin/transaksi/cetakStruk/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-danger disabled" target="_blank" title="Batalkan Transaksi"><i class="fas fa-times-circle"></i></a>
+                        <?php endif?>
+                        
                         <a href="<?= base_url('admin/transaksi/updateTransaksi/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-primary" title="Edit Transaksi"><i class="fas fa-edit"></i></a>
                         <a href="<?= base_url('admin/transaksi/transaksiSelesai/') . $tr['id_transaksi'] ?>" class="btn btn-sm btn-warning" onclick="return confirm('Anda ingin menyelesaikan ini?')" title="Selesaikan Transaksi"><i class="fas fa-clipboard-check"></i></a>
                       </td>
@@ -276,7 +283,7 @@
                     <small>Biaya menggunakan jasa supir</small>
                   </td>
                   <td class="text-center">
-                    <span id="hrgSupir"></span>
+                    <span id="a"></span>
                   </td>
                   <td class="text-center">
                     <span id="hari2"></span>

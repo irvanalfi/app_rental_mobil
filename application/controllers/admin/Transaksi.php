@@ -12,6 +12,8 @@ class Transaksi extends CI_Controller
     check_admin(); /*pengecekan status level admin atau bukan */
     // load semua model yang dibutuhkan
     $this->load->model('Transaksi_model');
+    $this->load->model('User_model');
+    $this->load->model('Mobil_model');
   }
 
   public function index()
@@ -20,7 +22,22 @@ class Transaksi extends CI_Controller
     $this->template->load('templateAdmin', 'admin/data_transaksi', $data);
   }
 
-  // tampilan halaman form rental
+  // tambpilan pilih user ketika akan merental
+  public function pilihCustomer()
+  {
+    $data['customer'] = $this->User_model->get_user_customer();
+    $this->template->load('templateAdmin', 'admin/form_pilih_customer', $data);
+  }
+
+  // tambpilan pilih mobil ketika akan merental
+  public function pilihMobil($id)
+  {
+    $data['mobil'] = $this->Mobil_model->get_all_mobil();
+    $data['user'] = $id;
+    $this->template->load('templateAdmin', 'admin/form_pilih_mobil', $data);
+  }
+
+  // tampilan halaman form tambah rental
   public function addRental($id)
   {
     check_not_login(); /*pengecekan staus login */
@@ -110,7 +127,7 @@ class Transaksi extends CI_Controller
       "total_refund"          => 0,
       "total_akhir"           => $total_akhir,
       "tgl_pengembalian"      => null,
-      "status_pengembalian"   => "Belum diambil",
+      "status_pengembalian"   => "Belum Diambil",
       "status_rental"         => "Belum Selesai",
       "tgl_cancel"            => null,
       "status_refund"         => "Belum Selesai",
@@ -138,7 +155,6 @@ class Transaksi extends CI_Controller
       echo "<script>window.location='" . site_url('customer/addRental/' . $id_mobil) . "'</script>";
     }
   }
-
 
   // cek ketersediaan tanggal perentalan
   public function cek_ketersediaan_rental($tgl_rental, $tgl_kembali, $id_mobil)
