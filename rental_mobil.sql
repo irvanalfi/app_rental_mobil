@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2021 at 03:37 PM
+-- Generation Time: Dec 07, 2021 at 03:21 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -232,7 +232,10 @@ CREATE TABLE `transaksi` (
 
 INSERT INTO `transaksi` (`id_transaksi`, `id_user`, `id_mobil`, `tgl_rental`, `waktu_penjemputan`, `tgl_kembali`, `alamat_penjemputan`, `total_harga`, `pajak`, `total_harga_supir`, `total_denda`, `total_akhir`, `tgl_pengembalian`, `status_pengembalian`, `status_rental`, `bukti_pembayaran`, `status_pembayaran`, `confirm_by`, `tgl_cancel`, `status_refund`, `bukti_refund`, `total_refund`, `created`, `updated`, `created_by`, `updated_by`) VALUES
 (33, 4, 9, '2021/12/1', '7:00am', '2021/12/3', 'Kencono, Sragi, Songgon, Banyuwangi', 1350000, 27000, 0, 0, 1377000, NULL, 'Kembali', 'Gagal', NULL, 0, NULL, NULL, 'Belum Selesai', NULL, 0, '2021-11-29 11:43:56', '2021-12-01 20:10:27', '4', '4'),
-(34, 4, 18, '2021/12/2', '1:00am', '2021/12/3', 'Kencono, Sragi, Songgon, Banyuwangi', 600000, 12000, 600000, 0, 1212000, '2021-12-03', 'Kembali', 'Selesai', 'Struk-291121-e3d305a825.jpg', 1, 'M. Irvan Alfi Hidayat', NULL, 'Belum Selesai', NULL, 0, '2021-11-29 11:49:56', NULL, '4', NULL);
+(34, 4, 18, '2021/12/2', '1:00am', '2021/12/3', 'Kencono, Sragi, Songgon, Banyuwangi', 600000, 12000, 600000, 0, 1212000, '2021-12-03', 'Kembali', 'Selesai', 'Struk-291121-e3d305a825.jpg', 1, 'M. Irvan Alfi Hidayat', NULL, 'Belum Selesai', NULL, 0, '2021-11-30 11:49:56', NULL, '4', NULL),
+(39, 13, 6, '2021/12/9', '1:00am', '2021/12/13', 'Jl. Tirto Utomo Gg.8 No.2 , Kec. Dau, Malang, Jawa Timur,', 2000000, 40000, 1500000, 0, 0, NULL, 'Kembali', 'Batal', 'Struk-291121-e3d305a825.jpg', 1, 'Arif', '2021/12/05', 'Belum Selesai', NULL, 3540000, '2021-12-05 21:24:17', '2021-12-05 22:45:35', '13', '13'),
+(40, 13, 6, '2021/12/20', '1:00am', '2021/12/23', 'Jl. Tirto Utomo Gg.8 No.2 , Kec. Dau, Malang, Jawa Timur,', 1200000, 24000, 900000, 0, 2124000, NULL, 'Belum Kembali', 'Belum Selesai', NULL, 0, NULL, NULL, 'Belum Selesai', NULL, 0, '2021-12-05 22:56:01', NULL, '13', NULL),
+(41, 13, 6, '2021/12/8', '1:00am', '2021/12/10', 'Jl. Tirto Utomo Gg.8 No.2 , Kec. Dau, Malang, Jawa Timur,', 1200000, 24000, 900000, 0, 2124000, NULL, 'Belum Diambil', 'Belum Selesai', NULL, 0, NULL, NULL, 'Belum Selesai', NULL, 0, '2021-12-05 23:08:38', NULL, '13', NULL);
 
 -- --------------------------------------------------------
 
@@ -383,7 +386,7 @@ ALTER TABLE `tipe`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `user`
