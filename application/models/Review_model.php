@@ -59,6 +59,19 @@ class Review_model extends CI_Model
         return $query->result_array();
     }
 
+    //menampilkan review berdasarkan id_transaksi
+    public function get_review_by_id_transaksi($id_transaksi)
+    {
+        $this->db->select('*, review.created as review_created');
+        $this->db->from('review');
+        $this->db->join('mobil', 'mobil.id_mobil = review.id_mobil');
+        $this->db->join('user', 'user.id_user = review.id_user');
+        $this->db->join('transaksi', 'transaksi.id_transaksi = review.id_transaksi');
+        $this->db->where('review.id_transaksi', $id_transaksi);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+
     //menampilkan jumlah review yang sudah diapprove berdasarkan id mobil
     public function get_jumlah_review_approved_by_id_mobil($id)
     {

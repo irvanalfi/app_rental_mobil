@@ -94,26 +94,11 @@
 									<div style="text-align: center; align-content: center;">
 
 										<?php if ($tr['status_rental'] == 'Selesai') : ?>
-											<?php if ($review != null) : ?>
-												<?php foreach ($review as $r) : ?>
-													id tbl revie: <?= $r['id_transaksi'] ?>
-													id tbl transaksi : <?= $tr['id_transaksi'] ?>
-													<?php if ($r['id_transaksi'] != $tr['id_transaksi']) : ?>
-														<h3>
-															<a href="<?= base_url('transaksi/review/' . $tr['id_transaksi']) ?>" class="btn btn-sm btn-primary">
-																<span class="icon-star"></span> <span>Berikan Review</span>
-															</a>
-														</h3>
-													<?php endif ?>
-												<?php endforeach ?>
-											<?php else : ?>
-												<h3>
-													<a href="<?= base_url('transaksi/review/' . $tr['id_transaksi']) ?>" class="btn btn-sm btn-primary">
-														<span class="icon-star"></span> <span>Berikan Review</span>
-													</a>
-												</h3>
-											<?php endif ?>
-
+											<h3>
+												<a href="<?= base_url('transaksi/review/' . $tr['id_transaksi']) ?>" class="btn btn-sm btn-primary">
+													<span class="icon-star"></span> <span>Berikan Review</span>
+												</a>
+											</h3>
 										<?php endif ?>
 
 										<h3>

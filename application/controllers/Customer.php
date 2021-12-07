@@ -435,7 +435,8 @@ class Customer extends CI_Controller
     {
         check_not_login();
         $data['transaksi'] = $this->Transaksi_model->get_transaksi_by_id($id_transaksi);
-
+        $data['review'] = $this->Review_model->get_review_by_id_transaksi($id_transaksi); 
+        
         $this->form_validation->set_rules(
             'review',
             'Review',
