@@ -100,15 +100,6 @@
             </div>
             <div class="col-md-3">
                 <div class="services services-2 w-100 text-center">
-                    <div class="icon d-flex align-items-center justify-content-center"><span class="ion-md-airplane"></span></div>
-                    <div class="text w-100">
-                        <h3 class="heading mb-2">Antar Jemput Bandara</h3>
-                        <p>Antar jemput dari bandara ke tempat tujuan atau dari tempat tujuan ke bandara dengan waktu yang sudah di diskusikan</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="services services-2 w-100 text-center">
                     <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-transportation"></span></div>
                     <div class="text w-100">
                         <h3 class="heading mb-2">Tour Keliling Kota</h3>
@@ -141,8 +132,15 @@
                 <div class="heading-section heading-section-white pl-md-5">
                     <span class="subheading">Tentang Kami</span>
                     <h2 class="mb-4">Selamat Datang di Halim Rental Car</h2>
-                    <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima quia cupiditate non, nobis totam corporis, velit a fuga soluta reiciendis rem culpa, quaerat quidem perferendis voluptate. Expedita distinctio explicabo nulla!</p>
-                    <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quisquam velit sunt excepturi in exercitationem dolore minima! Magni quis consequuntur non sunt rerum esse harum. Adipisci porro illum ut ipsum?Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas explicabo veritatis, consequatur cum odio non cumque quam beatae quisquam ipsa nihil dolore nemo itaque consectetur eum quaerat suscipit labore velit.</p>
+                    <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nikmati kemudahan dan kenyamanan rental mobil di Banyuwangi lebih leluasa bersama HRC. Ada banyak pilihan berbagai mobil murah dengan tipe terbaik dan sopir berpengalaman yang siap mengantarkan Anda ketujuan. Perjalanan bisnis, liburan, atau acara pernikahan serahkan semua urusan transportasi Anda kepada kami. Kepuasan dan kenyamaan anda adalah prioritas kami.</p>
+                    <br>
+                    <ul class="text-light">
+                        <li>Armada / mobil terawat dengan baik dengan selalu melakukan perawatan dan pengecekan sebelum armada digunakan</li>
+                        <li>Bisa lepas kunci untuk beberapa mobil</li>
+                        <li>Driver berpengalaman lebih dari 2 tahun</li>
+                        <li>Armada terlengkap yang tersebar di kota Banyuwangi</li>
+                        <li>Harga terjangkau dan bersaing</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -161,18 +159,18 @@
         <div class="row ftco-animate">
             <div class="col-md-12">
                 <div class="carousel-testimony owl-carousel ftco-owl">
-                    <?php foreach($review as $r) : ?>
-                    <div class="item">
-                        <div class="testimony-wrap rounded text-center py-4 pb-5">
-                            <div class="user-img mb-2" style="background-image: url(<?= base_url() ?>assets/upload/user/avatar/<?= $r['avatar']?>)">
-                            </div>
-                            <div class="text pt-4">
-                                <p class="mb-4"><?= $r['review']?></p>
-                                <p class="name"><?= $r['nama']?></p>
+                    <?php foreach ($review as $r) : ?>
+                        <div class="item">
+                            <div class="testimony-wrap rounded text-center py-4 pb-5">
+                                <div class="user-img mb-2" style="background-image: url(<?= base_url() ?>assets/upload/user/avatar/<?= $r['avatar'] ?>)">
+                                </div>
+                                <div class="text pt-4">
+                                    <p class="mb-4"><?= $r['review'] ?></p>
+                                    <p class="name"><?= $r['nama'] ?></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <?php endforeach?>
+                    <?php endforeach ?>
                 </div>
             </div>
         </div>

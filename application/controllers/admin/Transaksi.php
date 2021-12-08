@@ -154,12 +154,12 @@ class Transaksi extends CI_Controller
     $selisih                    = abs($x - $y) / (60 * 60 * 24);
 
     $ganti_total_harga_supir    = $total_harga_supir - ($harga_supir  * $selisih);
-    $ganti_total_harga_pajak    = $total_pajak - ($pajak_per_hari * $selisih);
+    $ganti_total_harga_pajak    = $total_pajak - ($pajak_per_hari * 0.5 * $selisih);
     $ganti_total_harga_mobil    = $total_harga_mobil - ($harga_mobil * 0.5 * $selisih);
 
     // yang di tambah hasil perhitungan (pajak perhari di kali selisih) + (hargamobil * 0.5 * selisih ) = total refund
     // update total akhir adalah total akhir lama - total refund
-    $total_refund               = ($harga_supir * $selisih) + ($pajak_per_hari * $selisih) + ($harga_mobil * 0.5 * $selisih);
+    $total_refund               = ($harga_supir * $selisih) + ($pajak_per_hari * 0.5 * $selisih) + ($harga_mobil * 0.5 * $selisih);
     $update_total_akhir         = $total_akhir - $total_refund;
     $data = [
       'status_rental'         => 'Batal',
