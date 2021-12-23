@@ -107,11 +107,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row justify-content-center">
             <div class="col-md-3">
                 <div class="services services-2 w-100 text-center">
-                    <div class="icon d-flex align-items-center justify-content-center"><span class="ion-md-business"></span></div>
+                    <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-transportation"></span></div>
                     <div class="text w-100">
                         <h3 class="heading mb-2">Perjalanan Bisnis atau Dinas</h3>
                         <p>Perjalanan dengan tujuan berbisnis atau tujuan dinas</p>

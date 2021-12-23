@@ -1,7 +1,7 @@
 <div class="main-content">
   <section class="section">
     <div class="section-header">
-      <h1>Data User</h1>
+      <h1>Data Transaksi</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item text-capitalize"><?= $this->uri->segment(1) ?></div>
         <div class="breadcrumb-item text-capitalize"><?= $this->uri->segment(2) ?></div>
@@ -83,6 +83,7 @@
                       </td>
                       <td>
                         <?php
+                        $tgl_hari_ini         = strtotime(date('Y/m/d'));
                         $tanggal_rental       = strtotime($tr['tgl_rental']);
                         $tanggal_kembali      = strtotime($tr['tgl_kembali']);
                         $selisih              = abs($tanggal_rental - $tanggal_kembali) / (60 * 60 * 24) + 1;

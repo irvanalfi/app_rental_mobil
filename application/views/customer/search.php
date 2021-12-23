@@ -20,7 +20,7 @@
 			<div class="col-lg-12">
 				<form action="<?= base_url('mobil/search')?>" method="GET">
 					<div class="input-group input-group-lg">
-						<input type="text" class="form-control input-lg mr-2 rounded" name="keyword"
+						<input type="text" class="form-control input-lg mr-2 rounded" name="keyword" id="keyword"
 							placeholder="Cari mobil ... ">
 						<span class="input-group-btn">
 							<button type="submit" class="btn btn-primary mb-2 rounded px-5" style="height: 52px;">

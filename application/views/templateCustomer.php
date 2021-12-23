@@ -180,9 +180,14 @@
 		$("#alert1").fadeTo(2000, 500).slideUp(500, function() {
 			$("#alert1").slideUp(500);
 		});
+
+		$('#keyword').keypress(function (e) {
+			var txt = String.fromCharCode(e.which);
+			if (!txt.match(/[A-Za-z0-9&.]/)) {
+				return false;
+			}
+		});
 	</script>
-
-
 </body>
 
 </html>
