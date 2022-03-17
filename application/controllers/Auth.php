@@ -317,8 +317,8 @@ class Auth extends CI_Controller
     $config = [
       'protocol'  => 'smtp',
       'smtp_host' => 'ssl://smtp.googlemail.com',
-      'smtp_user' => '1841720002@student.polinema.ac.id',
-      'smtp_pass' => 'polisi86',
+      'smtp_user' => //fill with your email,
+      'smtp_pass' => //fill with your email password,
       'smtp_port' => 465,
       'mailtype'  => 'html',
       'charset'   => 'utf-8',
